@@ -36,7 +36,7 @@ requirements in requirements.txt or requirements_qt5.txt
 - The following steps should be done in a terminal (or powershell on Windows)
 - Clone this archive:
 
-    `git clone xxx`
+    `git clone https://github.com/w9cf/cwsim`
 - Change to the cwsim directory:
 
   `cd cwsim`
