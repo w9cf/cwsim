@@ -2,18 +2,25 @@
 
 This is the source repository for a CW contest
 simulator written in python, based on and mostly a clone of
-Morse Runner by Alex, VE3NEA.
-The [Morse Runner source](https://github.com/VE3NEA/MorseRunner)
+Morse Runner by Alex, VE3NEA. Therefore it is a derivative work
+of Morse Runner Copyright Copyright 2004-2006, Alex Shovkoplyas, VE3NEA
+ve3nea@dxatlast.com.
+The Morse Runner source
 is distributed  under the [Mozilla Public
-License, v. 2.0.](http://mozilla.org/MPL/2.0/). No Morse Runner
-code is used directly, but most algorithms are identical,
+License, v. 2.0.](http://mozilla.org/MPL/2.0/)
+You can download it
+[here](https://github.com/VE3NEA/MorseRunner).
+
+No Morse Runner
+files are used directly in this project, but most algorithms are identical,
 and often functions are straightforward
 translations of the Morse Runner Delphi code
 into python. I used
 the GNU GPL version of Qt
 for my GUI code, so the cwsim code is licensed under
 [GNU GPL version
-2.0](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html).
+2.0](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html), to
+be consistent with that license.
 
 The code runs on Linux, Mac OS, and Windows, and probably any
 other platform that supports python, Qt, and portaudio.
