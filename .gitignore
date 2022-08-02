@@ -1,3 +1,5 @@
 __pycache__
 *.pyc
 python/cwsimgui.py
+python/ui.license
+python/py.license
