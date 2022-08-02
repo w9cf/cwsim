@@ -32,7 +32,7 @@ requirements in requirements.txt or requirements_qt5.txt
 (sounddevice uses portaudio). One way is described below.
 
 ### Steps
-- Install [python] (https://python.org) version 3.8 or later. 
+- Install [python](https://python.org) version 3.8 or later. 
 - The following steps should be done in a terminal (or powershell on Windows)
 - Clone this archive:
 
