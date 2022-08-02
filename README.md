@@ -3,7 +3,7 @@
 This is the source repository for a CW contest
 simulator written in python, based on and mostly a clone of
 Morse Runner by Alex, VE3NEA. Therefore it is a derivative work
-of Morse Runner Copyright Copyright 2004-2006, Alex Shovkoplyas, VE3NEA
+of Morse Runner Copyright 2004-2006, Alex Shovkoplyas, VE3NEA
 ve3nea@dxatlas.com.
 The Morse Runner source
 is distributed  under the [Mozilla Public
