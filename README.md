@@ -43,11 +43,11 @@ requirements in requirements.txt or requirements_qt5.txt
 
 - Install requirements
 
-  `pip install -r requirements.txt`
+  `pip install -r requirements.txt --user`
 
    alternatively, to use the older Qt5 version instead of the current Qt6,
 
-  `pip install -r requirements_qt5.txt`
+  `pip install -r requirements_qt5.txt --user`
 
 - Run the program with:
 
