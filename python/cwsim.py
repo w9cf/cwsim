@@ -320,7 +320,7 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
 
    Based on and derivative of Morse Runner
    Copyright 2004-2006, Alex Shovkoplyas, VE3NEA
-   ve3nea@dxatlast.com""".format(version)
+   ve3nea@dxatlas.com""".format(version)
       QtWidgets.QMessageBox.about(self,"CW Simulator",msg)
 
    def shortcutHelp(self):
