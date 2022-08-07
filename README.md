@@ -16,10 +16,10 @@ files are used directly in this project, but most algorithms are identical,
 and often functions are straightforward
 translations of the Morse Runner Delphi code
 into python. I used
-the GNU GPL version of Qt
+the GNU GPL version of Qt and Qt Designer
 for my GUI code, so the cwsim code is licensed under
 [GNU GPL version
-2.0](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html), to
+3.0](https://www.gnu.org/licenses/gpl-3.0.en.html), to
 be consistent with that license.
 
 The code runs on Linux, Mac OS, and Windows, and probably any

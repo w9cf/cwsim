@@ -1,20 +1,19 @@
-#
-# Copyright (C) 2022 Kevin E. Schmidt. All rights reserved.
+# Copyright (C) 2022 Kevin E. Schmidt.
 #
 # This file is part of cwsim <https://github.com/w9cf/cwsim/>
 #
-# cwsim is free software: you can redistribute it and/or modify it under the
-# terms of the GNU General Public License version 2 as published by the
-# Free Software Foundation and appearing in the file LICENSE included in the
-# packaging of this file.
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
 #
-# cwsim is distributed in the hope that it will be useful,
+# This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
 #
-# See https://www.gnu.org/licenses/ for GPL licensing information.
-#
-
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import numpy as np
 import audioprocess
 

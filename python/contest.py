@@ -14,7 +14,6 @@
 #
 # See https://www.gnu.org/licenses/ for GPL licensing information.
 #
-
 import numpy as np
 import enum
 import keyer
