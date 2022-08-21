@@ -21,7 +21,6 @@ jobs:
            sudo dpkg --add-architecture i386
            sudo apt-get update
            sudo apt install -y --allow-downgrades libpcre2-8-0=10.34-7
-           sudo apt install -y wine32
            sudo apt-get install wine-stable wine64 wine32:i386 wine64
 
            wget https://www.python.org/ftp/python/3.8.10/python-3.8.10.exe
