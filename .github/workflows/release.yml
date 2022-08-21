@@ -1,0 +1,53 @@
+on:
+  release:
+    types: [created]
+name: Handle Release
+
+env:
+   G_RELEASE: "x.xx"
+
+jobs:
+  generate:
+    name: Create release-artifacts
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@main
+      - name: Generate the artifacts
+        run : |
+           pwd
+           ls -l
+           sudo apt-get update
+           sudo apt-get install wine
+           sudo apt-get install winetricks
+           wget https://www.python.org/ftp/python/3.8.10/python-3.8.10.exe
+           winetricks -q vcrun2017
+           wine python-3.8.10.exe /passive \
+              InstallAllUsers=1 \
+              TargetDir="C:Python38" \
+              PrependPath=1
+           wine C:Python38/python.exe -m pip install --upgrade pip
+           wine C:Python38/python.exe -m pip install \
+              -r requirements_qt5.txt
+           wine C:Python38/python.exe -m pip install pyinstaller
+           cd python
+           wine C:/Python38/Scripts/pyuic5.exe -i 3 -o cwsimgui.py cwsimgui.ui
+           wine C:/Python38/Scripts/pyinstaller.exe  -w -F --clean \
+              --add-data "MASTER.SCP;." --add-data "cwsimgui.ui;." \
+              -n cwsim cwsim.py
+           cd ..
+           RELEASE="0.01"
+           echo "G_RELEASE=${RELEASE}" >> $GITHUB_ENV
+           rm -rf tmp
+           mkdir -p tmp
+           cp python/dist/cwsim.exe tmp/cwsim.exe
+           echo Done
+      - name: Upload the artifacts
+        env:
+           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: actions/upload-release-asset@v1
+        with:
+           upload_url: ${{ github.event.release.upload_url }}
+           asset_path: tmp/cwsim.exe
+           asset_name: cwsim.exe
+           asset_content_type: application/octet-stream
