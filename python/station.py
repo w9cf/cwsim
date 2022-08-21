@@ -71,7 +71,7 @@ class Station():
    Base class for stations.
    '''
    msg2txt = {
-      StationMessage.CQ : 'CQ <my> TEST',
+      StationMessage.CQ : 'TEST <my>',
       StationMessage.NR : '<#>',
       StationMessage.TU : 'TU',
       StationMessage.MyCall : '<my>',

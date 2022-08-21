@@ -1,19 +1,19 @@
-# Copyright (C) 2022 Kevin E. Schmidt.
+#
+# Copyright (C) 2022 Kevin E. Schmidt. All rights reserved.
 #
 # This file is part of cwsim <https://github.com/w9cf/cwsim/>
 #
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
+# cwsim is free software: you can redistribute it and/or modify it under the
+# terms of the GNU General Public License version 2 as published by the
+# Free Software Foundation and appearing in the file LICENSE included in the
+# packaging of this file.
 #
-# This program is distributed in the hope that it will be useful,
+# cwsim is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 #
-# You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+# See https://www.gnu.org/licenses/ for GPL licensing information.
+#
 try:
    from PyQt6 import QtCore, QtGui, QtWidgets
    from PyQt6.QtWidgets import QApplication, QTableWidgetItem
@@ -35,6 +35,7 @@ except ImportError:
    import cwsimgui
 
 import os
+import re
 import sys
 import csv
 import xdg.BaseDirectory
@@ -42,6 +43,7 @@ import numpy as np
 import time
 from contest import Contest, RunMode
 from station import StationMessage
+from station import StationState
 from prefix import Prefix
 
 class ToUpperRegularExpressionValidator(QtGui.QRegularExpressionValidator):
@@ -59,9 +61,15 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
    lastqsosig = QtCore.pyqtSignal()
    contestendedsig = QtCore.pyqtSignal()
 
+
    def __init__(self,parent=None):
       super(RunApp,self).__init__(parent)
       self.setupUi(self)
+      self.tr = self.entryTabs.currentIndex() == 0
+      self.re1 = re.compile(r"^[A-Z]{1,3}[0-9]+[A-Z]+$")
+      self.re2 = re.compile(r"^[2-9][A-Z][0-9]+[A-Z]+$")
+      self.re3 = re.compile(r"^[0-9A-Z]+[0-9]/[0-9A-Z]+$")
+      self.re4 = re.compile(r"^[0-9A-Z]/[0-9A-Z]*[0-9][0-9A-Z]*$")
       self.started = False
       self.configpath = xdg.BaseDirectory.save_config_path("cwsim")
       os.makedirs(self.configpath,exist_ok=True)
@@ -82,9 +90,15 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
          QtCore.QRegularExpression(r'^[a-zA-Z0-9/?]*$'),self)
       nrval = QtGui.QRegularExpressionValidator(
          QtCore.QRegularExpression(r'^[0-9]*$'),self)
+      trexval = ToUpperRegularExpressionValidator(
+         QtCore.QRegularExpression(r'^\ *[0-9]*\ *[0-9]*\ *[a-zA-Z0-9/?]*$'),self)
       self.callLine.setValidator(callval)
       self.callEntry.installEventFilter(self)
       self.callEntry.setValidator(callval)
+      self.trCallEntry.setValidator(callval)
+      self.trCallEntry.installEventFilter(self)
+      self.trExchangeEntry.setValidator(trexval)
+      self.trExchangeEntry.installEventFilter(self)
       self.rstEntry.setValidator(nrval)
       self.rstEntry.installEventFilter(self)
       self.nrEntry.setValidator(nrval)
@@ -93,6 +107,8 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
       self.actionKeyboard_Shortcuts.triggered.connect(self.shortcutHelp)
       self.callLine.textChanged.connect(self.mycall)
       self.callEntry.textChanged.connect(self.hiscall)
+      self.trCallEntry.textChanged.connect(self.hiscall)
+      self.trExchangeEntry.textChanged.connect(self.rcvdex)
       self.rstEntry.textChanged.connect(self.rcvdrst)
       self.nrEntry.textChanged.connect(self.rcvdnr)
       self.qskCheck.stateChanged.connect(self.qsk)
@@ -118,6 +134,14 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
       self.startStopButton.setToolTip("Start or stop contest")
       self.durationSpinBox.valueChanged.connect(self.duration)
       self.activitySpinBox.valueChanged.connect(self.activity)
+      self.trF1Button.clicked.connect(self.f1)
+      self.trF2Button.clicked.connect(self.f2)
+      self.trF3Button.clicked.connect(self.f3)
+      self.trF4Button.clicked.connect(self.f4)
+      self.trF5Button.clicked.connect(self.f5)
+      self.trF6Button.clicked.connect(self.f6)
+      self.trF7Button.clicked.connect(self.f7)
+      self.trF8Button.clicked.connect(self.f8)
       self.f1Button.clicked.connect(self.f1)
       self.f2Button.clicked.connect(self.f2)
       self.f3Button.clicked.connect(self.f3)
@@ -126,6 +150,7 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
       self.f6Button.clicked.connect(self.f6)
       self.f7Button.clicked.connect(self.f7)
       self.f8Button.clicked.connect(self.f8)
+      self.entryTabs.currentChanged.connect(self.entrytabs)
       self.action_Load_Configuration.triggered.connect(self.getFile)
       self.action_Save_Configuration.triggered.connect(self.putFile)
       self.action_Copy_Log.triggered.connect(self.saveLog)
@@ -152,6 +177,7 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
       self.slowSpinBox.setToolTip("DX stations randomly choose speeds "
          + "between your speed multiplied by slow WPM and your speed multipled "
          + "by fast WPM")
+      self.trExchangeEntry.setEnabled(False)
       self._callsent = False
       self._nrsent = False
       self._lastQso = [None,None,None]
@@ -161,10 +187,11 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
       self._qtimes = []
       scdict = { "Alt+W":self.wipe, "Return":self.enter, "Escape":self.escape,
         "F1":self.f1, "F2":self.f2, "F3":self.f3, "F4":self.f4, "F5":self.f5,
-        "F6":self.f6, "F7":self.f7, "F8":self.f8, "Up":self.ritup,
-        "Down":self.ritdown, "Alt+C":self.ritclear, "Ctrl+Up":self.bwup,
+        "F6":self.f6, "F7":self.f7, "F8":self.f8, "Shift+Up":self.ritup,
+        "Shift+Down":self.ritdown, "Alt+C":self.ritclear, "Ctrl+Up":self.bwup,
         "Ctrl+Down":self.bwdown, "Alt+Up":self.pitchup,
-        "Alt+Down":self.pitchdown, "PgUp":self.wpmup, "PgDown":self.wpmdown}
+        "Alt+Down":self.pitchdown, "PgUp":self.wpmup, "PgDown":self.wpmdown,
+        "Up":self.uparrow, "Down":self.downarrow }
       for key, fun in scdict.items():
          sc = QShortcut(QtGui.QKeySequence(key),self)
          sc.activated.connect(fun)
@@ -256,11 +283,18 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
                      row.append(item.text())
                writer.writerow(row)
 
+   def looksLikeCall(self,s):
+      return (self.re1.match(s) is not None or
+              self.re2.match(s) is not None or
+              self.re3.match(s) is not None or
+              self.re4.match(s) is not None)
+
    def eventFilter(self,source,event):
       if event.type() == QtCore.QEvent.Type.KeyPress:
          if " " in event.text():
-            self.space()
-            return True
+            if not self.tr:
+               self.space()
+               return True
          elif "\t" in event.text():
             self.tab()
             return True
@@ -275,6 +309,25 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
 
    def rcvdrst(self,s):
       self._rst = s
+
+   def rcvdex(self,s):
+      s = s.split()
+      for ss in s:
+         if self.looksLikeCall(ss):
+            self._hiscall = ss
+#            self.trCallEntry.setText(ss)
+            s.remove(ss)
+      if len(s) == 0:
+         self._nr = ""
+         self._rst = ""
+      elif len(s) == 1:
+         if s[0].isdigit():
+            self._nr = s[0]
+            self._rst = "599"
+      elif len(s) == 2:
+         if len(s[0]) == 1 and s[0].isdigit():
+            self._rst = '5'+s[0]+'9'
+         self._nr = s[1]
 
    def resetCounters(self):
       self._lastQso = [None,None,None]
@@ -306,7 +359,10 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
             self.contest.mode = RunMode.pileup
          elif i==1:
             self.contest.mode = RunMode.single
-         self.callEntry.setFocus()
+         if self.tr:
+            self.trCallEntry.setFocus()
+         else:
+            self.callEntry.setFocus()
          self.contest.start()
          self.startStopButton.setText("Stop ")
          self.started = True
@@ -319,7 +375,7 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
 
    Based on and derivative of Morse Runner
    Copyright 2004-2006, Alex Shovkoplyas, VE3NEA
-   ve3nea@dxatlas.com""".format(version)
+   ve3nea@dxatlast.com""".format(version)
       QtWidgets.QMessageBox.about(self,"CW Simulator",msg)
 
    def shortcutHelp(self):
@@ -328,8 +384,10 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
       Alt+W = Wipe
       Escape = Stop sending
       Enter = Enter sends message
-      Up arrow = Tune RIT higher in frequency 25 Hz
-      Down arrow = Tune RIT lower in frequency 25 Hz
+      Up arrow = N1MM Tune RIT higher in frequency 25 Hz
+      Down arrow = N1MM Tune RIT lower in frequency 25 Hz
+      Shift+Up arrow = TR Tune RIT higher in frequency 25 Hz
+      Shift+Down arrow = TR Tune RIT lower in frequency 25 Hz
       Alt+C = Clear RIT
       Ctrl+Up arrow  = Increase receive bandwidth 50 Hz
       Ctrl+Down arrow = Decrease receive bandwidth 50 Hz
@@ -424,6 +482,7 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
       h,m,s = self.contest.time()
       tstr = '{:d}:{:02d}:{:02d}'.format(h,m,s)
       self.timeEntryLabel.setText(tstr)
+      self.trTimeEntryLabel.setText(tstr)
 
    def updateRate(self):
       h,m,s = self.contest.time()
@@ -471,7 +530,12 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
    def f8(self):
       self.sendMsg(StationMessage.Nil)
 
+   def entrytabs(self):
+      self.tr = self.entryTabs.currentIndex() == 0
+
    def enter(self):
+      if self.tr:
+         self.trCallEntry.setText(self._hiscall)
       self._mustAdvance = False
       if self._hiscall == '':
          self.sendMsg(StationMessage.CQ)
@@ -514,14 +578,18 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
 
    def advanceslot(self):
       if self._mustAdvance:
-         if self._rst == '':
-            self.rstEntry.setText('599')
+         if self.tr:
+            self.trExchangeEntry.setEnabled(True)
+            self.trExchangeEntry.setFocus()
          else:
-            self.rstEntry.deselect()
-         if self._hiscall.find('?') == -1:
-            self.nrEntry.setFocus()
-         else:
-            self.callEntry.setFocus()
+            if self._rst == '':
+               self.rstEntry.setText('599')
+            else:
+               self.rstEntry.deselect()
+            if self._hiscall.find('?') == -1:
+               self.nrEntry.setFocus()
+            else:
+               self.callEntry.setFocus()
          self._mustAdvance = False
 
    def lastQso(self):
@@ -663,10 +731,16 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
       QtCore.QTimer.singleShot(100,self.logTable.scrollToBottom)
 
    def wipe(self):
-      self.callEntry.setText("")
-      self.rstEntry.setText("")
-      self.nrEntry.setText("")
-      self.callEntry.setFocus()
+      if self.tr:
+         self.trCallEntry.setText("")
+         self.trExchangeEntry.setText("")
+         self.trCallEntry.setFocus()
+         self.trExchangeEntry.setEnabled(False)
+      else:
+         self.callEntry.setText("")
+         self.rstEntry.setText("")
+         self.nrEntry.setText("")
+         self.callEntry.setFocus()
       self._callsent = False
       self._nrsent = False
 
@@ -675,7 +749,14 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
          self._callsent = False
       if StationMessage.NR in self.contest.me.msgs:
          self._nrsent = False
-      self.contest.me.abortSend()
+      if self.contest.me.state == StationState.Sending:
+         self.contest.me.abortSend()
+      elif self.tr and self.trExchangeEntry.isEnabled():
+         self.trExchangeEntry.clear()
+         self.trExchangeEntry.setEnabled(False)
+         self.trCallEntry.setFocus()
+      else:
+         self.wipe()
 
    def ritup(self):
       self.ritSlider.setValue(25*round(int((self.contest.rit+25)/25)))
@@ -704,7 +785,25 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
    def wpmdown(self):
       self.wpmSpinBox.setValue(self.contest.wpm-2)
 
+   def uparrow(self):
+      if self.tr:
+         foc = QtWidgets.QApplication.focusWidget()
+         if foc is self.trExchangeEntry:
+            self.trCallEntry.setFocus()
+      else:
+         self.ritup()
+
+   def downarrow(self):
+      if self.tr:
+         foc = QtWidgets.QApplication.focusWidget()
+         if foc is self.trCallEntry:
+            self.trExchangeEntry.setEnabled(True)
+            self.trExchangeEntry.setFocus()
+      else:
+         self.ritdown()
+
    def space(self):
+      if self.tr: return
       self._mustAdvance = False
       foc = QtWidgets.QApplication.focusWidget()
       if foc in [self.callEntry, self.rstEntry]:
@@ -733,6 +832,10 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
          else:
             self.callEntry.deselect()
             self.callEntry.end(False)
+      elif foc is self.trCallEntry:
+         self.trExchangeEntry.setFocus()
+      elif foc is self.trExchangeEntry:
+         self.trCallEntry.setFocus()
 
    def close(self):
       if not os.path.exists(self.defaultini):

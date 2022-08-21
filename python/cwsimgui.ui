@@ -24,8 +24,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>860</width>
-    <height>746</height>
+    <width>878</width>
+    <height>753</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -128,7 +128,7 @@
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_8">
           <item>
-           <widget class="QTabWidget" name="tabWidget">
+           <widget class="QTabWidget" name="paramTabs">
             <property name="currentIndex">
              <number>0</number>
             </property>
@@ -146,110 +146,6 @@
                  <enum>QFrame::Raised</enum>
                 </property>
                 <layout class="QGridLayout" name="gridLayout_2">
-                 <item row="0" column="0">
-                  <widget class="QLabel" name="callLabel">
-                   <property name="text">
-                    <string>Call</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="1" colspan="2">
-                  <widget class="QLineEdit" name="callLine">
-                   <property name="focusPolicy">
-                    <enum>Qt::ClickFocus</enum>
-                   </property>
-                   <property name="text">
-                    <string>P55CF</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="3">
-                  <widget class="QCheckBox" name="qskCheck">
-                   <property name="focusPolicy">
-                    <enum>Qt::ClickFocus</enum>
-                   </property>
-                   <property name="text">
-                    <string>QSK</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="0">
-                  <widget class="QLabel" name="speedLabel">
-                   <property name="text">
-                    <string>CW Speed</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="1">
-                  <widget class="QSpinBox" name="wpmSpinBox">
-                   <property name="focusPolicy">
-                    <enum>Qt::ClickFocus</enum>
-                   </property>
-                   <property name="minimum">
-                    <number>10</number>
-                   </property>
-                   <property name="value">
-                    <number>40</number>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="2">
-                  <widget class="QLabel" name="wpmLabel">
-                   <property name="text">
-                    <string>WPM</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="3">
-                  <widget class="QCheckBox" name="cwReverseCheck">
-                   <property name="focusPolicy">
-                    <enum>Qt::NoFocus</enum>
-                   </property>
-                   <property name="text">
-                    <string>CWR</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="2" column="0">
-                  <widget class="QLabel" name="pitchLabel">
-                   <property name="text">
-                    <string>CW Pitch</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="2" column="1">
-                  <widget class="QSpinBox" name="pitchSpinBox">
-                   <property name="focusPolicy">
-                    <enum>Qt::ClickFocus</enum>
-                   </property>
-                   <property name="minimum">
-                    <number>300</number>
-                   </property>
-                   <property name="maximum">
-                    <number>900</number>
-                   </property>
-                   <property name="singleStep">
-                    <number>50</number>
-                   </property>
-                   <property name="value">
-                    <number>600</number>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="2" column="2">
-                  <widget class="QLabel" name="hzPitchLabel">
-                   <property name="text">
-                    <string>Hz</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="3" column="0">
-                  <widget class="QLabel" name="bandwidthLabel">
-                   <property name="text">
-                    <string>RX Bandwidth</string>
-                   </property>
-                  </widget>
-                 </item>
                  <item row="3" column="1">
                   <widget class="QSpinBox" name="bandwidthSpinBox">
                    <property name="focusPolicy">
@@ -276,6 +172,13 @@
                    </property>
                   </widget>
                  </item>
+                 <item row="2" column="2">
+                  <widget class="QLabel" name="hzPitchLabel">
+                   <property name="text">
+                    <string>Hz</string>
+                   </property>
+                  </widget>
+                 </item>
                  <item row="4" column="0">
                   <widget class="QLabel" name="monitorLabel">
                    <property name="text">
@@ -283,16 +186,16 @@
                    </property>
                   </widget>
                  </item>
-                 <item row="4" column="1" colspan="2">
-                  <widget class="QSlider" name="monitorSlider">
+                 <item row="1" column="1">
+                  <widget class="QSpinBox" name="wpmSpinBox">
                    <property name="focusPolicy">
                     <enum>Qt::ClickFocus</enum>
                    </property>
-                   <property name="value">
+                   <property name="minimum">
                     <number>10</number>
                    </property>
-                   <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
+                   <property name="value">
+                    <number>40</number>
                    </property>
                   </widget>
                  </item>
@@ -325,6 +228,103 @@
                    </property>
                   </widget>
                  </item>
+                 <item row="2" column="0">
+                  <widget class="QLabel" name="pitchLabel">
+                   <property name="text">
+                    <string>CW Pitch</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="2">
+                  <widget class="QLabel" name="wpmLabel">
+                   <property name="text">
+                    <string>WPM</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="0">
+                  <widget class="QLabel" name="bandwidthLabel">
+                   <property name="text">
+                    <string>RX Bandwidth</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="1" colspan="2">
+                  <widget class="QLineEdit" name="callLine">
+                   <property name="focusPolicy">
+                    <enum>Qt::ClickFocus</enum>
+                   </property>
+                   <property name="text">
+                    <string>P55CF</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="1">
+                  <widget class="QSpinBox" name="pitchSpinBox">
+                   <property name="focusPolicy">
+                    <enum>Qt::ClickFocus</enum>
+                   </property>
+                   <property name="minimum">
+                    <number>300</number>
+                   </property>
+                   <property name="maximum">
+                    <number>900</number>
+                   </property>
+                   <property name="singleStep">
+                    <number>50</number>
+                   </property>
+                   <property name="value">
+                    <number>600</number>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="3">
+                  <widget class="QCheckBox" name="cwReverseCheck">
+                   <property name="focusPolicy">
+                    <enum>Qt::NoFocus</enum>
+                   </property>
+                   <property name="text">
+                    <string>CWR</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="3">
+                  <widget class="QCheckBox" name="qskCheck">
+                   <property name="focusPolicy">
+                    <enum>Qt::ClickFocus</enum>
+                   </property>
+                   <property name="text">
+                    <string>QSK</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="0">
+                  <widget class="QLabel" name="speedLabel">
+                   <property name="text">
+                    <string>CW Speed</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="4" column="1" colspan="2">
+                  <widget class="QSlider" name="monitorSlider">
+                   <property name="focusPolicy">
+                    <enum>Qt::ClickFocus</enum>
+                   </property>
+                   <property name="value">
+                    <number>10</number>
+                   </property>
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="5" column="5">
+                  <widget class="QLabel" name="hzRitLabel">
+                   <property name="text">
+                    <string>Hz</string>
+                   </property>
+                  </widget>
+                 </item>
                  <item row="5" column="4">
                   <widget class="QSpinBox" name="ritSpinBox">
                    <property name="focusPolicy">
@@ -344,10 +344,10 @@
                    </property>
                   </widget>
                  </item>
-                 <item row="5" column="5">
-                  <widget class="QLabel" name="hzRitLabel">
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="callLabel">
                    <property name="text">
-                    <string>Hz</string>
+                    <string>Call</string>
                    </property>
                   </widget>
                  </item>
@@ -566,190 +566,332 @@
            </widget>
           </item>
           <item>
-           <widget class="QGroupBox" name="entryBox">
-            <property name="title">
-             <string>Entry</string>
+           <widget class="QTabWidget" name="entryTabs">
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
             </property>
-            <layout class="QVBoxLayout" name="verticalLayout_7">
-             <item>
-              <widget class="QFrame" name="frame">
-               <property name="frameShape">
-                <enum>QFrame::StyledPanel</enum>
-               </property>
-               <property name="frameShadow">
-                <enum>QFrame::Raised</enum>
-               </property>
-               <layout class="QGridLayout" name="gridLayout_4">
-                <item row="0" column="0">
-                 <widget class="QLabel" name="callEntryLabel">
-                  <property name="text">
-                   <string>Call</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="1">
-                 <widget class="QLabel" name="rstEntryLabel">
-                  <property name="text">
-                   <string>RST</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="2">
-                 <widget class="QFrame" name="frame_3">
-                  <property name="frameShape">
-                   <enum>QFrame::NoFrame</enum>
-                  </property>
-                  <property name="frameShadow">
-                   <enum>QFrame::Raised</enum>
-                  </property>
-                  <property name="lineWidth">
-                   <number>0</number>
-                  </property>
-                  <layout class="QHBoxLayout" name="horizontalLayout_2">
-                   <item>
-                    <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="10,90">
-                     <property name="spacing">
-                      <number>0</number>
-                     </property>
-                     <property name="sizeConstraint">
-                      <enum>QLayout::SetDefaultConstraint</enum>
-                     </property>
-                     <property name="rightMargin">
-                      <number>1</number>
-                     </property>
-                     <item>
-                      <widget class="QLabel" name="nrEntryLabel">
-                       <property name="lineWidth">
-                        <number>0</number>
-                       </property>
-                       <property name="text">
-                        <string>Nr</string>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QLabel" name="timeEntryLabel">
-                       <property name="text">
-                        <string>0:00:00</string>
-                       </property>
-                       <property name="textFormat">
-                        <enum>Qt::PlainText</enum>
-                       </property>
-                       <property name="alignment">
-                        <set>Qt::AlignCenter</set>
-                       </property>
-                      </widget>
-                     </item>
-                    </layout>
-                   </item>
-                  </layout>
-                 </widget>
-                </item>
-                <item row="1" column="0">
-                 <widget class="QLineEdit" name="callEntry"/>
-                </item>
-                <item row="1" column="1">
-                 <widget class="QLineEdit" name="rstEntry"/>
-                </item>
-                <item row="1" column="2">
-                 <widget class="QLineEdit" name="nrEntry"/>
-                </item>
-               </layout>
-              </widget>
-             </item>
-             <item>
-              <widget class="QFrame" name="frame_2">
-               <property name="frameShape">
-                <enum>QFrame::StyledPanel</enum>
-               </property>
-               <property name="frameShadow">
-                <enum>QFrame::Raised</enum>
-               </property>
-               <layout class="QGridLayout" name="gridLayout_3">
-                <item row="0" column="0">
-                 <widget class="QPushButton" name="f1Button">
-                  <property name="focusPolicy">
-                   <enum>Qt::ClickFocus</enum>
-                  </property>
-                  <property name="text">
-                   <string>F1 CQ</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="1">
-                 <widget class="QPushButton" name="f2Button">
-                  <property name="focusPolicy">
-                   <enum>Qt::ClickFocus</enum>
-                  </property>
-                  <property name="text">
-                   <string>F2 &lt;#&gt;</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="2">
-                 <widget class="QPushButton" name="f3Button">
-                  <property name="focusPolicy">
-                   <enum>Qt::ClickFocus</enum>
-                  </property>
-                  <property name="text">
-                   <string>F3 TU</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="3">
-                 <widget class="QPushButton" name="f4Button">
-                  <property name="focusPolicy">
-                   <enum>Qt::ClickFocus</enum>
-                  </property>
-                  <property name="text">
-                   <string>F4 &lt;my&gt;</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="0">
-                 <widget class="QPushButton" name="f5Button">
-                  <property name="focusPolicy">
-                   <enum>Qt::ClickFocus</enum>
-                  </property>
-                  <property name="text">
-                   <string>F5 &lt;his&gt;</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="1">
-                 <widget class="QPushButton" name="f6Button">
-                  <property name="focusPolicy">
-                   <enum>Qt::ClickFocus</enum>
-                  </property>
-                  <property name="text">
-                   <string>F6 B4</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="2">
-                 <widget class="QPushButton" name="f7Button">
-                  <property name="focusPolicy">
-                   <enum>Qt::ClickFocus</enum>
-                  </property>
-                  <property name="text">
-                   <string>F7 ?</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="3">
-                 <widget class="QPushButton" name="f8Button">
-                  <property name="focusPolicy">
-                   <enum>Qt::ClickFocus</enum>
-                  </property>
-                  <property name="text">
-                   <string>F8 NIL</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </widget>
-             </item>
-            </layout>
+            <property name="currentIndex">
+             <number>1</number>
+            </property>
+            <widget class="QWidget" name="trEntry">
+             <attribute name="title">
+              <string>TR Input</string>
+             </attribute>
+             <layout class="QVBoxLayout" name="verticalLayout_10">
+              <item>
+               <widget class="QFrame" name="trFkeys">
+                <property name="frameShape">
+                 <enum>QFrame::StyledPanel</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Raised</enum>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_7">
+                 <item row="0" column="0">
+                  <widget class="QPushButton" name="trF1Button">
+                   <property name="focusPolicy">
+                    <enum>Qt::ClickFocus</enum>
+                   </property>
+                   <property name="text">
+                    <string>F1 CQ</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="1">
+                  <widget class="QPushButton" name="trF2Button">
+                   <property name="focusPolicy">
+                    <enum>Qt::ClickFocus</enum>
+                   </property>
+                   <property name="text">
+                    <string>F2 &lt;#&gt;</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="2">
+                  <widget class="QPushButton" name="trF3Button">
+                   <property name="focusPolicy">
+                    <enum>Qt::ClickFocus</enum>
+                   </property>
+                   <property name="text">
+                    <string>F3 TU</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="3">
+                  <widget class="QPushButton" name="trF4Button">
+                   <property name="focusPolicy">
+                    <enum>Qt::ClickFocus</enum>
+                   </property>
+                   <property name="text">
+                    <string>F4 &lt;my&gt;</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="0">
+                  <widget class="QPushButton" name="trF5Button">
+                   <property name="focusPolicy">
+                    <enum>Qt::ClickFocus</enum>
+                   </property>
+                   <property name="text">
+                    <string>F5 &lt;his&gt;</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="1">
+                  <widget class="QPushButton" name="trF6Button">
+                   <property name="focusPolicy">
+                    <enum>Qt::ClickFocus</enum>
+                   </property>
+                   <property name="text">
+                    <string>F6 B4</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="2">
+                  <widget class="QPushButton" name="trF7Button">
+                   <property name="focusPolicy">
+                    <enum>Qt::ClickFocus</enum>
+                   </property>
+                   <property name="text">
+                    <string>F7 ?</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="3">
+                  <widget class="QPushButton" name="trF8Button">
+                   <property name="focusPolicy">
+                    <enum>Qt::ClickFocus</enum>
+                   </property>
+                   <property name="text">
+                    <string>F8 NIL</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item>
+               <widget class="QFrame" name="trEntryFrame">
+                <property name="frameShape">
+                 <enum>QFrame::StyledPanel</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Raised</enum>
+                </property>
+                <layout class="QGridLayout" name="gridLayout">
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="trTimeEntryLabel">
+                   <property name="text">
+                    <string>0:00:00</string>
+                   </property>
+                   <property name="textFormat">
+                    <enum>Qt::PlainText</enum>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="1">
+                  <widget class="TrLineEdit" name="trCallEntry"/>
+                 </item>
+                 <item row="1" column="1">
+                  <widget class="TrLineEdit" name="trExchangeEntry">
+                   <property name="enabled">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+            <widget class="QWidget" name="n1mmEntry">
+             <attribute name="title">
+              <string>N1MM Input</string>
+             </attribute>
+             <layout class="QVBoxLayout" name="verticalLayout_7">
+              <item>
+               <widget class="QFrame" name="entries">
+                <property name="frameShape">
+                 <enum>QFrame::StyledPanel</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Raised</enum>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_4">
+                 <item row="0" column="1">
+                  <widget class="QLabel" name="rstEntryLabel">
+                   <property name="text">
+                    <string>RST</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="0">
+                  <widget class="QLineEdit" name="callEntry"/>
+                 </item>
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="callEntryLabel">
+                   <property name="text">
+                    <string>Call</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="1">
+                  <widget class="QLineEdit" name="rstEntry"/>
+                 </item>
+                 <item row="0" column="2">
+                  <widget class="QFrame" name="nrTimeFrame">
+                   <property name="frameShape">
+                    <enum>QFrame::NoFrame</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
+                   </property>
+                   <property name="lineWidth">
+                    <number>0</number>
+                   </property>
+                   <layout class="QHBoxLayout" name="horizontalLayout_2">
+                    <item>
+                     <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="10,90">
+                      <property name="spacing">
+                       <number>0</number>
+                      </property>
+                      <property name="sizeConstraint">
+                       <enum>QLayout::SetDefaultConstraint</enum>
+                      </property>
+                      <property name="rightMargin">
+                       <number>1</number>
+                      </property>
+                      <item>
+                       <widget class="QLabel" name="nrEntryLabel">
+                        <property name="lineWidth">
+                         <number>0</number>
+                        </property>
+                        <property name="text">
+                         <string>Nr</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QLabel" name="timeEntryLabel">
+                        <property name="text">
+                         <string>0:00:00</string>
+                        </property>
+                        <property name="textFormat">
+                         <enum>Qt::PlainText</enum>
+                        </property>
+                        <property name="alignment">
+                         <set>Qt::AlignCenter</set>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                 <item row="1" column="2">
+                  <widget class="QLineEdit" name="nrEntry"/>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item>
+               <widget class="QFrame" name="fkeys">
+                <property name="frameShape">
+                 <enum>QFrame::StyledPanel</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Raised</enum>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_3">
+                 <item row="1" column="2">
+                  <widget class="QPushButton" name="f7Button">
+                   <property name="focusPolicy">
+                    <enum>Qt::ClickFocus</enum>
+                   </property>
+                   <property name="text">
+                    <string>F7 ?</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="1">
+                  <widget class="QPushButton" name="f2Button">
+                   <property name="focusPolicy">
+                    <enum>Qt::ClickFocus</enum>
+                   </property>
+                   <property name="text">
+                    <string>F2 &lt;#&gt;</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="1">
+                  <widget class="QPushButton" name="f6Button">
+                   <property name="focusPolicy">
+                    <enum>Qt::ClickFocus</enum>
+                   </property>
+                   <property name="text">
+                    <string>F6 B4</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="0">
+                  <widget class="QPushButton" name="f1Button">
+                   <property name="focusPolicy">
+                    <enum>Qt::ClickFocus</enum>
+                   </property>
+                   <property name="text">
+                    <string>F1 CQ</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="2">
+                  <widget class="QPushButton" name="f3Button">
+                   <property name="focusPolicy">
+                    <enum>Qt::ClickFocus</enum>
+                   </property>
+                   <property name="text">
+                    <string>F3 TU</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="0">
+                  <widget class="QPushButton" name="f5Button">
+                   <property name="focusPolicy">
+                    <enum>Qt::ClickFocus</enum>
+                   </property>
+                   <property name="text">
+                    <string>F5 &lt;his&gt;</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="3">
+                  <widget class="QPushButton" name="f4Button">
+                   <property name="focusPolicy">
+                    <enum>Qt::ClickFocus</enum>
+                   </property>
+                   <property name="text">
+                    <string>F4 &lt;my&gt;</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="3">
+                  <widget class="QPushButton" name="f8Button">
+                   <property name="focusPolicy">
+                    <enum>Qt::ClickFocus</enum>
+                   </property>
+                   <property name="text">
+                    <string>F8 NIL</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+             </layout>
+            </widget>
            </widget>
           </item>
          </layout>
@@ -972,7 +1114,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>860</width>
+     <width>878</width>
      <height>20</height>
     </rect>
    </property>
@@ -1064,6 +1206,11 @@
    <extends>QFrame</extends>
    <header>mplwidget</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>TrLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>trlineedit.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
