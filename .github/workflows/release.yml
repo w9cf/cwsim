@@ -17,6 +17,7 @@ jobs:
         run : |
            pwd
            ls -l
+           export WINEARCH=win32
            sudo apt-get update
            sudo apt-get install wine32
            sudo apt-get install winetricks
