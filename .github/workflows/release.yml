@@ -20,9 +20,9 @@ jobs:
            export WINEARCH=win32
            sudo apt-get update
            sudo apt-get install wine32
-           sudo apt-get install winetricks
+#           sudo apt-get install winetricks
            wget https://www.python.org/ftp/python/3.8.10/python-3.8.10.exe
-           winetricks -q vcrun2017
+#           winetricks -q vcrun2017
            wine python-3.8.10.exe /passive \
               InstallAllUsers=1 \
               TargetDir="C:Python38" \
