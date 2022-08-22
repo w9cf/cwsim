@@ -21,7 +21,6 @@ jobs:
            sudo dpkg --add-architecture i386
            sudo apt-get update -y
            sudo apt-get install wine32 -y
-           sudo apt-get install wine -y
            wget https://www.python.org/ftp/python/3.8.10/python-3.8.10.exe
            wine python-3.8.10.exe /passive \
               InstallAllUsers=1 \
