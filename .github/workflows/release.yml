@@ -9,7 +9,7 @@ env:
 jobs:
   generate:
     name: Create release-artifacts
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout the repository
         uses: actions/checkout@main
@@ -19,11 +19,9 @@ jobs:
            ls -l
            export WINEARCH=win32
            sudo dpkg --add-architecture i386
-           sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 86B72ED9
-           sudo add-apt-repository 'deb [arch=amd64] https://mirror.mxe.cc/repos/apt focal main'
-           sudo apt -qq update
-           sudo apt install -y --allow-downgrades libpcre2-8-0=10.34-7
-           sudo apt install -y wine32
+           sudo apt-get update -y
+           sudo apt-get install wine32 -y
+           sudo apt-get install wine -y
            wget https://www.python.org/ftp/python/3.8.10/python-3.8.10.exe
            wine python-3.8.10.exe /passive \
               InstallAllUsers=1 \
