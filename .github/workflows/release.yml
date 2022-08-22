@@ -15,6 +15,7 @@ jobs:
         uses: actions/checkout@main
       - name: Generate the artifacts
         run : |
+           set -e
            pwd
            ls -l
            export WINEARCH=win32
