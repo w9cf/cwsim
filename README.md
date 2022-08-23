@@ -29,7 +29,7 @@ other platform that supports python, Qt, and portaudio.
 
 You just need to satisfy the
 requirements in requirements.txt or requirements_qt5.txt
-(sounddevice uses portaudio). One way is described below.
+(sounddevice uses portaudio). One way is to use pip and requirements:
 
 ### Steps
 - Install [python](https://python.org) version 3.8 or later. 
@@ -52,3 +52,30 @@ requirements in requirements.txt or requirements_qt5.txt
 - Run the program with:
 
   `python python/cwsim.py`
+
+### Alternative for Raspberry Pi 4B
+I normally run Slackware on my PI 4B. The installation just uses
+sbopkg and slackbuilds.com to add the needed packages. I did
+test with the 2022-04-04 64bit Raspberry Pi operating system. Here are
+the commands I used to install the needed packages:
+```
+git clone https://github.com/w9cf/cwsim.git
+sudo apt-get install python3-matplotlib
+sudo apt-get install python3-pyqt5
+sudo apt-get install libportaudio2
+pip install pip --upgrade --user
+python3 -m pip install numpy==1.23 --user
+python3 -m pip install sounddevice --user
+python3 -m pip install pyxdg --user
+```
+
+Then
+```
+cd cwsim/python
+python cwsim.py
+```
+Note! Make sure the numpy version is >= 1.22, otherwise a numpy.accumulate
+bug in older versions will crash the program unless QSK is turned off.
+This bug was fixed in numpy 1.22. The
+```python3 -m pip install numpy==1.23 --user```
+command above will install numpy 1.23 locally.
