@@ -72,7 +72,7 @@ python3 -m pip install pyxdg --user
 Then
 ```
 cd cwsim/python
-python cwsim.py
+python3 cwsim.py
 ```
 Note! Make sure the numpy version is >= 1.22, otherwise a numpy.accumulate
 bug in older versions will crash the program unless QSK is turned off.
