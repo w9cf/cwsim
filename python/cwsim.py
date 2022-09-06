@@ -330,6 +330,7 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
          self._nr = s[1]
 
    def resetCounters(self):
+      self.contest.me.nr = 1
       self._lastQso = [None,None,None]
       self._lastLog = [None,None,None]
       self._rawQsoCount = 0
