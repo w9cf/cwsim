@@ -25,8 +25,8 @@ jobs:
            sudo apt-get install wine -y
            wine --version
            winecfg
-           wget https://www.python.org/ftp/python/3.8.10/python-3.8.10.exe
-           wine python-3.8.10.exe /passive \
+           wget -q https://www.python.org/ftp/python/3.8.10/python-3.8.10.exe
+           wine wineconsole --backend=curses python-3.8.10.exe /passive \
               InstallAllUsers=1 \
               TargetDir="C:Python38" \
               PrependPath=1
