@@ -18,15 +18,21 @@ jobs:
            set -x
            pwd
            ls -l
+           sudo apt-get install xvfb
+           Xvfb :0 -screen 0 1024x768x16 &
+           export DISPLAY=:0.0
            export WINEARCH=win32
            sudo dpkg --add-architecture i386
            sudo apt-get update -y
-           sudo apt-get install wine
-           sudo apt-get install wine32
+           sudo apt-get install wine32 -y
+           sudo apt-get install wine -y
+           sudo apt-get install winetricks -y
+           sudo winetricks --self-update -y
            wine --version
-           winecfg
-           wget https://www.python.org/ftp/python/3.8.10/python-3.8.10.exe
-           wine python-3.8.10.exe /passive \
+           wine winecfg -v win7
+           winetricks -q vcrun2017
+           wget -q https://www.python.org/ftp/python/3.8.10/python-3.8.10.exe
+           wine python-3.8.10.exe /quiet /nogui \
               InstallAllUsers=1 \
               TargetDir="C:Python38" \
               PrependPath=1
