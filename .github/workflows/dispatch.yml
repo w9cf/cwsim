@@ -20,13 +20,14 @@ jobs:
            ls -l
            sudo apt-get install xvfb
            Xvfb :0 -screen 0 1024x768x16 &
+           export DISPLAY=:0.0
            export WINEARCH=win32
            sudo dpkg --add-architecture i386
            sudo apt-get update -y
            sudo apt-get install wine32 -y
            sudo apt-get install wine -y
            sudo apt-get install winetricks -y
-           sudo winetricks --self-update
+           sudo winetricks --self-update -y
            wine --version
            wine winecfg -v win7
            winetricks -q vcrun2017
