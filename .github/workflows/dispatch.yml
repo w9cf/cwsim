@@ -18,6 +18,8 @@ jobs:
            set -x
            pwd
            ls -l
+           sudo apt-get install xvfb
+           Xvfb :0 -screen 0 1024x768x16 &
            export WINEARCH=win32
            sudo dpkg --add-architecture i386
            sudo apt-get update -y
