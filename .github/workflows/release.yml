@@ -9,7 +9,7 @@ env:
 jobs:
   generate:
     name: Create release-artifacts
-    runs-on: runs-on: ubuntu-22.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout the repository
         uses: actions/checkout@main
@@ -18,7 +18,6 @@ jobs:
            set -x
            pwd
            ls -l
-           sudo apt-get install xvfb
            Xvfb :0 -screen 0 1024x768x16 &
            export DISPLAY=:0.0
            export WINEARCH=win32
