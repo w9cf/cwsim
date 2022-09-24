@@ -1,5 +1,5 @@
 on:
-  release:
+  [release, workflow_dispatch]:
     types: [created]
 name: Handle Release
 
