@@ -24,7 +24,7 @@ jobs:
            wget -qO - https://dl.winehq.org/wine-builds/winehq.key | sudo apt-key add -
            sudo add-apt-repository ppa:cybermax-dexter/sdl2-backport
            sudo apt-add-repository "deb https://dl.winehq.org/wine-builds/ubuntu $(lsb_release -cs) main"
-           sudo apt install --install-recommends winehq-stable
+           sudo apt install --install-recommends winehq-devel
            wine --version
            winecfg
            wget https://www.python.org/ftp/python/3.8.10/python-3.8.10.exe
