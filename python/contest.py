@@ -334,8 +334,7 @@ class Contest():
       self.stream.start()
 
    def stop(self):
-      for s in self.stations:
-         self.stations.remove(s)
+      self.stations = []
       self.stream.stop()
       self.stream.close()
 
