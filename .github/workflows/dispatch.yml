@@ -1,7 +1,7 @@
 on:
-  release:
-    types: [created]
-name: Handle Release
+  workflow_dispatch:
+
+name: Test pyinstall
 
 env:
    G_RELEASE: "x.xx"
