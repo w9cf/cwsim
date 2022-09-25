@@ -30,7 +30,7 @@ If you are running Microsoft Windows, and do not wish to install python
 and the requirements,
 as described below, a zipped windows executable file
 is available under the [Releases](https://github.com/w9cf/cwsim/releases)
-tag on [Github](https://github.com/w9cf/w9cf). This file is automatically
+tag on [Github](https://github.com/w9cf/cwsim). This file is automatically
 built by github runners on release. It just uses Pyinstall to gather the
 python components below and package them into an exe file. Download,
 unzip, and run the executable.
