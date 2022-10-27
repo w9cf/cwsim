@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 #
 # Copyright (C) 2022 Kevin E. Schmidt. All rights reserved.
 #
