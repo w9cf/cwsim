@@ -192,7 +192,7 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
         "Shift+Down":self.ritdown, "Alt+C":self.ritclear, "Ctrl+Up":self.bwup,
         "Ctrl+Down":self.bwdown, "Alt+Up":self.pitchup,
         "Alt+Down":self.pitchdown, "PgUp":self.wpmup, "PgDown":self.wpmdown,
-        "Up":self.uparrow, "Down":self.downarrow }
+        "Up":self.uparrow, "Down":self.downarrow, "Alt+X": self.startStop }
       for key, fun in scdict.items():
          sc = QShortcut(QtGui.QKeySequence(key),self)
          sc.activated.connect(fun)
@@ -345,7 +345,7 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
       self._goodPfxs.clear()
       self._qtimes = []
 
-   def startStop(self,s):
+   def startStop(self):
       if self.started:
          self.contest.stop()
          self.clocktimer.stop()
@@ -397,6 +397,7 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
       Alt+Down arrow = Decrease pitch 50 Hz
       Page Up = Increase cw speed 2 wpm
       Page Down = Decrease cw speed 2 wpm
+      Alt+X = Start/Stop simulation run
       """
       QtWidgets.QMessageBox.about(self,"Keyboard Shortcuts",msg)
       
