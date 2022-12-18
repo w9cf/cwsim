@@ -15,6 +15,7 @@
 #
 # See https://www.gnu.org/licenses/ for GPL licensing information.
 #
+import os
 try:
    from PyQt6 import QtCore, QtGui, QtWidgets
    from PyQt6.QtWidgets import QApplication, QTableWidgetItem
@@ -26,16 +27,19 @@ except ImportError:
    from PyQt5.uic import compileUi
 
 try:
+   uifilename = os.path.join(os.path.dirname(__file__),"cwsimgui.ui")
+   pyfilename = os.path.join(os.path.dirname(__file__),"cwsimgui.py")
+   if os.path.getmtime(uifilename) > os.path.getmtime(pyfilename):
+      with open(pyfilename,"w") as py:
+         compileUi(uifilename,py,indent=3)
    import cwsimgui
-except ImportError:
-   import os
+except FileNotFoundError:
    uifilename = os.path.join(os.path.dirname(__file__),"cwsimgui.ui")
    pyfilename = os.path.join(os.path.dirname(__file__),"cwsimgui.py")
    with open(pyfilename,"w") as py:
       compileUi(uifilename,py,indent=3)
    import cwsimgui
 
-import os
 import re
 import sys
 import csv
@@ -66,7 +70,7 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
    def __init__(self,parent=None):
       super(RunApp,self).__init__(parent)
       self.setupUi(self)
-      self.tr = self.entryTabs.currentIndex() == 0
+      self.tr = self.entryTabs.currentIndex() == 1
       self.re1 = re.compile(r"^[A-Z]{1,3}[0-9]+[A-Z]+$")
       self.re2 = re.compile(r"^[2-9][A-Z][0-9]+[A-Z]+$")
       self.re3 = re.compile(r"^[0-9A-Z]+[0-9]/[0-9A-Z]+$")
@@ -86,7 +90,6 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
       self._hiscall = ""
       self._rst = ""
       self._nr = ""
-      self.contestComboBox.addItems(["Pile up","Single calls"])
       callval = ToUpperRegularExpressionValidator(
          QtCore.QRegularExpression(r'^[a-zA-Z0-9/?]*$'),self)
       nrval = QtGui.QRegularExpressionValidator(
@@ -106,6 +109,7 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
       self.nrEntry.installEventFilter(self)
       self.action_About.triggered.connect(self.about)
       self.actionKeyboard_Shortcuts.triggered.connect(self.shortcutHelp)
+      self.action_Function_Key_CW.triggered.connect(self.FkeyHelp)
       self.callLine.textChanged.connect(self.mycall)
       self.callEntry.textChanged.connect(self.hiscall)
       self.trCallEntry.textChanged.connect(self.hiscall)
@@ -120,19 +124,12 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
       self.monitorSlider.valueChanged.connect(self.monitor)
       self.ritSlider.valueChanged.connect(self.rit)
       self.qrnCheck.stateChanged.connect(self.qrn)
-      self.qrnCheck.setToolTip("Add static and crashes")
       self.qrmCheck.stateChanged.connect(self.qrm)
-      self.qrmCheck.setToolTip("Add QRM stations")
       self.qsyCheck.stateChanged.connect(self.qsyState)
       self.qsbCheck.stateChanged.connect(self.qsb)
-      self.qsbCheck.setToolTip("Add QSB to callers")
       self.flutterCheck.stateChanged.connect(self.flutter)
-      self.flutterCheck.setToolTip("With QSB checked adds flutter instead"
-         + " to callers with flutter probability")
       self.lidsCheck.stateChanged.connect(self.lids)
-      self.lidsCheck.setToolTip("Add operators who make mistakes")
       self.startStopButton.clicked.connect(self.startStop)
-      self.startStopButton.setToolTip("Start or stop contest")
       self.durationSpinBox.valueChanged.connect(self.duration)
       self.activitySpinBox.valueChanged.connect(self.activity)
       self.trF1Button.clicked.connect(self.f1)
@@ -156,28 +153,12 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
       self.action_Save_Configuration.triggered.connect(self.putFile)
       self.action_Copy_Log.triggered.connect(self.saveLog)
       self.tqrmSpinBox.valueChanged.connect(self.tqrm)
-      self.tqrmSpinBox.setToolTip("Average time in seconds for a QRM station "
-         + "to appear")
       self.lidRstProbSpinBox.valueChanged.connect(self.lidRstProb)
-      self.lidRstProbSpinBox.setToolTip("Probability a lid doesn't send 599")
       self.lidNrProbSpinBox.valueChanged.connect(self.lidNrProb)
-      self.lidNrProbSpinBox.setToolTip(
-         "Probability a lid sends incorrect number")
       self.rptProbSpinBox.valueChanged.connect(self.rptProb)
-      self.rptProbSpinBox.setToolTip(
-         "Probability of stations repeating information. "
-         + "Set to 0 to turn off repeats")
-      self.qsyCheck.setToolTip("Show stations that give up and QSY in log")
       self.flutterProbSpinBox.valueChanged.connect(self.flutterProb)
-      self.flutterProbSpinBox.setToolTip("Probability QSB is flutter")
       self.fastSpinBox.valueChanged.connect(self.fast)
-      self.fastSpinBox.setToolTip("DX stations randomly choose speeds "
-         + "between your speed multiplied by slow WPM and your speed multipled "
-         + "by fast WPM")
       self.slowSpinBox.valueChanged.connect(self.slow)
-      self.slowSpinBox.setToolTip("DX stations randomly choose speeds "
-         + "between your speed multiplied by slow WPM and your speed multipled "
-         + "by fast WPM")
       self.trExchangeEntry.setEnabled(False)
       self._callsent = False
       self._nrsent = False
@@ -192,10 +173,15 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
         "Shift+Down":self.ritdown, "Alt+C":self.ritclear, "Ctrl+Up":self.bwup,
         "Ctrl+Down":self.bwdown, "Alt+Up":self.pitchup,
         "Alt+Down":self.pitchdown, "PgUp":self.wpmup, "PgDown":self.wpmdown,
-        "Up":self.uparrow, "Down":self.downarrow, "Alt+X": self.startStop }
+        "Up":self.uparrow, "Down":self.downarrow}
+      self.sclist = []
+      sc = QShortcut(QtGui.QKeySequence("Alt+X"),self)
+      sc.activated.connect(self.startStop)
       for key, fun in scdict.items():
          sc = QShortcut(QtGui.QKeySequence(key),self)
          sc.activated.connect(fun)
+         sc.setEnabled(False)
+         self.sclist.append(sc)
       self.updateTime()
       self.clocktimer = QtCore.QTimer(self)
       self.clocktimer.timeout.connect(self.updateTime)
@@ -296,7 +282,7 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
             if not self.tr:
                self.space()
                return True
-         elif "\t" in event.text():
+         elif "\t" in event.text() and self.started:
             self.tab()
             return True
       return super(RunApp,self).eventFilter(source,event)
@@ -352,6 +338,8 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
          self.ratetimer.stop()
          self.started = False
          self.startStopButton.setText("Start")
+         for sc in self.sclist:
+            sc.setEnabled(False)
       else:
          self.resetCounters()
          self.clocktimer.start(500)
@@ -361,6 +349,7 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
             self.contest.mode = RunMode.pileup
          elif i==1:
             self.contest.mode = RunMode.single
+         self.tr = self.entryTabs.currentIndex() == 1
          if self.tr:
             self.trCallEntry.setFocus()
          else:
@@ -368,6 +357,8 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
          self.contest.start()
          self.startStopButton.setText("Stop ")
          self.started = True
+         for sc in self.sclist:
+            sc.setEnabled(True)
 
    def about(self):
       version = "Testing version"
@@ -383,6 +374,8 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
    def shortcutHelp(self):
       msg = """
    Keyboard Shortcuts:
+      Alt+X = Start/Stop simulation run
+   Only when simulation is running:
       Alt+W = Wipe
       Escape = Stop sending
       Enter = Enter sends message
@@ -397,9 +390,22 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
       Alt+Down arrow = Decrease pitch 50 Hz
       Page Up = Increase cw speed 2 wpm
       Page Down = Decrease cw speed 2 wpm
-      Alt+X = Start/Stop simulation run
       """
       QtWidgets.QMessageBox.about(self,"Keyboard Shortcuts",msg)
+
+   def FkeyHelp(self):
+      msg = """
+   Function Keys:
+      F1 = Send CQ
+      F2 = Send exchange
+      F3 = Send TU to acknowledge receipt
+      F4 = Send my call
+      F5 = Send his call (Contents of the Call field)
+      F6 = Send QSO B4
+      F7 = Send a question mark
+      F8 = Send Nil, not in log
+      """
+      QtWidgets.QMessageBox.about(self,"Function key messages",msg)
       
 
    def mycall(self,s):
@@ -534,7 +540,7 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
       self.sendMsg(StationMessage.Nil)
 
    def entrytabs(self):
-      self.tr = self.entryTabs.currentIndex() == 0
+      self.tr = self.entryTabs.currentIndex() == 1
 
    def enter(self):
       if self.tr:
