@@ -649,7 +649,7 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
 
    def contestEndedslot(self):
       if self.started:
-         self.startStopContest()
+         self.startStop()
       self.started = False
 
    def sendMsg(self,msg):
