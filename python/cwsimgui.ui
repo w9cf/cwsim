@@ -191,7 +191,7 @@
                  <item row="3" column="1">
                   <widget class="QSpinBox" name="bandwidthSpinBox">
                    <property name="focusPolicy">
-                    <enum>Qt::TabFocus</enum>
+                    <enum>Qt::StrongFocus</enum>
                    </property>
                    <property name="toolTip">
                     <string>Receiver bandwidth</string>
@@ -240,7 +240,7 @@
                  <item row="1" column="1">
                   <widget class="QSpinBox" name="wpmSpinBox">
                    <property name="focusPolicy">
-                    <enum>Qt::TabFocus</enum>
+                    <enum>Qt::StrongFocus</enum>
                    </property>
                    <property name="toolTip">
                     <string>Sending speed</string>
@@ -340,7 +340,7 @@
                  <item row="2" column="1">
                   <widget class="QSpinBox" name="pitchSpinBox">
                    <property name="focusPolicy">
-                    <enum>Qt::TabFocus</enum>
+                    <enum>Qt::StrongFocus</enum>
                    </property>
                    <property name="toolTip">
                     <string>Sidetone pitch</string>
@@ -602,7 +602,7 @@
                  <item row="1" column="2">
                   <widget class="QDoubleSpinBox" name="lidRstProbSpinBox">
                    <property name="focusPolicy">
-                    <enum>Qt::TabFocus</enum>
+                    <enum>Qt::StrongFocus</enum>
                    </property>
                    <property name="toolTip">
                     <string>Probability a lid doesn't send 599</string>
@@ -624,7 +624,7 @@
                  <item row="1" column="3">
                   <widget class="QDoubleSpinBox" name="rptProbSpinBox">
                    <property name="focusPolicy">
-                    <enum>Qt::TabFocus</enum>
+                    <enum>Qt::StrongFocus</enum>
                    </property>
                    <property name="toolTip">
                     <string>Probability of stations repeating information. Set to 0 to turn off repeats</string>
@@ -646,7 +646,7 @@
                  <item row="1" column="4">
                   <widget class="QDoubleSpinBox" name="fastSpinBox">
                    <property name="focusPolicy">
-                    <enum>Qt::TabFocus</enum>
+                    <enum>Qt::StrongFocus</enum>
                    </property>
                    <property name="toolTip">
                     <string>DX stations randomly choose speeds between your speed multiplied by slow WPM and your speed multipled by fast WPM</string>
@@ -737,7 +737,7 @@
                  <item row="3" column="1">
                   <widget class="QDoubleSpinBox" name="tqrmSpinBox">
                    <property name="focusPolicy">
-                    <enum>Qt::TabFocus</enum>
+                    <enum>Qt::StrongFocus</enum>
                    </property>
                    <property name="toolTip">
                     <string>Average time in seconds for a QRM station to appear</string>
@@ -765,7 +765,7 @@
                  <item row="3" column="2">
                   <widget class="QDoubleSpinBox" name="lidNrProbSpinBox">
                    <property name="focusPolicy">
-                    <enum>Qt::TabFocus</enum>
+                    <enum>Qt::StrongFocus</enum>
                    </property>
                    <property name="toolTip">
                     <string>&quot;Probability a lid sends incorrect number</string>
@@ -787,7 +787,7 @@
                  <item row="3" column="3">
                   <widget class="QDoubleSpinBox" name="flutterProbSpinBox">
                    <property name="focusPolicy">
-                    <enum>Qt::TabFocus</enum>
+                    <enum>Qt::StrongFocus</enum>
                    </property>
                    <property name="toolTip">
                     <string>Probability that QSB is flutter</string>
@@ -809,7 +809,7 @@
                  <item row="3" column="4">
                   <widget class="QDoubleSpinBox" name="slowSpinBox">
                    <property name="focusPolicy">
-                    <enum>Qt::TabFocus</enum>
+                    <enum>Qt::StrongFocus</enum>
                    </property>
                    <property name="toolTip">
                     <string>DX stations randomly choose speeds between your speed multiplied by slow WPM and your speed multipled by fast WPM</string>
@@ -1373,7 +1373,7 @@
              <item row="1" column="1">
               <widget class="QSpinBox" name="durationSpinBox">
                <property name="focusPolicy">
-                <enum>Qt::TabFocus</enum>
+                <enum>Qt::StrongFocus</enum>
                </property>
                <property name="toolTip">
                 <string>Contest simulation duration</string>
@@ -1398,7 +1398,7 @@
              <item row="1" column="2">
               <widget class="QSpinBox" name="activitySpinBox">
                <property name="focusPolicy">
-                <enum>Qt::TabFocus</enum>
+                <enum>Qt::StrongFocus</enum>
                </property>
                <property name="toolTip">
                 <string>Average number of calling stations</string>
