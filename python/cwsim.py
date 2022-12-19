@@ -70,6 +70,7 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
    def __init__(self,parent=None):
       super(RunApp,self).__init__(parent)
       self.setupUi(self)
+      _translate = QtCore.QCoreApplication.translate
       self.tr = self.entryTabs.currentIndex() == 1
       self.re1 = re.compile(r"^[A-Z]{1,3}[0-9]+[A-Z]+$")
       self.re2 = re.compile(r"^[2-9][A-Z][0-9]+[A-Z]+$")
@@ -192,9 +193,14 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
       self.ratehist = np.zeros(nbin)
       self.ratePlot.canvas.setaxes(nbin,5,300)
       self.logTable.setHorizontalHeaderLabels(
-         ["UTC","Call","Recv","Sent","Pref","Chk"])
-      self.scoreTable.setHorizontalHeaderLabels(["Points", "Mults", "Score"])
-      self.scoreTable.setVerticalHeaderLabels(["Raw", "Verified"])
+         [_translate("RunApp","UTC"),_translate("RunApp","Call")
+         ,_translate("RunApp","Recv"),_translate("RunApp","Sent")
+         ,_translate("RunApp","Pref"),_translate("RunApp","Chk")])
+      self.scoreTable.setHorizontalHeaderLabels(
+         [_translate("RunApp","Points"),_translate("RunApp","Mults")
+         ,_translate("RunApp","Score")])
+      self.scoreTable.setVerticalHeaderLabels(
+         [_translate("RunApp","Raw"),_translate("RunApp","Verified")])
       self._goodCalls = set()
       self._rawPfxs = set()
       self._goodPfxs = set()
@@ -230,9 +236,11 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
          self.contestComboBox.setCurrentIndex(1)
 
    def getFile(self):
+      _translate = QtCore.QCoreApplication.translate
       filename, filter  = QtWidgets.QFileDialog.getOpenFileName(self,
-         caption="Open Configuration",directory=self.configpath
-         ,filter="Configuration Files (*.ini)")
+         caption=_translate("RunApp","Open Configuration")
+         ,directory=self.configpath
+         ,filter=_translate("RunApp","Configuration Files") + " (*.ini)")
       if filename != "":
          self.contest.readConfig(filename)
          self.syncGui()
@@ -245,9 +253,11 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
          self.contest.writeConfig(filename)
 
    def saveLog(self):
+      _translate = QtCore.QCoreApplication.translate
       filename, filter  = QtWidgets.QFileDialog.getSaveFileName(self,
-         caption="Save Log File",directory=os.getenv('HOME')
-         ,filter="csv(*.csv)")
+         caption=_translate("RunApp","Save Log File")
+         ,directory=os.getenv('HOME')
+         ,filter=_translate("RunApp","csv") + " (*.csv)")
       if filename != "":
          columns = range(self.logTable.columnCount())
          header = []
@@ -332,12 +342,13 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
       self._qtimes = []
 
    def startStop(self):
+      _translate = QtCore.QCoreApplication.translate
       if self.started:
          self.contest.stop()
          self.clocktimer.stop()
          self.ratetimer.stop()
          self.started = False
-         self.startStopButton.setText("Start")
+         self.startStopButton.setText(_translate("RunApp","Start"))
          for sc in self.sclist:
             sc.setEnabled(False)
       else:
@@ -355,7 +366,7 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
          else:
             self.callEntry.setFocus()
          self.contest.start()
-         self.startStopButton.setText("Stop ")
+         self.startStopButton.setText(_translate("RunApp","Stop"))
          self.started = True
          for sc in self.sclist:
             sc.setEnabled(True)
@@ -372,7 +383,8 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
       QtWidgets.QMessageBox.about(self,"CW Simulator",msg)
 
    def shortcutHelp(self):
-      msg = """
+      _translate = QtCore.QCoreApplication.transla
+      msg = _translate("RunApp","""
    Keyboard Shortcuts:
       Alt+X = Start/Stop simulation run
    Only when simulation is running:
@@ -390,11 +402,12 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
       Alt+Down arrow = Decrease pitch 50 Hz
       Page Up = Increase cw speed 2 wpm
       Page Down = Decrease cw speed 2 wpm
-      """
+      """)
       QtWidgets.QMessageBox.about(self,"Keyboard Shortcuts",msg)
 
    def FkeyHelp(self):
-      msg = """
+      _translate = QtCore.QCoreApplication.transla
+      msg = _translate("RunApp","""
    Function Keys:
       F1 = Send CQ
       F2 = Send exchange
@@ -404,7 +417,7 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
       F6 = Send QSO B4
       F7 = Send a question mark
       F8 = Send Nil, not in log
-      """
+      """)
       QtWidgets.QMessageBox.about(self,"Function key messages",msg)
       
 
@@ -494,6 +507,9 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
       self.trTimeEntryLabel.setText(tstr)
 
    def updateRate(self):
+      _translate = QtCore.QCoreApplication.translate
+      rstr = _translate("RunApp","Rate")
+      qstr = _translate("RunApp","QSOs/Hr (5m)")
       h,m,s = self.contest.time()
       s += 60*(m+60*h)
       tint = min(s,300)
@@ -506,7 +522,7 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
             break
       if nq == 0: return
       rate = int(round(nq*3600/tint))
-      rateTitle = "Rate {:3d} QSOs/Hr (5m)".format(rate)
+      rateTitle = (rstr + " {:3d} " + qstr).format(rate)
       self.ratebox.setTitle(rateTitle)
 
    def f1(self):
@@ -854,6 +870,11 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
 
 if __name__ == "__main__":
    app = QApplication(sys.argv)
+   translator = QtCore.QTranslator()
+   tfile = QtCore.QLocale.system().name() + '.qm'
+   tdir = 'translate'
+   translator.load(tfile,tdir)
+   app.installTranslator(translator)
    form = RunApp()
    form.show()
    app.exec()
