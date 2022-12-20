@@ -153,6 +153,10 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
       self.action_Load_Configuration.triggered.connect(self.getFile)
       self.action_Save_Configuration.triggered.connect(self.putFile)
       self.action_Copy_Log.triggered.connect(self.saveLog)
+      self.action_Update_Default_Configuration_on_Exit.triggered.connect(
+         self.alwaysUpdate)
+      self.action_Update_Default_Configuration.triggered.connect(
+         self.updateFile)
       self.tqrmSpinBox.valueChanged.connect(self.tqrm)
       self.lidRstProbSpinBox.valueChanged.connect(self.lidRstProb)
       self.lidNrProbSpinBox.valueChanged.connect(self.lidNrProb)
@@ -207,6 +211,8 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
       self.prefix = Prefix()
 
    def syncGui(self):
+      self.action_Update_Default_Configuration_on_Exit.setChecked(
+         self.contest.saveini != 0)
       self.callLine.setText(self.contest.call)
       self.wpmSpinBox.setValue(self.contest.wpm)
       self.bandwidthSpinBox.setValue(self.contest.bandwidth)
@@ -252,6 +258,9 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
       if filename != "":
          self.contest.writeConfig(filename)
 
+   def updateFile(self):
+      self.contest.writeConfig(self.defaultini)
+
    def saveLog(self):
       _translate = QtCore.QCoreApplication.translate
       filename, filter  = QtWidgets.QFileDialog.getSaveFileName(self,
@@ -279,6 +288,12 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
                   else:
                      row.append(item.text())
                writer.writerow(row)
+
+   def alwaysUpdate(self,s):
+      if s:
+         self.contest.saveini = 1
+      else:
+         self.contest.saveini = 0
 
    def looksLikeCall(self,s):
       return (self.re1.match(s) is not None or
@@ -863,7 +878,7 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
          self.trCallEntry.setFocus()
 
    def close(self):
-      if not os.path.exists(self.defaultini):
+      if not os.path.exists(self.defaultini) or self.contest.saveini != 0:
          self.contest.writeConfig(self.defaultini)
       super().close()
       

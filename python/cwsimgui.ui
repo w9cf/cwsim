@@ -829,7 +829,7 @@
              <string>F1 CQ Button</string>
             </property>
             <property name="currentIndex">
-             <number>1</number>
+             <number>0</number>
             </property>
             <widget class="QWidget" name="n1mmEntry">
              <property name="focusPolicy">
@@ -1602,8 +1602,10 @@
     <property name="title">
      <string>&amp;File</string>
     </property>
+    <addaction name="action_Update_Default_Configuration"/>
     <addaction name="action_Load_Configuration"/>
     <addaction name="action_Save_Configuration"/>
+    <addaction name="action_Update_Default_Configuration_on_Exit"/>
     <addaction name="action_Copy_Log"/>
     <addaction name="action_Exit"/>
    </widget>
@@ -1633,11 +1635,6 @@
     <bool>false</bool>
    </attribute>
   </widget>
-  <action name="action_Audio_recording_enabled">
-   <property name="text">
-    <string>&amp;Audio recording enabled</string>
-   </property>
-  </action>
   <action name="action_Exit">
    <property name="text">
     <string>&amp;Exit</string>
@@ -1664,6 +1661,9 @@
    </property>
   </action>
   <action name="action_Load_Configuration">
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>&amp;Load Configuration</string>
    </property>
@@ -1686,6 +1686,22 @@
   <action name="action_Function_Key_CW">
    <property name="text">
     <string>&amp;Function Key CW</string>
+   </property>
+  </action>
+  <action name="action_Update_Default_Configuration_on_Exit">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Always Update Default Configuration on Exit</string>
+   </property>
+  </action>
+  <action name="action_Update_Default_Configuration">
+   <property name="text">
+    <string>&amp;Update Default Configuration</string>
    </property>
   </action>
  </widget>
