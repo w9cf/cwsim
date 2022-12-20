@@ -1,22 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-# Copyright (C) 2022 Kevin E. Schmidt.
-#
-# This file is part of cwsim <https://github.com/w9cf/cwsim/>
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <https://www.gnu.org/licenses/>.
--->
 <ui version="4.0">
  <class>CwsimMainWindow</class>
  <widget class="QMainWindow" name="CwsimMainWindow">
@@ -847,7 +829,7 @@
              <string>F1 CQ Button</string>
             </property>
             <property name="currentIndex">
-             <number>0</number>
+             <number>1</number>
             </property>
             <widget class="QWidget" name="n1mmEntry">
              <property name="focusPolicy">
@@ -875,10 +857,10 @@
                  <item row="2" column="1">
                   <widget class="QLineEdit" name="rstEntry">
                    <property name="accessibleName">
-                    <string>N1 M M R S T</string>
+                    <string>RST</string>
                    </property>
                    <property name="accessibleDescription">
-                    <string>Enter R S T if not five nine nine</string>
+                    <string>RST</string>
                    </property>
                   </widget>
                  </item>
@@ -950,20 +932,20 @@
                  <item row="2" column="0">
                   <widget class="QLineEdit" name="callEntry">
                    <property name="accessibleName">
-                    <string>N1 M M Call entry</string>
+                    <string>Call</string>
                    </property>
                    <property name="accessibleDescription">
-                    <string>Enter call here</string>
+                    <string>Call</string>
                    </property>
                   </widget>
                  </item>
                  <item row="2" column="2">
                   <widget class="QLineEdit" name="nrEntry">
                    <property name="accessibleName">
-                    <string>N1 M M Number</string>
+                    <string>Nr</string>
                    </property>
                    <property name="accessibleDescription">
-                    <string>Enter Received Number</string>
+                    <string>Nr</string>
                    </property>
                   </widget>
                  </item>
@@ -1285,10 +1267,10 @@
                  <item row="0" column="1">
                   <widget class="TrLineEdit" name="trCallEntry">
                    <property name="accessibleName">
-                    <string>T R call entry</string>
+                    <string>Call</string>
                    </property>
                    <property name="accessibleDescription">
-                    <string>Enter call here</string>
+                    <string>Call</string>
                    </property>
                   </widget>
                  </item>
@@ -1298,10 +1280,10 @@
                     <bool>true</bool>
                    </property>
                    <property name="accessibleName">
-                    <string>T R exchange entry</string>
+                    <string>Exchange</string>
                    </property>
                    <property name="accessibleDescription">
-                    <string>Enter just number if R S T is five nine nine, enter signal strength number a space and serial number otherwise</string>
+                    <string>Exchange</string>
                    </property>
                   </widget>
                  </item>
