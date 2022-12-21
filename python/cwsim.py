@@ -886,8 +886,12 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
 if __name__ == "__main__":
    app = QApplication(sys.argv)
    translator = QtCore.QTranslator()
+   if getattr(sys,'frozen',False):
+      tdir = os.path.dirname(sys.executable)
+   else:
+      tdir = os.path.dirname(__file__)
    tfile = QtCore.QLocale.system().name() + '.qm'
-   tdir = 'translate'
+   tdir = os.path.join(tdir,'translate')
    translator.load(tfile,tdir)
    app.installTranslator(translator)
    form = RunApp()
