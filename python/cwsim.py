@@ -398,7 +398,7 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
       QtWidgets.QMessageBox.about(self,"CW Simulator",msg)
 
    def shortcutHelp(self):
-      _translate = QtCore.QCoreApplication.transla
+      _translate = QtCore.QCoreApplication.translate
       msg = _translate("RunApp","""
    Keyboard Shortcuts:
       Alt+X = Start/Stop simulation run
@@ -421,7 +421,7 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
       QtWidgets.QMessageBox.about(self,"Keyboard Shortcuts",msg)
 
    def FkeyHelp(self):
-      _translate = QtCore.QCoreApplication.transla
+      _translate = QtCore.QCoreApplication.translate
       msg = _translate("RunApp","""
    Function Keys:
       F1 = Send CQ
