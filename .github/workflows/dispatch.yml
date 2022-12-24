@@ -53,11 +53,7 @@ jobs:
            cp python/dist/cwsim.exe tmp/cwsim.exe
            echo Done
       - name: Upload the artifacts
-        env:
-           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        uses: actions/upload-release-asset@v1
+        uses: actions/upload-artifact@v3
         with:
-           upload_url: ${{ github.event.release.upload_url }}
-           asset_path: tmp/cwsim.exe
-           asset_name: cwsim.exe
-           asset_content_type: application/octet-stream
+           name: cwsim windows executable
+           path: tmp/cwsim.exe
