@@ -145,7 +145,7 @@
              <string> Station Data input tab and simulator parameter tab</string>
             </property>
             <property name="currentIndex">
-             <number>0</number>
+             <number>1</number>
             </property>
             <widget class="QWidget" name="stationTab">
              <property name="focusPolicy">
@@ -215,7 +215,7 @@
                  <item row="4" column="0">
                   <widget class="QLabel" name="monitorLabel">
                    <property name="text">
-                    <string>Monitor Level</string>
+                    <string>Sidetone Level</string>
                    </property>
                   </widget>
                  </item>
@@ -260,7 +260,7 @@
                     <string>RIT</string>
                    </property>
                    <property name="accessibleDescription">
-                    <string>Receiver tuning around default (RIT)</string>
+                    <string>Receiver incremental tuning (RIT)</string>
                    </property>
                    <property name="minimum">
                     <number>-1000</number>
@@ -306,13 +306,13 @@
                     <enum>Qt::WheelFocus</enum>
                    </property>
                    <property name="toolTip">
-                    <string>Enter the station call</string>
+                    <string>My call</string>
                    </property>
                    <property name="accessibleName">
                     <string>My Call</string>
                    </property>
                    <property name="accessibleDescription">
-                    <string>Call of this running station</string>
+                    <string>My call</string>
                    </property>
                    <property name="text">
                     <string>P55CF</string>
@@ -331,7 +331,7 @@
                     <string>Pitch</string>
                    </property>
                    <property name="accessibleDescription">
-                    <string>Sets Pitch for zero beat signals.</string>
+                    <string>Sidetone pitch</string>
                    </property>
                    <property name="minimum">
                     <number>300</number>
@@ -359,7 +359,7 @@
                     <string>CW Reverse</string>
                    </property>
                    <property name="accessibleDescription">
-                    <string>Chooses CW Reverse for tuning</string>
+                    <string>CW reverse</string>
                    </property>
                    <property name="text">
                     <string>CWR</string>
@@ -378,7 +378,7 @@
                     <string>QSK</string>
                    </property>
                    <property name="accessibleDescription">
-                    <string>Turns on QSK, break in, if checked.</string>
+                    <string>Full break in</string>
                    </property>
                    <property name="text">
                     <string>QSK</string>
@@ -398,13 +398,13 @@
                     <enum>Qt::TabFocus</enum>
                    </property>
                    <property name="toolTip">
-                    <string>Sidetone monitor audio level</string>
+                    <string>Sidetone audio level</string>
                    </property>
                    <property name="accessibleName">
-                    <string>Monitor level</string>
+                    <string>Sidetone level</string>
                    </property>
                    <property name="accessibleDescription">
-                    <string>Slider that adjusts sidetone monitor level</string>
+                    <string>Sidteone level</string>
                    </property>
                    <property name="value">
                     <number>10</number>
@@ -433,7 +433,7 @@
                     <string>RIT Value</string>
                    </property>
                    <property name="accessibleDescription">
-                    <string>RIT Value in Hz</string>
+                    <string>RIT value in Hz</string>
                    </property>
                    <property name="buttonSymbols">
                     <enum>QAbstractSpinBox::NoButtons</enum>
@@ -469,7 +469,7 @@
               <string>Simulation parameters</string>
              </property>
              <property name="accessibleDescription">
-              <string>Parameters that control the simulation and probabilities</string>
+              <string>Simulation parameters and probabilities</string>
              </property>
              <attribute name="title">
               <string>Condition/Op parameters</string>
@@ -490,13 +490,13 @@
                     <enum>Qt::TabFocus</enum>
                    </property>
                    <property name="toolTip">
-                    <string>Add static and crashes</string>
+                    <string>Adds QRN</string>
                    </property>
                    <property name="accessibleName">
                     <string>QRN</string>
                    </property>
                    <property name="accessibleDescription">
-                    <string>Adds static crashes when checked</string>
+                    <string>Adds QRN when checked</string>
                    </property>
                    <property name="text">
                     <string>QRN</string>
@@ -509,13 +509,13 @@
                     <enum>Qt::TabFocus</enum>
                    </property>
                    <property name="toolTip">
-                    <string>Show stations, that give up and QSY, in log</string>
+                    <string>Show stations, that in log that give up and QSY</string>
                    </property>
                    <property name="accessibleName">
                     <string>QSY</string>
                    </property>
                    <property name="accessibleDescription">
-                    <string>adds information to log for unworked stations that QSY</string>
+                    <string>Show stations in log that give up and QSY</string>
                    </property>
                    <property name="text">
                     <string>QSY</string>
@@ -555,7 +555,7 @@
                     <string>QRM</string>
                    </property>
                    <property name="accessibleDescription">
-                    <string> Adds QRM stations that call CW when checked</string>
+                    <string> Add QRM stations</string>
                    </property>
                    <property name="text">
                     <string>QRM</string>
@@ -574,7 +574,7 @@
                     <string>Lids</string>
                    </property>
                    <property name="accessibleDescription">
-                    <string>Adds stations that make mistakes when checked</string>
+                    <string>Add operators who make mistakes</string>
                    </property>
                    <property name="text">
                     <string>Lids</string>
@@ -593,7 +593,7 @@
                     <string>Lid RST probability</string>
                    </property>
                    <property name="accessibleDescription">
-                    <string>Probability that Lid does not send five nine nine</string>
+                    <string>Probability a lid doesn't send 599</string>
                    </property>
                    <property name="maximum">
                     <double>1.000000000000000</double>
@@ -609,13 +609,13 @@
                     <enum>Qt::StrongFocus</enum>
                    </property>
                    <property name="toolTip">
-                    <string>Probability of stations repeating information. Set to 0 to turn off repeats</string>
+                    <string>&lt;html&gt;&lt;Probability of stations repeating information</string>
                    </property>
                    <property name="accessibleName">
                     <string>Repeat Probability</string>
                    </property>
                    <property name="accessibleDescription">
-                    <string>Probability that stations repeat information</string>
+                    <string>Probability of stations repeating information</string>
                    </property>
                    <property name="maximum">
                     <double>1.000000000000000</double>
@@ -631,7 +631,7 @@
                     <enum>Qt::StrongFocus</enum>
                    </property>
                    <property name="toolTip">
-                    <string>DX stations randomly choose speeds between your speed multiplied by slow WPM and your speed multipled by fast WPM</string>
+                    <string>The DX station speed is randomly chosen between Slow WPM and Fast WPM multiplied by our speed</string>
                    </property>
                    <property name="accessibleName">
                     <string>Fast WPM</string>
@@ -662,7 +662,7 @@
                     <string>QSB</string>
                    </property>
                    <property name="accessibleDescription">
-                    <string>Adds fading to DX signals</string>
+                    <string>Add QSB to callers</string>
                    </property>
                    <property name="text">
                     <string>QSB</string>
@@ -709,7 +709,7 @@
                     <string>Flutter</string>
                    </property>
                    <property name="accessibleDescription">
-                    <string>If QSB is turned on checking this adds flutter with the flutter probability</string>
+                    <string>With QSB checked adds flutter instead to callers with flutter probability</string>
                    </property>
                    <property name="text">
                     <string>Flutter</string>
@@ -728,7 +728,7 @@
                     <string>QRM time</string>
                    </property>
                    <property name="accessibleDescription">
-                    <string>The average time in seconds between QRM stations</string>
+                    <string>Average time in seconds for a QRM station to appear</string>
                    </property>
                    <property name="decimals">
                     <number>0</number>
@@ -756,7 +756,7 @@
                     <string>Lid Nr</string>
                    </property>
                    <property name="accessibleDescription">
-                    <string>The probability that a lid sends the wrong number</string>
+                    <string>&quot;Probability a lid sends incorrect number</string>
                    </property>
                    <property name="maximum">
                     <double>1.000000000000000</double>
@@ -778,7 +778,7 @@
                     <string>Flutter probability</string>
                    </property>
                    <property name="accessibleDescription">
-                    <string>When QSB and Flutter are checked, the probability that there is flutter</string>
+                    <string>Probability that QSB is flutter</string>
                    </property>
                    <property name="maximum">
                     <double>1.000000000000000</double>
@@ -797,7 +797,7 @@
                     <string>DX stations randomly choose speeds between your speed multiplied by slow WPM and your speed multipled by fast WPM</string>
                    </property>
                    <property name="accessibleDescription">
-                    <string>The DX stations speed is randomly chosen between Slow WPM and Fast WPM multiplied by our speed</string>
+                    <string>DX stations randomly choose speeds between your speed multiplied by slow WPM and your speed multipled by fast WPM</string>
                    </property>
                    <property name="minimum">
                     <double>0.500000000000000</double>
@@ -829,7 +829,7 @@
              <string>F1 CQ Button</string>
             </property>
             <property name="currentIndex">
-             <number>0</number>
+             <number>1</number>
             </property>
             <widget class="QWidget" name="n1mmEntry">
              <property name="focusPolicy">
@@ -1324,7 +1324,7 @@
                 <string>Contest Type</string>
                </property>
                <property name="accessibleDescription">
-                <string>Choose pileup or single calls</string>
+                <string>Choose contest type</string>
                </property>
                <item>
                 <property name="text">
@@ -1364,7 +1364,7 @@
                 <string>Duration</string>
                </property>
                <property name="accessibleDescription">
-                <string>Simulation will stop automatically after this time in minutes</string>
+                <string>Contest simulation duration</string>
                </property>
                <property name="minimum">
                 <number>1</number>
@@ -1389,7 +1389,7 @@
                 <string>Activity</string>
                </property>
                <property name="accessibleDescription">
-                <string>Average number of stations calling</string>
+                <string>Average number of calling stations</string>
                </property>
                <property name="minimum">
                 <number>1</number>
@@ -1411,7 +1411,7 @@
                 <string>Start/Stop</string>
                </property>
                <property name="accessibleDescription">
-                <string>Start or Stop Simulation</string>
+                <string>Start or stop contest</string>
                </property>
                <property name="text">
                 <string>Start</string>
