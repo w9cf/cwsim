@@ -50,8 +50,6 @@ jobs:
            rm -rf tmp
            mkdir -p tmp
            cp python/dist/cwsim.exe tmp/cwsim.exe
-           cd tmp
-           zip cwsim_windows_exe.zip cwsim.exe
            cd ..
            echo Done
       - name: Upload the artifacts
@@ -60,6 +58,6 @@ jobs:
         uses: actions/upload-release-asset@v1
         with:
            upload_url: ${{ github.event.release.upload_url }}
-           asset_path: tmp/cwsim_windows_exe.zip
-           asset_name: cwsim_windows_exe.zip
+           asset_path: tmp/cwsim.exe
+           asset_name: cwsim_windows_exe
            asset_content_type: application/octet-stream
