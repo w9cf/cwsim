@@ -145,7 +145,7 @@
              <string> Station Data input tab and simulator parameter tab</string>
             </property>
             <property name="currentIndex">
-             <number>1</number>
+             <number>0</number>
             </property>
             <widget class="QWidget" name="stationTab">
              <property name="focusPolicy">
@@ -829,7 +829,7 @@
              <string>F1 CQ Button</string>
             </property>
             <property name="currentIndex">
-             <number>1</number>
+             <number>0</number>
             </property>
             <widget class="QWidget" name="n1mmEntry">
              <property name="focusPolicy">
