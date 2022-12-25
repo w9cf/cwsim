@@ -16,6 +16,9 @@
     <verstretch>0</verstretch>
    </sizepolicy>
   </property>
+  <property name="focusPolicy">
+   <enum>Qt::TabFocus</enum>
+  </property>
   <property name="windowTitle">
    <string>CW Simulator</string>
   </property>
@@ -23,6 +26,18 @@
    <layout class="QVBoxLayout" name="verticalLayout_5">
     <item>
      <widget class="QGroupBox" name="logBox">
+      <property name="focusPolicy">
+       <enum>Qt::TabFocus</enum>
+      </property>
+      <property name="toolTip">
+       <string/>
+      </property>
+      <property name="accessibleName">
+       <string>Log</string>
+      </property>
+      <property name="accessibleDescription">
+       <string>Log in table format</string>
+      </property>
       <property name="title">
        <string>Log</string>
       </property>
@@ -37,6 +52,12 @@
          </property>
          <property name="focusPolicy">
           <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="accessibleName">
+          <string>Log Table</string>
+         </property>
+         <property name="accessibleDescription">
+          <string>QSO log including error report</string>
          </property>
          <property name="layoutDirection">
           <enum>Qt::LeftToRight</enum>
@@ -96,6 +117,9 @@
     </item>
     <item>
      <widget class="QFrame" name="frame_5">
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
       </property>
@@ -105,16 +129,34 @@
       <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0">
        <item>
         <widget class="QGroupBox" name="leftBox">
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
          <property name="title">
           <string/>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_8">
           <item>
            <widget class="QTabWidget" name="paramTabs">
+            <property name="accessibleName">
+             <string>Station and Parameters</string>
+            </property>
+            <property name="accessibleDescription">
+             <string> Station Data input tab and simulator parameter tab</string>
+            </property>
             <property name="currentIndex">
-             <number>0</number>
+             <number>1</number>
             </property>
             <widget class="QWidget" name="stationTab">
+             <property name="focusPolicy">
+              <enum>Qt::TabFocus</enum>
+             </property>
+             <property name="accessibleName">
+              <string>Station tab</string>
+             </property>
+             <property name="accessibleDescription">
+              <string>Station information input</string>
+             </property>
              <attribute name="title">
               <string>Station</string>
              </attribute>
@@ -131,7 +173,16 @@
                  <item row="3" column="1">
                   <widget class="QSpinBox" name="bandwidthSpinBox">
                    <property name="focusPolicy">
-                    <enum>Qt::ClickFocus</enum>
+                    <enum>Qt::StrongFocus</enum>
+                   </property>
+                   <property name="toolTip">
+                    <string>Receiver bandwidth</string>
+                   </property>
+                   <property name="accessibleName">
+                    <string>Bandwidth</string>
+                   </property>
+                   <property name="accessibleDescription">
+                    <string>Sets Receiver bandwidth</string>
                    </property>
                    <property name="minimum">
                     <number>100</number>
@@ -164,14 +215,23 @@
                  <item row="4" column="0">
                   <widget class="QLabel" name="monitorLabel">
                    <property name="text">
-                    <string>Monitor Level</string>
+                    <string>Sidetone Level</string>
                    </property>
                   </widget>
                  </item>
                  <item row="1" column="1">
                   <widget class="QSpinBox" name="wpmSpinBox">
                    <property name="focusPolicy">
-                    <enum>Qt::ClickFocus</enum>
+                    <enum>Qt::StrongFocus</enum>
+                   </property>
+                   <property name="toolTip">
+                    <string>Sending speed</string>
+                   </property>
+                   <property name="accessibleName">
+                    <string>CW Speed</string>
+                   </property>
+                   <property name="accessibleDescription">
+                    <string>Sets initial CW speed in words per minute</string>
                    </property>
                    <property name="minimum">
                     <number>10</number>
@@ -191,7 +251,16 @@
                  <item row="5" column="1" colspan="2">
                   <widget class="QSlider" name="ritSlider">
                    <property name="focusPolicy">
-                    <enum>Qt::ClickFocus</enum>
+                    <enum>Qt::TabFocus</enum>
+                   </property>
+                   <property name="toolTip">
+                    <string>Receiver incremental tuning</string>
+                   </property>
+                   <property name="accessibleName">
+                    <string>RIT</string>
+                   </property>
+                   <property name="accessibleDescription">
+                    <string>Receiver incremental tuning (RIT)</string>
                    </property>
                    <property name="minimum">
                     <number>-1000</number>
@@ -234,7 +303,16 @@
                  <item row="0" column="1" colspan="2">
                   <widget class="QLineEdit" name="callLine">
                    <property name="focusPolicy">
-                    <enum>Qt::ClickFocus</enum>
+                    <enum>Qt::WheelFocus</enum>
+                   </property>
+                   <property name="toolTip">
+                    <string>My call</string>
+                   </property>
+                   <property name="accessibleName">
+                    <string>My Call</string>
+                   </property>
+                   <property name="accessibleDescription">
+                    <string>My call</string>
                    </property>
                    <property name="text">
                     <string>P55CF</string>
@@ -244,7 +322,16 @@
                  <item row="2" column="1">
                   <widget class="QSpinBox" name="pitchSpinBox">
                    <property name="focusPolicy">
-                    <enum>Qt::ClickFocus</enum>
+                    <enum>Qt::StrongFocus</enum>
+                   </property>
+                   <property name="toolTip">
+                    <string>Sidetone pitch</string>
+                   </property>
+                   <property name="accessibleName">
+                    <string>Pitch</string>
+                   </property>
+                   <property name="accessibleDescription">
+                    <string>Sidetone pitch</string>
                    </property>
                    <property name="minimum">
                     <number>300</number>
@@ -263,7 +350,16 @@
                  <item row="1" column="3">
                   <widget class="QCheckBox" name="cwReverseCheck">
                    <property name="focusPolicy">
-                    <enum>Qt::NoFocus</enum>
+                    <enum>Qt::TabFocus</enum>
+                   </property>
+                   <property name="toolTip">
+                    <string>CW Reverse</string>
+                   </property>
+                   <property name="accessibleName">
+                    <string>CW Reverse</string>
+                   </property>
+                   <property name="accessibleDescription">
+                    <string>CW reverse</string>
                    </property>
                    <property name="text">
                     <string>CWR</string>
@@ -273,7 +369,16 @@
                  <item row="0" column="3">
                   <widget class="QCheckBox" name="qskCheck">
                    <property name="focusPolicy">
-                    <enum>Qt::ClickFocus</enum>
+                    <enum>Qt::TabFocus</enum>
+                   </property>
+                   <property name="toolTip">
+                    <string>Full break in</string>
+                   </property>
+                   <property name="accessibleName">
+                    <string>QSK</string>
+                   </property>
+                   <property name="accessibleDescription">
+                    <string>Full break in</string>
                    </property>
                    <property name="text">
                     <string>QSK</string>
@@ -290,7 +395,16 @@
                  <item row="4" column="1" colspan="2">
                   <widget class="QSlider" name="monitorSlider">
                    <property name="focusPolicy">
-                    <enum>Qt::ClickFocus</enum>
+                    <enum>Qt::TabFocus</enum>
+                   </property>
+                   <property name="toolTip">
+                    <string>Sidetone audio level</string>
+                   </property>
+                   <property name="accessibleName">
+                    <string>Sidetone level</string>
+                   </property>
+                   <property name="accessibleDescription">
+                    <string>Sidteone level</string>
                    </property>
                    <property name="value">
                     <number>10</number>
@@ -311,6 +425,15 @@
                   <widget class="QSpinBox" name="ritSpinBox">
                    <property name="focusPolicy">
                     <enum>Qt::NoFocus</enum>
+                   </property>
+                   <property name="toolTip">
+                    <string>RIT value in Hz</string>
+                   </property>
+                   <property name="accessibleName">
+                    <string>RIT Value</string>
+                   </property>
+                   <property name="accessibleDescription">
+                    <string>RIT value in Hz</string>
                    </property>
                    <property name="buttonSymbols">
                     <enum>QAbstractSpinBox::NoButtons</enum>
@@ -339,6 +462,15 @@
              </layout>
             </widget>
             <widget class="QWidget" name="conditionTab">
+             <property name="focusPolicy">
+              <enum>Qt::TabFocus</enum>
+             </property>
+             <property name="accessibleName">
+              <string>Simulation parameters</string>
+             </property>
+             <property name="accessibleDescription">
+              <string>Simulation parameters and probabilities</string>
+             </property>
              <attribute name="title">
               <string>Condition/Op parameters</string>
              </attribute>
@@ -355,7 +487,16 @@
                  <item row="0" column="0">
                   <widget class="QCheckBox" name="qrnCheck">
                    <property name="focusPolicy">
-                    <enum>Qt::ClickFocus</enum>
+                    <enum>Qt::TabFocus</enum>
+                   </property>
+                   <property name="toolTip">
+                    <string>Adds QRN</string>
+                   </property>
+                   <property name="accessibleName">
+                    <string>QRN</string>
+                   </property>
+                   <property name="accessibleDescription">
+                    <string>Adds QRN when checked</string>
                    </property>
                    <property name="text">
                     <string>QRN</string>
@@ -364,6 +505,18 @@
                  </item>
                  <item row="0" column="1">
                   <widget class="QCheckBox" name="qsyCheck">
+                   <property name="focusPolicy">
+                    <enum>Qt::TabFocus</enum>
+                   </property>
+                   <property name="toolTip">
+                    <string>Show stations, that in log that give up and QSY</string>
+                   </property>
+                   <property name="accessibleName">
+                    <string>QSY</string>
+                   </property>
+                   <property name="accessibleDescription">
+                    <string>Show stations in log that give up and QSY</string>
+                   </property>
                    <property name="text">
                     <string>QSY</string>
                    </property>
@@ -393,7 +546,16 @@
                  <item row="1" column="0">
                   <widget class="QCheckBox" name="qrmCheck">
                    <property name="focusPolicy">
-                    <enum>Qt::ClickFocus</enum>
+                    <enum>Qt::TabFocus</enum>
+                   </property>
+                   <property name="toolTip">
+                    <string>Add QRM stations</string>
+                   </property>
+                   <property name="accessibleName">
+                    <string>QRM</string>
+                   </property>
+                   <property name="accessibleDescription">
+                    <string> Add QRM stations</string>
                    </property>
                    <property name="text">
                     <string>QRM</string>
@@ -403,7 +565,16 @@
                  <item row="1" column="1">
                   <widget class="QCheckBox" name="lidsCheck">
                    <property name="focusPolicy">
-                    <enum>Qt::ClickFocus</enum>
+                    <enum>Qt::TabFocus</enum>
+                   </property>
+                   <property name="toolTip">
+                    <string>Add operators who make mistakes</string>
+                   </property>
+                   <property name="accessibleName">
+                    <string>Lids</string>
+                   </property>
+                   <property name="accessibleDescription">
+                    <string>Add operators who make mistakes</string>
                    </property>
                    <property name="text">
                     <string>Lids</string>
@@ -412,6 +583,18 @@
                  </item>
                  <item row="1" column="2">
                   <widget class="QDoubleSpinBox" name="lidRstProbSpinBox">
+                   <property name="focusPolicy">
+                    <enum>Qt::StrongFocus</enum>
+                   </property>
+                   <property name="toolTip">
+                    <string>Probability a lid doesn't send 599</string>
+                   </property>
+                   <property name="accessibleName">
+                    <string>Lid RST probability</string>
+                   </property>
+                   <property name="accessibleDescription">
+                    <string>Probability a lid doesn't send 599</string>
+                   </property>
                    <property name="maximum">
                     <double>1.000000000000000</double>
                    </property>
@@ -422,6 +605,18 @@
                  </item>
                  <item row="1" column="3">
                   <widget class="QDoubleSpinBox" name="rptProbSpinBox">
+                   <property name="focusPolicy">
+                    <enum>Qt::StrongFocus</enum>
+                   </property>
+                   <property name="toolTip">
+                    <string>&lt;html&gt;&lt;Probability of stations repeating information</string>
+                   </property>
+                   <property name="accessibleName">
+                    <string>Repeat Probability</string>
+                   </property>
+                   <property name="accessibleDescription">
+                    <string>Probability of stations repeating information</string>
+                   </property>
                    <property name="maximum">
                     <double>1.000000000000000</double>
                    </property>
@@ -432,6 +627,18 @@
                  </item>
                  <item row="1" column="4">
                   <widget class="QDoubleSpinBox" name="fastSpinBox">
+                   <property name="focusPolicy">
+                    <enum>Qt::StrongFocus</enum>
+                   </property>
+                   <property name="toolTip">
+                    <string>The DX station speed is randomly chosen between Slow WPM and Fast WPM multiplied by our speed</string>
+                   </property>
+                   <property name="accessibleName">
+                    <string>Fast WPM</string>
+                   </property>
+                   <property name="accessibleDescription">
+                    <string>The DX station speed is randomly chosen between Slow WPM and Fast WPM multiplied by our speed</string>
+                   </property>
                    <property name="minimum">
                     <double>1.000000000000000</double>
                    </property>
@@ -446,7 +653,16 @@
                  <item row="2" column="0">
                   <widget class="QCheckBox" name="qsbCheck">
                    <property name="focusPolicy">
-                    <enum>Qt::ClickFocus</enum>
+                    <enum>Qt::TabFocus</enum>
+                   </property>
+                   <property name="toolTip">
+                    <string>Add QSB to callers</string>
+                   </property>
+                   <property name="accessibleName">
+                    <string>QSB</string>
+                   </property>
+                   <property name="accessibleDescription">
+                    <string>Add QSB to callers</string>
                    </property>
                    <property name="text">
                     <string>QSB</string>
@@ -484,7 +700,16 @@
                  <item row="3" column="0">
                   <widget class="QCheckBox" name="flutterCheck">
                    <property name="focusPolicy">
-                    <enum>Qt::ClickFocus</enum>
+                    <enum>Qt::TabFocus</enum>
+                   </property>
+                   <property name="toolTip">
+                    <string>With QSB checked adds flutter instead to callers with flutter probability</string>
+                   </property>
+                   <property name="accessibleName">
+                    <string>Flutter</string>
+                   </property>
+                   <property name="accessibleDescription">
+                    <string>With QSB checked adds flutter instead to callers with flutter probability</string>
                    </property>
                    <property name="text">
                     <string>Flutter</string>
@@ -493,6 +718,18 @@
                  </item>
                  <item row="3" column="1">
                   <widget class="QDoubleSpinBox" name="tqrmSpinBox">
+                   <property name="focusPolicy">
+                    <enum>Qt::StrongFocus</enum>
+                   </property>
+                   <property name="toolTip">
+                    <string>Average time in seconds for a QRM station to appear</string>
+                   </property>
+                   <property name="accessibleName">
+                    <string>QRM time</string>
+                   </property>
+                   <property name="accessibleDescription">
+                    <string>Average time in seconds for a QRM station to appear</string>
+                   </property>
                    <property name="decimals">
                     <number>0</number>
                    </property>
@@ -509,6 +746,18 @@
                  </item>
                  <item row="3" column="2">
                   <widget class="QDoubleSpinBox" name="lidNrProbSpinBox">
+                   <property name="focusPolicy">
+                    <enum>Qt::StrongFocus</enum>
+                   </property>
+                   <property name="toolTip">
+                    <string>&quot;Probability a lid sends incorrect number</string>
+                   </property>
+                   <property name="accessibleName">
+                    <string>Lid Nr</string>
+                   </property>
+                   <property name="accessibleDescription">
+                    <string>&quot;Probability a lid sends incorrect number</string>
+                   </property>
                    <property name="maximum">
                     <double>1.000000000000000</double>
                    </property>
@@ -519,6 +768,18 @@
                  </item>
                  <item row="3" column="3">
                   <widget class="QDoubleSpinBox" name="flutterProbSpinBox">
+                   <property name="focusPolicy">
+                    <enum>Qt::StrongFocus</enum>
+                   </property>
+                   <property name="toolTip">
+                    <string>Probability that QSB is flutter</string>
+                   </property>
+                   <property name="accessibleName">
+                    <string>Flutter probability</string>
+                   </property>
+                   <property name="accessibleDescription">
+                    <string>Probability that QSB is flutter</string>
+                   </property>
                    <property name="maximum">
                     <double>1.000000000000000</double>
                    </property>
@@ -529,6 +790,15 @@
                  </item>
                  <item row="3" column="4">
                   <widget class="QDoubleSpinBox" name="slowSpinBox">
+                   <property name="focusPolicy">
+                    <enum>Qt::StrongFocus</enum>
+                   </property>
+                   <property name="toolTip">
+                    <string>DX stations randomly choose speeds between your speed multiplied by slow WPM and your speed multipled by fast WPM</string>
+                   </property>
+                   <property name="accessibleDescription">
+                    <string>DX stations randomly choose speeds between your speed multiplied by slow WPM and your speed multipled by fast WPM</string>
+                   </property>
                    <property name="minimum">
                     <double>0.500000000000000</double>
                    </property>
@@ -550,146 +820,27 @@
           <item>
            <widget class="QTabWidget" name="entryTabs">
             <property name="focusPolicy">
-             <enum>Qt::NoFocus</enum>
+             <enum>Qt::TabFocus</enum>
+            </property>
+            <property name="accessibleName">
+             <string>F1 CQ</string>
+            </property>
+            <property name="accessibleDescription">
+             <string>F1 CQ Button</string>
             </property>
             <property name="currentIndex">
              <number>1</number>
             </property>
-            <widget class="QWidget" name="trEntry">
-             <attribute name="title">
-              <string>TR Input</string>
-             </attribute>
-             <layout class="QVBoxLayout" name="verticalLayout_10">
-              <item>
-               <widget class="QFrame" name="trFkeys">
-                <property name="frameShape">
-                 <enum>QFrame::StyledPanel</enum>
-                </property>
-                <property name="frameShadow">
-                 <enum>QFrame::Raised</enum>
-                </property>
-                <layout class="QGridLayout" name="gridLayout_7">
-                 <item row="0" column="0">
-                  <widget class="QPushButton" name="trF1Button">
-                   <property name="focusPolicy">
-                    <enum>Qt::ClickFocus</enum>
-                   </property>
-                   <property name="text">
-                    <string>F1 CQ</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="1">
-                  <widget class="QPushButton" name="trF2Button">
-                   <property name="focusPolicy">
-                    <enum>Qt::ClickFocus</enum>
-                   </property>
-                   <property name="text">
-                    <string>F2 &lt;#&gt;</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="2">
-                  <widget class="QPushButton" name="trF3Button">
-                   <property name="focusPolicy">
-                    <enum>Qt::ClickFocus</enum>
-                   </property>
-                   <property name="text">
-                    <string>F3 TU</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="3">
-                  <widget class="QPushButton" name="trF4Button">
-                   <property name="focusPolicy">
-                    <enum>Qt::ClickFocus</enum>
-                   </property>
-                   <property name="text">
-                    <string>F4 &lt;my&gt;</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="0">
-                  <widget class="QPushButton" name="trF5Button">
-                   <property name="focusPolicy">
-                    <enum>Qt::ClickFocus</enum>
-                   </property>
-                   <property name="text">
-                    <string>F5 &lt;his&gt;</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="1">
-                  <widget class="QPushButton" name="trF6Button">
-                   <property name="focusPolicy">
-                    <enum>Qt::ClickFocus</enum>
-                   </property>
-                   <property name="text">
-                    <string>F6 B4</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="2">
-                  <widget class="QPushButton" name="trF7Button">
-                   <property name="focusPolicy">
-                    <enum>Qt::ClickFocus</enum>
-                   </property>
-                   <property name="text">
-                    <string>F7 ?</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="3">
-                  <widget class="QPushButton" name="trF8Button">
-                   <property name="focusPolicy">
-                    <enum>Qt::ClickFocus</enum>
-                   </property>
-                   <property name="text">
-                    <string>F8 NIL</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </widget>
-              </item>
-              <item>
-               <widget class="QFrame" name="trEntryFrame">
-                <property name="frameShape">
-                 <enum>QFrame::StyledPanel</enum>
-                </property>
-                <property name="frameShadow">
-                 <enum>QFrame::Raised</enum>
-                </property>
-                <layout class="QGridLayout" name="gridLayout">
-                 <item row="0" column="0">
-                  <widget class="QLabel" name="trTimeEntryLabel">
-                   <property name="text">
-                    <string>0:00:00</string>
-                   </property>
-                   <property name="textFormat">
-                    <enum>Qt::PlainText</enum>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignCenter</set>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="1">
-                  <widget class="TrLineEdit" name="trCallEntry"/>
-                 </item>
-                 <item row="1" column="1">
-                  <widget class="TrLineEdit" name="trExchangeEntry">
-                   <property name="enabled">
-                    <bool>true</bool>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </widget>
-              </item>
-             </layout>
-            </widget>
             <widget class="QWidget" name="n1mmEntry">
+             <property name="focusPolicy">
+              <enum>Qt::TabFocus</enum>
+             </property>
+             <property name="accessibleName">
+              <string>N1 M M Input</string>
+             </property>
+             <property name="accessibleDescription">
+              <string>N1 M M Input Panel</string>
+             </property>
              <attribute name="title">
               <string>N1MM Input</string>
              </attribute>
@@ -703,25 +854,15 @@
                  <enum>QFrame::Raised</enum>
                 </property>
                 <layout class="QGridLayout" name="gridLayout_4">
-                 <item row="0" column="1">
-                  <widget class="QLabel" name="rstEntryLabel">
-                   <property name="text">
+                 <item row="2" column="1">
+                  <widget class="QLineEdit" name="rstEntry">
+                   <property name="accessibleName">
+                    <string>RST</string>
+                   </property>
+                   <property name="accessibleDescription">
                     <string>RST</string>
                    </property>
                   </widget>
-                 </item>
-                 <item row="1" column="0">
-                  <widget class="QLineEdit" name="callEntry"/>
-                 </item>
-                 <item row="0" column="0">
-                  <widget class="QLabel" name="callEntryLabel">
-                   <property name="text">
-                    <string>Call</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="1">
-                  <widget class="QLineEdit" name="rstEntry"/>
                  </item>
                  <item row="0" column="2">
                   <widget class="QFrame" name="nrTimeFrame">
@@ -774,8 +915,39 @@
                    </layout>
                   </widget>
                  </item>
-                 <item row="1" column="2">
-                  <widget class="QLineEdit" name="nrEntry"/>
+                 <item row="0" column="1">
+                  <widget class="QLabel" name="rstEntryLabel">
+                   <property name="text">
+                    <string>RST</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="callEntryLabel">
+                   <property name="text">
+                    <string>Call</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="0">
+                  <widget class="QLineEdit" name="callEntry">
+                   <property name="accessibleName">
+                    <string>Call</string>
+                   </property>
+                   <property name="accessibleDescription">
+                    <string>Call</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="2">
+                  <widget class="QLineEdit" name="nrEntry">
+                   <property name="accessibleName">
+                    <string>Nr</string>
+                   </property>
+                   <property name="accessibleDescription">
+                    <string>Nr</string>
+                   </property>
+                  </widget>
                  </item>
                 </layout>
                </widget>
@@ -794,6 +966,12 @@
                    <property name="focusPolicy">
                     <enum>Qt::ClickFocus</enum>
                    </property>
+                   <property name="accessibleName">
+                    <string>F7 ?</string>
+                   </property>
+                   <property name="accessibleDescription">
+                    <string>F7 Question Mark button</string>
+                   </property>
                    <property name="text">
                     <string>F7 ?</string>
                    </property>
@@ -803,6 +981,12 @@
                   <widget class="QPushButton" name="f2Button">
                    <property name="focusPolicy">
                     <enum>Qt::ClickFocus</enum>
+                   </property>
+                   <property name="accessibleName">
+                    <string>F2 Nr</string>
+                   </property>
+                   <property name="accessibleDescription">
+                    <string>F2 number Button</string>
                    </property>
                    <property name="text">
                     <string>F2 &lt;#&gt;</string>
@@ -814,6 +998,12 @@
                    <property name="focusPolicy">
                     <enum>Qt::ClickFocus</enum>
                    </property>
+                   <property name="accessibleName">
+                    <string>F6 B4</string>
+                   </property>
+                   <property name="accessibleDescription">
+                    <string>F6 Q S O B4 button</string>
+                   </property>
                    <property name="text">
                     <string>F6 B4</string>
                    </property>
@@ -823,6 +1013,12 @@
                   <widget class="QPushButton" name="f1Button">
                    <property name="focusPolicy">
                     <enum>Qt::ClickFocus</enum>
+                   </property>
+                   <property name="accessibleName">
+                    <string>F1 CQ</string>
+                   </property>
+                   <property name="accessibleDescription">
+                    <string>F1 CQ Button</string>
                    </property>
                    <property name="text">
                     <string>F1 CQ</string>
@@ -834,6 +1030,12 @@
                    <property name="focusPolicy">
                     <enum>Qt::ClickFocus</enum>
                    </property>
+                   <property name="accessibleName">
+                    <string>F3 T U</string>
+                   </property>
+                   <property name="accessibleDescription">
+                    <string>F3 Thank you button</string>
+                   </property>
                    <property name="text">
                     <string>F3 TU</string>
                    </property>
@@ -843,6 +1045,12 @@
                   <widget class="QPushButton" name="f5Button">
                    <property name="focusPolicy">
                     <enum>Qt::ClickFocus</enum>
+                   </property>
+                   <property name="accessibleName">
+                    <string>F5 his</string>
+                   </property>
+                   <property name="accessibleDescription">
+                    <string>F5 his call button</string>
                    </property>
                    <property name="text">
                     <string>F5 &lt;his&gt;</string>
@@ -854,6 +1062,12 @@
                    <property name="focusPolicy">
                     <enum>Qt::ClickFocus</enum>
                    </property>
+                   <property name="accessibleName">
+                    <string>F4 My</string>
+                   </property>
+                   <property name="accessibleDescription">
+                    <string>F4 My call button</string>
+                   </property>
                    <property name="text">
                     <string>F4 &lt;my&gt;</string>
                    </property>
@@ -864,8 +1078,212 @@
                    <property name="focusPolicy">
                     <enum>Qt::ClickFocus</enum>
                    </property>
+                   <property name="accessibleName">
+                    <string>F8 Nil</string>
+                   </property>
+                   <property name="accessibleDescription">
+                    <string>F8 Nil Not in log button</string>
+                   </property>
                    <property name="text">
                     <string>F8 NIL</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+            <widget class="QWidget" name="trEntry">
+             <property name="focusPolicy">
+              <enum>Qt::TabFocus</enum>
+             </property>
+             <property name="accessibleName">
+              <string>T R Entry</string>
+             </property>
+             <property name="accessibleDescription">
+              <string>T R Style entry</string>
+             </property>
+             <attribute name="title">
+              <string>TR Input</string>
+             </attribute>
+             <layout class="QVBoxLayout" name="verticalLayout_10">
+              <item>
+               <widget class="QFrame" name="trFkeys">
+                <property name="frameShape">
+                 <enum>QFrame::StyledPanel</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Raised</enum>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_7">
+                 <item row="0" column="0">
+                  <widget class="QPushButton" name="trF1Button">
+                   <property name="focusPolicy">
+                    <enum>Qt::ClickFocus</enum>
+                   </property>
+                   <property name="text">
+                    <string>F1 CQ</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="1">
+                  <widget class="QPushButton" name="trF2Button">
+                   <property name="focusPolicy">
+                    <enum>Qt::ClickFocus</enum>
+                   </property>
+                   <property name="accessibleName">
+                    <string>F2 Nr</string>
+                   </property>
+                   <property name="accessibleDescription">
+                    <string>F2 Number button</string>
+                   </property>
+                   <property name="text">
+                    <string>F2 &lt;#&gt;</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="2">
+                  <widget class="QPushButton" name="trF3Button">
+                   <property name="focusPolicy">
+                    <enum>Qt::ClickFocus</enum>
+                   </property>
+                   <property name="accessibleName">
+                    <string>F3 T U</string>
+                   </property>
+                   <property name="accessibleDescription">
+                    <string>F3 Thank you button</string>
+                   </property>
+                   <property name="text">
+                    <string>F3 TU</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="3">
+                  <widget class="QPushButton" name="trF4Button">
+                   <property name="focusPolicy">
+                    <enum>Qt::ClickFocus</enum>
+                   </property>
+                   <property name="accessibleName">
+                    <string>F4 My</string>
+                   </property>
+                   <property name="accessibleDescription">
+                    <string>F4 My call button</string>
+                   </property>
+                   <property name="text">
+                    <string>F4 &lt;my&gt;</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="0">
+                  <widget class="QPushButton" name="trF5Button">
+                   <property name="focusPolicy">
+                    <enum>Qt::ClickFocus</enum>
+                   </property>
+                   <property name="accessibleName">
+                    <string>F5 his</string>
+                   </property>
+                   <property name="accessibleDescription">
+                    <string>F5 his call button</string>
+                   </property>
+                   <property name="text">
+                    <string>F5 &lt;his&gt;</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="1">
+                  <widget class="QPushButton" name="trF6Button">
+                   <property name="focusPolicy">
+                    <enum>Qt::ClickFocus</enum>
+                   </property>
+                   <property name="accessibleName">
+                    <string>F6 B4</string>
+                   </property>
+                   <property name="accessibleDescription">
+                    <string>F6 Q S O B4 button</string>
+                   </property>
+                   <property name="text">
+                    <string>F6 B4</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="2">
+                  <widget class="QPushButton" name="trF7Button">
+                   <property name="focusPolicy">
+                    <enum>Qt::ClickFocus</enum>
+                   </property>
+                   <property name="accessibleName">
+                    <string>F7 ?</string>
+                   </property>
+                   <property name="accessibleDescription">
+                    <string>F7 question mark button</string>
+                   </property>
+                   <property name="text">
+                    <string>F7 ?</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="3">
+                  <widget class="QPushButton" name="trF8Button">
+                   <property name="focusPolicy">
+                    <enum>Qt::ClickFocus</enum>
+                   </property>
+                   <property name="accessibleName">
+                    <string>F8 Nil</string>
+                   </property>
+                   <property name="accessibleDescription">
+                    <string>F8 Nil Not in log button</string>
+                   </property>
+                   <property name="text">
+                    <string>F8 NIL</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item>
+               <widget class="QFrame" name="trEntryFrame">
+                <property name="frameShape">
+                 <enum>QFrame::StyledPanel</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Raised</enum>
+                </property>
+                <layout class="QGridLayout" name="gridLayout">
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="trTimeEntryLabel">
+                   <property name="text">
+                    <string>0:00:00</string>
+                   </property>
+                   <property name="textFormat">
+                    <enum>Qt::PlainText</enum>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="1">
+                  <widget class="TrLineEdit" name="trCallEntry">
+                   <property name="accessibleName">
+                    <string>Call</string>
+                   </property>
+                   <property name="accessibleDescription">
+                    <string>Call</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="1">
+                  <widget class="TrLineEdit" name="trExchangeEntry">
+                   <property name="enabled">
+                    <bool>true</bool>
+                   </property>
+                   <property name="accessibleName">
+                    <string>Exchange</string>
+                   </property>
+                   <property name="accessibleDescription">
+                    <string>Exchange</string>
                    </property>
                   </widget>
                  </item>
@@ -881,6 +1299,9 @@
        </item>
        <item>
         <widget class="QGroupBox" name="rightBox">
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
          <property name="title">
           <string/>
          </property>
@@ -892,7 +1313,30 @@
             </property>
             <layout class="QGridLayout" name="gridLayout_5">
              <item row="0" column="0">
-              <widget class="QComboBox" name="contestComboBox"/>
+              <widget class="QComboBox" name="contestComboBox">
+               <property name="focusPolicy">
+                <enum>Qt::TabFocus</enum>
+               </property>
+               <property name="toolTip">
+                <string>Choose contest type</string>
+               </property>
+               <property name="accessibleName">
+                <string>Contest Type</string>
+               </property>
+               <property name="accessibleDescription">
+                <string>Choose contest type</string>
+               </property>
+               <item>
+                <property name="text">
+                 <string>Pile Up</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Single Calls</string>
+                </property>
+               </item>
+              </widget>
              </item>
              <item row="0" column="1">
               <widget class="QLabel" name="durationLabel">
@@ -911,7 +1355,16 @@
              <item row="1" column="1">
               <widget class="QSpinBox" name="durationSpinBox">
                <property name="focusPolicy">
-                <enum>Qt::ClickFocus</enum>
+                <enum>Qt::StrongFocus</enum>
+               </property>
+               <property name="toolTip">
+                <string>Contest simulation duration</string>
+               </property>
+               <property name="accessibleName">
+                <string>Duration</string>
+               </property>
+               <property name="accessibleDescription">
+                <string>Contest simulation duration</string>
                </property>
                <property name="minimum">
                 <number>1</number>
@@ -927,7 +1380,16 @@
              <item row="1" column="2">
               <widget class="QSpinBox" name="activitySpinBox">
                <property name="focusPolicy">
-                <enum>Qt::ClickFocus</enum>
+                <enum>Qt::StrongFocus</enum>
+               </property>
+               <property name="toolTip">
+                <string>Average number of calling stations</string>
+               </property>
+               <property name="accessibleName">
+                <string>Activity</string>
+               </property>
+               <property name="accessibleDescription">
+                <string>Average number of calling stations</string>
                </property>
                <property name="minimum">
                 <number>1</number>
@@ -939,6 +1401,18 @@
              </item>
              <item row="1" column="0">
               <widget class="QPushButton" name="startStopButton">
+               <property name="focusPolicy">
+                <enum>Qt::TabFocus</enum>
+               </property>
+               <property name="toolTip">
+                <string>Start or stop contest</string>
+               </property>
+               <property name="accessibleName">
+                <string>Start/Stop</string>
+               </property>
+               <property name="accessibleDescription">
+                <string>Start or stop contest</string>
+               </property>
                <property name="text">
                 <string>Start</string>
                </property>
@@ -952,6 +1426,12 @@
           </item>
           <item>
            <widget class="QGroupBox" name="scoreBox">
+            <property name="accessibleName">
+             <string>Score</string>
+            </property>
+            <property name="accessibleDescription">
+             <string>Panel with current score</string>
+            </property>
             <property name="title">
              <string>Score</string>
             </property>
@@ -969,6 +1449,12 @@
                </property>
                <property name="focusPolicy">
                 <enum>Qt::NoFocus</enum>
+               </property>
+               <property name="accessibleName">
+                <string>Score table</string>
+               </property>
+               <property name="accessibleDescription">
+                <string>Score table of raw and correct contacts and multipliers</string>
                </property>
                <property name="autoFillBackground">
                 <bool>false</bool>
@@ -1069,6 +1555,12 @@
                  <height>200</height>
                 </size>
                </property>
+               <property name="accessibleName">
+                <string>Rate Plot</string>
+               </property>
+               <property name="accessibleDescription">
+                <string>Plot of contact rate in 5 minute intervals</string>
+               </property>
                <property name="frameShape">
                 <enum>QFrame::NoFrame</enum>
                </property>
@@ -1100,20 +1592,32 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="focusPolicy">
+    <enum>Qt::TabFocus</enum>
+   </property>
    <widget class="QMenu" name="menu_File">
+    <property name="focusPolicy">
+     <enum>Qt::TabFocus</enum>
+    </property>
     <property name="title">
      <string>&amp;File</string>
     </property>
+    <addaction name="action_Update_Default_Configuration"/>
     <addaction name="action_Load_Configuration"/>
     <addaction name="action_Save_Configuration"/>
+    <addaction name="action_Update_Default_Configuration_on_Exit"/>
     <addaction name="action_Copy_Log"/>
     <addaction name="action_Exit"/>
    </widget>
    <widget class="QMenu" name="menu_Help">
+    <property name="focusPolicy">
+     <enum>Qt::TabFocus</enum>
+    </property>
     <property name="title">
      <string>&amp;Help</string>
     </property>
     <addaction name="actionKeyboard_Shortcuts"/>
+    <addaction name="action_Function_Key_CW"/>
     <addaction name="action_About"/>
    </widget>
    <addaction name="menu_File"/>
@@ -1131,11 +1635,6 @@
     <bool>false</bool>
    </attribute>
   </widget>
-  <action name="action_Audio_recording_enabled">
-   <property name="text">
-    <string>&amp;Audio recording enabled</string>
-   </property>
-  </action>
   <action name="action_Exit">
    <property name="text">
     <string>&amp;Exit</string>
@@ -1162,6 +1661,9 @@
    </property>
   </action>
   <action name="action_Load_Configuration">
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>&amp;Load Configuration</string>
    </property>
@@ -1181,6 +1683,27 @@
     <string>&amp;Copy Log</string>
    </property>
   </action>
+  <action name="action_Function_Key_CW">
+   <property name="text">
+    <string>&amp;Function Key CW</string>
+   </property>
+  </action>
+  <action name="action_Update_Default_Configuration_on_Exit">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Always Update Default Configuration on Exit</string>
+   </property>
+  </action>
+  <action name="action_Update_Default_Configuration">
+   <property name="text">
+    <string>&amp;Update Default Configuration</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
@@ -1195,6 +1718,40 @@
    <header>trlineedit.h</header>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>logBox</tabstop>
+  <tabstop>paramTabs</tabstop>
+  <tabstop>callLine</tabstop>
+  <tabstop>wpmSpinBox</tabstop>
+  <tabstop>pitchSpinBox</tabstop>
+  <tabstop>bandwidthSpinBox</tabstop>
+  <tabstop>qskCheck</tabstop>
+  <tabstop>cwReverseCheck</tabstop>
+  <tabstop>monitorSlider</tabstop>
+  <tabstop>ritSlider</tabstop>
+  <tabstop>qrnCheck</tabstop>
+  <tabstop>qsyCheck</tabstop>
+  <tabstop>qrmCheck</tabstop>
+  <tabstop>lidsCheck</tabstop>
+  <tabstop>lidRstProbSpinBox</tabstop>
+  <tabstop>rptProbSpinBox</tabstop>
+  <tabstop>fastSpinBox</tabstop>
+  <tabstop>qsbCheck</tabstop>
+  <tabstop>flutterCheck</tabstop>
+  <tabstop>tqrmSpinBox</tabstop>
+  <tabstop>lidNrProbSpinBox</tabstop>
+  <tabstop>flutterProbSpinBox</tabstop>
+  <tabstop>slowSpinBox</tabstop>
+  <tabstop>contestComboBox</tabstop>
+  <tabstop>startStopButton</tabstop>
+  <tabstop>durationSpinBox</tabstop>
+  <tabstop>activitySpinBox</tabstop>
+  <tabstop>entryTabs</tabstop>
+  <tabstop>callEntry</tabstop>
+  <tabstop>rstEntry</tabstop>
+  <tabstop>trCallEntry</tabstop>
+  <tabstop>trExchangeEntry</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>

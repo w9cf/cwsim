@@ -82,6 +82,7 @@ class Contest():
          self.mode = RunMode.pileup
          self.cwreverse = 0
          self.savewave = 0
+         self.saveini = 1
          self.fontsize = 12 # not used
          
       self._qskdecayfactor = 1.0/(self._rate*self.qskdecaytime)
@@ -393,6 +394,7 @@ class Contest():
       self.duration = int(contestdict['duration'])
       self.mode = eval(contestdict['mode'])
       self.savewave = int(contestdict['savewave'])
+      self.saveini = int(contestdict['saveini'])
 
    def writeConfig(self,filename):
       with open(filename,'w') as f:
@@ -412,6 +414,6 @@ class Contest():
             ,'lidRstProb','lidNrProb','rptProb','flutterProb']:
             p.set('Conditions',i,str(eval('self.'+i)))
          p.add_section('Contest')
-         for i in ['duration','mode','savewave']:
+         for i in ['duration','mode','savewave','saveini']:
             p.set('Contest',i,str(eval('self.'+i)))
          p.write(f)

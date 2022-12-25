@@ -35,9 +35,10 @@ class MplCanvas(Canvas):
       Canvas.updateGeometry(self)
 
    def setaxes(self,nbin,dt,maxrate):
+      _translate = QtWidgets.QApplication.translate
       self.ax.clear()
-      self.ax.set_xlabel("Minutes")
-      self.ax.set_ylabel("QS0s/Hour")
+      self.ax.set_xlabel(_translate("MplCanvas","Minutes"))
+      self.ax.set_ylabel(_translate("MplCanvas","QS0s/Hour"))
       self.nbin = nbin
       self.dt = dt
       self.maxrate = maxrate

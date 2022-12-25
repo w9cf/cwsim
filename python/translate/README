@@ -1,0 +1,11 @@
+Use either
+pylupdate5 ../cwsim.py ../mplwidget.py ../cwsimgui.ui -ts xx_XX.ts
+or
+pylupdate6 ../cwsim.py ../mplwidget.py ../cwsimgui.ui -ts xx_XX.ts
+where xx is the language and XX the country
+
+Then use
+linguist xx_XX.ts
+to edit the translation file. Once satisfied make the release file
+lrelease xx_XX.ts -qm xx_XX.qm
+to get the compressed translation file used by cwsim.py

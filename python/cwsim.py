@@ -15,6 +15,7 @@
 #
 # See https://www.gnu.org/licenses/ for GPL licensing information.
 #
+import os
 try:
    from PyQt6 import QtCore, QtGui, QtWidgets
    from PyQt6.QtWidgets import QApplication, QTableWidgetItem
@@ -26,16 +27,19 @@ except ImportError:
    from PyQt5.uic import compileUi
 
 try:
+   uifilename = os.path.join(os.path.dirname(__file__),"cwsimgui.ui")
+   pyfilename = os.path.join(os.path.dirname(__file__),"cwsimgui.py")
+   if os.path.getmtime(uifilename) > os.path.getmtime(pyfilename):
+      with open(pyfilename,"w") as py:
+         compileUi(uifilename,py,indent=3)
    import cwsimgui
-except ImportError:
-   import os
+except FileNotFoundError:
    uifilename = os.path.join(os.path.dirname(__file__),"cwsimgui.ui")
    pyfilename = os.path.join(os.path.dirname(__file__),"cwsimgui.py")
    with open(pyfilename,"w") as py:
       compileUi(uifilename,py,indent=3)
    import cwsimgui
 
-import os
 import re
 import sys
 import csv
@@ -66,7 +70,8 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
    def __init__(self,parent=None):
       super(RunApp,self).__init__(parent)
       self.setupUi(self)
-      self.tr = self.entryTabs.currentIndex() == 0
+      _translate = QtCore.QCoreApplication.translate
+      self.tr = self.entryTabs.currentIndex() == 1
       self.re1 = re.compile(r"^[A-Z]{1,3}[0-9]+[A-Z]+$")
       self.re2 = re.compile(r"^[2-9][A-Z][0-9]+[A-Z]+$")
       self.re3 = re.compile(r"^[0-9A-Z]+[0-9]/[0-9A-Z]+$")
@@ -86,7 +91,6 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
       self._hiscall = ""
       self._rst = ""
       self._nr = ""
-      self.contestComboBox.addItems(["Pile up","Single calls"])
       callval = ToUpperRegularExpressionValidator(
          QtCore.QRegularExpression(r'^[a-zA-Z0-9/?]*$'),self)
       nrval = QtGui.QRegularExpressionValidator(
@@ -106,6 +110,7 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
       self.nrEntry.installEventFilter(self)
       self.action_About.triggered.connect(self.about)
       self.actionKeyboard_Shortcuts.triggered.connect(self.shortcutHelp)
+      self.action_Function_Key_CW.triggered.connect(self.FkeyHelp)
       self.callLine.textChanged.connect(self.mycall)
       self.callEntry.textChanged.connect(self.hiscall)
       self.trCallEntry.textChanged.connect(self.hiscall)
@@ -120,19 +125,12 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
       self.monitorSlider.valueChanged.connect(self.monitor)
       self.ritSlider.valueChanged.connect(self.rit)
       self.qrnCheck.stateChanged.connect(self.qrn)
-      self.qrnCheck.setToolTip("Add static and crashes")
       self.qrmCheck.stateChanged.connect(self.qrm)
-      self.qrmCheck.setToolTip("Add QRM stations")
       self.qsyCheck.stateChanged.connect(self.qsyState)
       self.qsbCheck.stateChanged.connect(self.qsb)
-      self.qsbCheck.setToolTip("Add QSB to callers")
       self.flutterCheck.stateChanged.connect(self.flutter)
-      self.flutterCheck.setToolTip("With QSB checked adds flutter instead"
-         + " to callers with flutter probability")
       self.lidsCheck.stateChanged.connect(self.lids)
-      self.lidsCheck.setToolTip("Add operators who make mistakes")
       self.startStopButton.clicked.connect(self.startStop)
-      self.startStopButton.setToolTip("Start or stop contest")
       self.durationSpinBox.valueChanged.connect(self.duration)
       self.activitySpinBox.valueChanged.connect(self.activity)
       self.trF1Button.clicked.connect(self.f1)
@@ -155,29 +153,17 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
       self.action_Load_Configuration.triggered.connect(self.getFile)
       self.action_Save_Configuration.triggered.connect(self.putFile)
       self.action_Copy_Log.triggered.connect(self.saveLog)
+      self.action_Update_Default_Configuration_on_Exit.triggered.connect(
+         self.alwaysUpdate)
+      self.action_Update_Default_Configuration.triggered.connect(
+         self.updateFile)
       self.tqrmSpinBox.valueChanged.connect(self.tqrm)
-      self.tqrmSpinBox.setToolTip("Average time in seconds for a QRM station "
-         + "to appear")
       self.lidRstProbSpinBox.valueChanged.connect(self.lidRstProb)
-      self.lidRstProbSpinBox.setToolTip("Probability a lid doesn't send 599")
       self.lidNrProbSpinBox.valueChanged.connect(self.lidNrProb)
-      self.lidNrProbSpinBox.setToolTip(
-         "Probability a lid sends incorrect number")
       self.rptProbSpinBox.valueChanged.connect(self.rptProb)
-      self.rptProbSpinBox.setToolTip(
-         "Probability of stations repeating information. "
-         + "Set to 0 to turn off repeats")
-      self.qsyCheck.setToolTip("Show stations that give up and QSY in log")
       self.flutterProbSpinBox.valueChanged.connect(self.flutterProb)
-      self.flutterProbSpinBox.setToolTip("Probability QSB is flutter")
       self.fastSpinBox.valueChanged.connect(self.fast)
-      self.fastSpinBox.setToolTip("DX stations randomly choose speeds "
-         + "between your speed multiplied by slow WPM and your speed multipled "
-         + "by fast WPM")
       self.slowSpinBox.valueChanged.connect(self.slow)
-      self.slowSpinBox.setToolTip("DX stations randomly choose speeds "
-         + "between your speed multiplied by slow WPM and your speed multipled "
-         + "by fast WPM")
       self.trExchangeEntry.setEnabled(False)
       self._callsent = False
       self._nrsent = False
@@ -192,10 +178,15 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
         "Shift+Down":self.ritdown, "Alt+C":self.ritclear, "Ctrl+Up":self.bwup,
         "Ctrl+Down":self.bwdown, "Alt+Up":self.pitchup,
         "Alt+Down":self.pitchdown, "PgUp":self.wpmup, "PgDown":self.wpmdown,
-        "Up":self.uparrow, "Down":self.downarrow, "Alt+X": self.startStop }
+        "Up":self.uparrow, "Down":self.downarrow}
+      self.sclist = []
+      sc = QShortcut(QtGui.QKeySequence("Alt+X"),self)
+      sc.activated.connect(self.startStop)
       for key, fun in scdict.items():
          sc = QShortcut(QtGui.QKeySequence(key),self)
          sc.activated.connect(fun)
+         sc.setEnabled(False)
+         self.sclist.append(sc)
       self.updateTime()
       self.clocktimer = QtCore.QTimer(self)
       self.clocktimer.timeout.connect(self.updateTime)
@@ -206,15 +197,22 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
       self.ratehist = np.zeros(nbin)
       self.ratePlot.canvas.setaxes(nbin,5,300)
       self.logTable.setHorizontalHeaderLabels(
-         ["UTC","Call","Recv","Sent","Pref","Chk"])
-      self.scoreTable.setHorizontalHeaderLabels(["Points", "Mults", "Score"])
-      self.scoreTable.setVerticalHeaderLabels(["Raw", "Verified"])
+         [_translate("RunApp","UTC"),_translate("RunApp","Call")
+         ,_translate("RunApp","Recv"),_translate("RunApp","Sent")
+         ,_translate("RunApp","Pref"),_translate("RunApp","Chk")])
+      self.scoreTable.setHorizontalHeaderLabels(
+         [_translate("RunApp","Points"),_translate("RunApp","Mults")
+         ,_translate("RunApp","Score")])
+      self.scoreTable.setVerticalHeaderLabels(
+         [_translate("RunApp","Raw"),_translate("RunApp","Verified")])
       self._goodCalls = set()
       self._rawPfxs = set()
       self._goodPfxs = set()
       self.prefix = Prefix()
 
    def syncGui(self):
+      self.action_Update_Default_Configuration_on_Exit.setChecked(
+         self.contest.saveini != 0)
       self.callLine.setText(self.contest.call)
       self.wpmSpinBox.setValue(self.contest.wpm)
       self.bandwidthSpinBox.setValue(self.contest.bandwidth)
@@ -244,9 +242,11 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
          self.contestComboBox.setCurrentIndex(1)
 
    def getFile(self):
+      _translate = QtCore.QCoreApplication.translate
       filename, filter  = QtWidgets.QFileDialog.getOpenFileName(self,
-         caption="Open Configuration",directory=self.configpath
-         ,filter="Configuration Files (*.ini)")
+         caption=_translate("RunApp","Open Configuration")
+         ,directory=self.configpath
+         ,filter=_translate("RunApp","Configuration Files") + " (*.ini)")
       if filename != "":
          self.contest.readConfig(filename)
          self.syncGui()
@@ -258,10 +258,15 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
       if filename != "":
          self.contest.writeConfig(filename)
 
+   def updateFile(self):
+      self.contest.writeConfig(self.defaultini)
+
    def saveLog(self):
+      _translate = QtCore.QCoreApplication.translate
       filename, filter  = QtWidgets.QFileDialog.getSaveFileName(self,
-         caption="Save Log File",directory=os.getenv('HOME')
-         ,filter="csv(*.csv)")
+         caption=_translate("RunApp","Save Log File")
+         ,directory=os.getenv('HOME')
+         ,filter=_translate("RunApp","csv") + " (*.csv)")
       if filename != "":
          columns = range(self.logTable.columnCount())
          header = []
@@ -284,6 +289,12 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
                      row.append(item.text())
                writer.writerow(row)
 
+   def alwaysUpdate(self,s):
+      if s:
+         self.contest.saveini = 1
+      else:
+         self.contest.saveini = 0
+
    def looksLikeCall(self,s):
       return (self.re1.match(s) is not None or
               self.re2.match(s) is not None or
@@ -296,7 +307,7 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
             if not self.tr:
                self.space()
                return True
-         elif "\t" in event.text():
+         elif "\t" in event.text() and self.started:
             self.tab()
             return True
       return super(RunApp,self).eventFilter(source,event)
@@ -346,12 +357,15 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
       self._qtimes = []
 
    def startStop(self):
+      _translate = QtCore.QCoreApplication.translate
       if self.started:
          self.contest.stop()
          self.clocktimer.stop()
          self.ratetimer.stop()
          self.started = False
-         self.startStopButton.setText("Start")
+         self.startStopButton.setText(_translate("RunApp","Start"))
+         for sc in self.sclist:
+            sc.setEnabled(False)
       else:
          self.resetCounters()
          self.clocktimer.start(500)
@@ -361,13 +375,16 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
             self.contest.mode = RunMode.pileup
          elif i==1:
             self.contest.mode = RunMode.single
+         self.tr = self.entryTabs.currentIndex() == 1
          if self.tr:
             self.trCallEntry.setFocus()
          else:
             self.callEntry.setFocus()
          self.contest.start()
-         self.startStopButton.setText("Stop ")
+         self.startStopButton.setText(_translate("RunApp","Stop"))
          self.started = True
+         for sc in self.sclist:
+            sc.setEnabled(True)
 
    def about(self):
       version = "Testing version"
@@ -381,8 +398,11 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
       QtWidgets.QMessageBox.about(self,"CW Simulator",msg)
 
    def shortcutHelp(self):
-      msg = """
+      _translate = QtCore.QCoreApplication.translate
+      msg = _translate("RunApp","""
    Keyboard Shortcuts:
+      Alt+X = Start/Stop simulation run
+   Only when simulation is running:
       Alt+W = Wipe
       Escape = Stop sending
       Enter = Enter sends message
@@ -397,9 +417,23 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
       Alt+Down arrow = Decrease pitch 50 Hz
       Page Up = Increase cw speed 2 wpm
       Page Down = Decrease cw speed 2 wpm
-      Alt+X = Start/Stop simulation run
-      """
+      """)
       QtWidgets.QMessageBox.about(self,"Keyboard Shortcuts",msg)
+
+   def FkeyHelp(self):
+      _translate = QtCore.QCoreApplication.translate
+      msg = _translate("RunApp","""
+   Function Keys:
+      F1 = Send CQ
+      F2 = Send exchange
+      F3 = Send TU to acknowledge receipt
+      F4 = Send my call
+      F5 = Send his call (Contents of the Call field)
+      F6 = Send QSO B4
+      F7 = Send a question mark
+      F8 = Send Nil, not in log
+      """)
+      QtWidgets.QMessageBox.about(self,"Function key messages",msg)
       
 
    def mycall(self,s):
@@ -488,6 +522,9 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
       self.trTimeEntryLabel.setText(tstr)
 
    def updateRate(self):
+      _translate = QtCore.QCoreApplication.translate
+      rstr = _translate("RunApp","Rate")
+      qstr = _translate("RunApp","QSOs/Hr (5m)")
       h,m,s = self.contest.time()
       s += 60*(m+60*h)
       tint = min(s,300)
@@ -500,7 +537,7 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
             break
       if nq == 0: return
       rate = int(round(nq*3600/tint))
-      rateTitle = "Rate {:3d} QSOs/Hr (5m)".format(rate)
+      rateTitle = (rstr + " {:3d} " + qstr).format(rate)
       self.ratebox.setTitle(rateTitle)
 
    def f1(self):
@@ -534,7 +571,7 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
       self.sendMsg(StationMessage.Nil)
 
    def entrytabs(self):
-      self.tr = self.entryTabs.currentIndex() == 0
+      self.tr = self.entryTabs.currentIndex() == 1
 
    def enter(self):
       if self.tr:
@@ -841,13 +878,22 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
          self.trCallEntry.setFocus()
 
    def close(self):
-      if not os.path.exists(self.defaultini):
+      if not os.path.exists(self.defaultini) or self.contest.saveini != 0:
          self.contest.writeConfig(self.defaultini)
       super().close()
       
 
 if __name__ == "__main__":
    app = QApplication(sys.argv)
+   translator = QtCore.QTranslator()
+   if getattr(sys,'frozen',False):
+      tdir = os.path.dirname(sys.executable)
+   else:
+      tdir = os.path.dirname(__file__)
+   tfile = QtCore.QLocale.system().name() + '.qm'
+   tdir = os.path.join(tdir,'translate')
+   translator.load(tfile,tdir)
+   app.installTranslator(translator)
    form = RunApp()
    form.show()
    app.exec()
