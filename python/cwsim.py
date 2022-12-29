@@ -773,7 +773,17 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
          return
       self._lastQso = [None,None,None]
       self._lastLog = [None,None,None]
+# find last good QSO in log
       r = self.logTable.rowCount()-1
+      while r >= 0:
+         if self.logTable.item(r,5) is None:
+            r -= 1
+            continue
+         elif self.logTable.item(r,5).text() == "QSY":
+            r -= 1
+            continue
+         else:
+            break
       if chk == "":
          if trueCall in self._goodCalls:
             self.logTable.item(r,5).setText("Dupe")
