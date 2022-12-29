@@ -1606,6 +1606,7 @@
     <addaction name="action_Load_Configuration"/>
     <addaction name="action_Save_Configuration"/>
     <addaction name="action_Update_Default_Configuration_on_Exit"/>
+    <addaction name="action_Write_Simulation_Summary_File"/>
     <addaction name="action_Copy_Log"/>
     <addaction name="action_Exit"/>
    </widget>
@@ -1702,6 +1703,11 @@
   <action name="action_Update_Default_Configuration">
    <property name="text">
     <string>&amp;Update Default Configuration</string>
+   </property>
+  </action>
+  <action name="action_Write_Simulation_Summary_File">
+   <property name="text">
+    <string>&amp;Write Simulation Summary File</string>
    </property>
   </action>
  </widget>

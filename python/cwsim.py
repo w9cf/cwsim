@@ -46,6 +46,7 @@ import csv
 import xdg.BaseDirectory
 import numpy as np
 import time
+import datetime
 from contest import Contest, RunMode
 from station import StationMessage
 from station import StationState
@@ -153,6 +154,8 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
       self.action_Load_Configuration.triggered.connect(self.getFile)
       self.action_Save_Configuration.triggered.connect(self.putFile)
       self.action_Copy_Log.triggered.connect(self.saveLog)
+      self.action_Write_Simulation_Summary_File.triggered.connect(
+         self.saveSummary)
       self.action_Update_Default_Configuration_on_Exit.triggered.connect(
          self.alwaysUpdate)
       self.action_Update_Default_Configuration.triggered.connect(
@@ -260,6 +263,127 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
 
    def updateFile(self):
       self.contest.writeConfig(self.defaultini)
+
+   def saveSummary(self):
+      _translate = QtCore.QCoreApplication.translate
+      filename, filter  = QtWidgets.QFileDialog.getSaveFileName(self,
+         caption=_translate("RunApp","Save Summary File")
+         ,directory=os.getenv('HOME')
+         ,filter=_translate("RunApp","txt") + " (*.txt)")
+      if filename != "":
+         with open(filename,'w') as f:
+            s = (self.contest.call + " " + _translate("RunApp","cwsim summary")
+               + " " + datetime.datetime.now().strftime("%c") + "\n")
+            f.write(s)
+            s = (_translate("RunApp","CW Speed") + " " + str(self.contest.wpm)
+               + " " + _translate("RunApp","WPM") + "\n")
+            f.write(s)
+            s = _translate("RunApp","Conditions") + " "
+            if self.contest.qrn:
+               s += _translate("RunApp","QRN") + " "
+            if self.contest.qrm:
+               s += _translate("RunApp","QRM") + " "
+            if self.contest.qsb:
+               s += _translate("RunApp","QSB") + " "
+               if self.contest.flutter:
+                  s += _translate("RunApp","Flutter") + " "
+            if self.contest.qsy:
+               s += _translate("RunApp","QSY") + " "
+            if self.contest.lids:
+               s += _translate("RunApp","Lids") + " "
+            s += "\n"
+            f.write(s)
+            s = (_translate("RunApp","Activity") + " "
+               + str(self.contest.activity) + "\n")
+            f.write(s)
+            s = (_translate("RunApp","Duration") + " "
+               + str(self.contest.duration) + "\n")
+            f.write(s)
+            s = (_translate("RunApp","Raw Points") + " "
+               + str(self._rawQsoCount) + "\n")
+            f.write(s)
+            s = (_translate("RunApp","Raw Prefixes") + " "
+               + str(len(self._rawPfxs)) + "\n")
+            f.write(s)
+            s = (_translate("RunApp","Raw Score") + " "
+               + str(len(self._rawPfxs)*self._rawQsoCount) + "\n")
+            f.write(s)
+            s = (_translate("RunApp","Verified Points") + " "
+               + str(self._goodQsoCount) + "\n")
+            f.write(s)
+            s = (_translate("RunApp","Verified Prefixes") + " "
+               + str(len(self._goodPfxs)) + "\n")
+            f.write(s)
+            s = (_translate("RunApp","Verified Score") + " "
+               + str(len(self._goodPfxs)*self._goodQsoCount) + "\n")
+            f.write(s)
+            if self._rawQsoCount > 0:
+               errpct = (1.0-self._goodQsoCount/self._rawQsoCount)*100.0
+               s = (_translate("RunApp","Error percentage") + " "
+                  "{:.1f}".format(errpct) + "\n")
+               f.write(s)
+            s = (
+               _translate("RunApp","QSOs/Hour for each 5 minute interval")
+               + "\n")
+            f.write(s)
+            for i in range(len(self.ratehist)):
+               s = "{:d}-{:d}   {:d}\n".format(i*5,i*5+4,int(self.ratehist[i]))
+               f.write(s)
+            cols = self.logTable.columnCount()
+            rows = self.logTable.rowCount()
+            nil = []
+            ex = []
+            qsy = []
+            for i in range(rows):
+               if self.logTable.item(i,cols-1) is None:
+                  continue
+               chk = self.logTable.item(i,cols-1).text()
+               if chk == "NIL":
+                  nil.append(self.logTable.item(i,1).text())
+               if chk.count("NR") != 0 or chk.count("RST") != 0:
+                  ex.append((self.logTable.item(i,1).text(),
+                     self.logTable.item(i,2).text(),chk))
+               if chk == "QSY":
+                  qsy.append(self.logTable.item(i,1).text())
+            if len(nil) != 0:
+               s = _translate("RunApp","Calls miscopied")  + "\n"
+               f.write(s)
+               s = ""
+               for i in range(len(nil)):
+                  s += nil[i]
+                  if (i+1) % 8 == 0:
+                     s += "\n"
+                     f.write(s)
+                     s = ""
+                  else:
+                     s += " "
+               if s != "":
+                  s = s[:-1] + "\n"
+                  f.write(s)
+            if len(ex) != 0:
+               s = _translate("RunApp","Exchanges miscopied")  + "\n"
+               f.write(s)
+               for i in range(len(ex)):
+                  s = (ex[i][0] + " " +  _translate("RunApp","copied")
+                     + " " + ex[i][1] + " "+  _translate("RunApp","should be")
+                     + " " + ex[i][2] + "\n")
+                  f.write(s)
+            if len(qsy) != 0:
+               s = (_translate("RunApp","Stations who gave up without a QSO")
+                  + "\n")
+               f.write(s)
+               s = ""
+               for i in range(len(qsy)):
+                  s += qsy[i]
+                  if (i+1) % 8 == 0:
+                     s += "\n"
+                     f.write(s)
+                     s = ""
+                  else:
+                     s += " "
+               if s != "":
+                  s = s[:-1] + "\n"
+                  f.write(s)
 
    def saveLog(self):
       _translate = QtCore.QCoreApplication.translate
