@@ -142,7 +142,7 @@
              <string>Station and Parameters</string>
             </property>
             <property name="accessibleDescription">
-             <string> Station Data input tab and simulator parameter tab</string>
+             <string>Station Data input tab and simulator parameter tab</string>
             </property>
             <property name="currentIndex">
              <number>0</number>
@@ -359,7 +359,7 @@
                     <string>CW Reverse</string>
                    </property>
                    <property name="accessibleDescription">
-                    <string>CW reverse</string>
+                    <string>CW Reverse</string>
                    </property>
                    <property name="text">
                     <string>CWR</string>
@@ -430,7 +430,7 @@
                     <string>RIT value in Hz</string>
                    </property>
                    <property name="accessibleName">
-                    <string>RIT Value</string>
+                    <string>RIT value</string>
                    </property>
                    <property name="accessibleDescription">
                     <string>RIT value in Hz</string>
@@ -509,7 +509,7 @@
                     <enum>Qt::TabFocus</enum>
                    </property>
                    <property name="toolTip">
-                    <string>Show stations, that in log that give up and QSY</string>
+                    <string>Show stations in log that give up and QSY</string>
                    </property>
                    <property name="accessibleName">
                     <string>QSY</string>
@@ -555,7 +555,7 @@
                     <string>QRM</string>
                    </property>
                    <property name="accessibleDescription">
-                    <string> Add QRM stations</string>
+                    <string>Add QRM stations</string>
                    </property>
                    <property name="text">
                     <string>QRM</string>
@@ -587,13 +587,13 @@
                     <enum>Qt::StrongFocus</enum>
                    </property>
                    <property name="toolTip">
-                    <string>Probability a lid doesn't send 599</string>
+                    <string>Probability a lid does not send 599</string>
                    </property>
                    <property name="accessibleName">
                     <string>Lid RST probability</string>
                    </property>
                    <property name="accessibleDescription">
-                    <string>Probability a lid doesn't send 599</string>
+                    <string>Probability a lid does not send 599</string>
                    </property>
                    <property name="maximum">
                     <double>1.000000000000000</double>
@@ -609,7 +609,7 @@
                     <enum>Qt::StrongFocus</enum>
                    </property>
                    <property name="toolTip">
-                    <string>&lt;html&gt;&lt;Probability of stations repeating information</string>
+                    <string>Probability of stations repeating information</string>
                    </property>
                    <property name="accessibleName">
                     <string>Repeat Probability</string>
@@ -703,13 +703,13 @@
                     <enum>Qt::TabFocus</enum>
                    </property>
                    <property name="toolTip">
-                    <string>With QSB checked adds flutter instead to callers with flutter probability</string>
+                    <string>With QSB checked instead adds flutter to callers with flutter probability</string>
                    </property>
                    <property name="accessibleName">
                     <string>Flutter</string>
                    </property>
                    <property name="accessibleDescription">
-                    <string>With QSB checked adds flutter instead to callers with flutter probability</string>
+                    <string>With QSB checked instead adds flutter to callers with flutter probability</string>
                    </property>
                    <property name="text">
                     <string>Flutter</string>
@@ -836,10 +836,10 @@
               <enum>Qt::TabFocus</enum>
              </property>
              <property name="accessibleName">
-              <string>N1 M M Input</string>
+              <string>N1MM Input</string>
              </property>
              <property name="accessibleDescription">
-              <string>N1 M M Input Panel</string>
+              <string>N1MM Input</string>
              </property>
              <attribute name="title">
               <string>N1MM Input</string>
@@ -1099,10 +1099,10 @@
               <enum>Qt::TabFocus</enum>
              </property>
              <property name="accessibleName">
-              <string>T R Entry</string>
+              <string>TR Entry</string>
              </property>
              <property name="accessibleDescription">
-              <string>T R Style entry</string>
+              <string>TR entry</string>
              </property>
              <attribute name="title">
               <string>TR Input</string>
