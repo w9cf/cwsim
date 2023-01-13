@@ -309,7 +309,7 @@
                     <string>My call</string>
                    </property>
                    <property name="accessibleName">
-                    <string>My Call</string>
+                    <string>My call</string>
                    </property>
                    <property name="accessibleDescription">
                     <string>My call</string>
@@ -750,13 +750,13 @@
                     <enum>Qt::StrongFocus</enum>
                    </property>
                    <property name="toolTip">
-                    <string>&quot;Probability a lid sends incorrect number</string>
+                    <string>Probability a lid sends incorrect number</string>
                    </property>
                    <property name="accessibleName">
                     <string>Lid Nr</string>
                    </property>
                    <property name="accessibleDescription">
-                    <string>&quot;Probability a lid sends incorrect number</string>
+                    <string>Probability a lid sends incorrect number</string>
                    </property>
                    <property name="maximum">
                     <double>1.000000000000000</double>
