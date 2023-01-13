@@ -1607,6 +1607,7 @@
     <addaction name="action_Save_Configuration"/>
     <addaction name="action_Update_Default_Configuration_on_Exit"/>
     <addaction name="action_Write_Simulation_Summary_File"/>
+    <addaction name="action_Overwrite_summary_to_cwsim_txt_when_simulation_ends"/>
     <addaction name="action_Copy_Log"/>
     <addaction name="action_Exit"/>
    </widget>
@@ -1708,6 +1709,17 @@
   <action name="action_Write_Simulation_Summary_File">
    <property name="text">
     <string>&amp;Write Simulation Summary File</string>
+   </property>
+  </action>
+  <action name="action_Overwrite_summary_to_cwsim_txt_when_simulation_ends">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Overwrite summary to cwsim.txt when simulation ends</string>
    </property>
   </action>
  </widget>

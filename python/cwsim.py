@@ -160,6 +160,9 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
          self.alwaysUpdate)
       self.action_Update_Default_Configuration.triggered.connect(
          self.updateFile)
+      self.\
+         action_Overwrite_summary_to_cwsim_txt_when_simulation_ends.\
+         triggered.connect(self.alwaysSummary)
       self.tqrmSpinBox.valueChanged.connect(self.tqrm)
       self.lidRstProbSpinBox.valueChanged.connect(self.lidRstProb)
       self.lidNrProbSpinBox.valueChanged.connect(self.lidNrProb)
@@ -216,6 +219,9 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
    def syncGui(self):
       self.action_Update_Default_Configuration_on_Exit.setChecked(
          self.contest.saveini != 0)
+      self.\
+         action_Overwrite_summary_to_cwsim_txt_when_simulation_ends.\
+         setChecked(self.contest.savesummary != 0)
       self.callLine.setText(self.contest.call)
       self.wpmSpinBox.setValue(self.contest.wpm)
       self.bandwidthSpinBox.setValue(self.contest.bandwidth)
@@ -270,7 +276,11 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
          caption=_translate("RunApp","Save Summary File")
          ,directory=os.getenv('HOME')
          ,filter=_translate("RunApp","txt") + " (*.txt)")
+      self.writeSummary(filename)
+
+   def writeSummary(self,filename):
       if filename != "":
+         _translate = QtCore.QCoreApplication.translate
          with open(filename,'w') as f:
             s = (self.contest.call + " " + _translate("RunApp","cwsim summary")
                + " " + datetime.datetime.now().strftime("%c") + "\n")
@@ -419,6 +429,12 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
       else:
          self.contest.saveini = 0
 
+   def alwaysSummary(self,s):
+      if s:
+         self.contest.savesummary = 1
+      else:
+         self.contest.savesummary = 0
+
    def looksLikeCall(self,s):
       return (self.re1.match(s) is not None or
               self.re2.match(s) is not None or
@@ -490,6 +506,9 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
          self.startStopButton.setText(_translate("RunApp","Start"))
          for sc in self.sclist:
             sc.setEnabled(False)
+         if self.contest.savesummary != 0:
+            filename = os.path.join(os.getcwd(),"cwsim.txt")
+            self.writeSummary(filename)
       else:
          self.resetCounters()
          self.clocktimer.start(500)
