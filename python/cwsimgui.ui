@@ -1405,13 +1405,13 @@
                 <enum>Qt::TabFocus</enum>
                </property>
                <property name="toolTip">
-                <string>Start or stop contest</string>
+                <string>Start or stop contest Alt+x</string>
                </property>
                <property name="accessibleName">
                 <string>Start/Stop</string>
                </property>
                <property name="accessibleDescription">
-                <string>Start or stop contest</string>
+                <string>Start or stop contest Alt+x</string>
                </property>
                <property name="text">
                 <string>Start</string>
