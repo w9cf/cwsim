@@ -1,22 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-# Copyright (C) 2022 Kevin E. Schmidt.
-#
-# This file is part of cwsim <https://github.com/w9cf/cwsim/>
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <https://www.gnu.org/licenses/>.
--->
 <ui version="4.0">
  <class>CwsimMainWindow</class>
  <widget class="QMainWindow" name="CwsimMainWindow">
@@ -416,13 +398,13 @@
                     <enum>Qt::TabFocus</enum>
                    </property>
                    <property name="toolTip">
-                    <string>Sidetone audio level</string>
+                    <string>Sidetone level</string>
                    </property>
                    <property name="accessibleName">
                     <string>Sidetone level</string>
                    </property>
                    <property name="accessibleDescription">
-                    <string>Sidteone level</string>
+                    <string>Sidetone level</string>
                    </property>
                    <property name="value">
                     <number>10</number>
@@ -1117,7 +1099,7 @@
               <enum>Qt::TabFocus</enum>
              </property>
              <property name="accessibleName">
-              <string>TR Entry</string>
+              <string>TR entry</string>
              </property>
              <property name="accessibleDescription">
               <string>TR entry</string>
