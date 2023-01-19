@@ -9,3 +9,7 @@ linguist xx_XX.ts
 to edit the translation file. Once satisfied make the release file
 lrelease xx_XX.ts -qm xx_XX.qm
 to get the compressed translation file used by cwsim.py
+
+The it_IT.ts file contains an italian translation by Gabrielle Battaglia,
+IZ4APU. Any mistakes should be blamed on Kevin, W9CF, who transcribed the
+english from linguist and the italian from Gabry, IZ4APU, into linguist.
