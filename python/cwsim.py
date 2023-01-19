@@ -281,7 +281,7 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
    def writeSummary(self,filename):
       if filename != "":
          _translate = QtCore.QCoreApplication.translate
-         with open(filename,'w') as f:
+         with open(filename,'w',encoding='utf8') as f:
             s = (self.contest.call + " " + _translate("RunApp","cwsim summary")
                + " " + datetime.datetime.now().strftime("%c") + "\n")
             f.write(s)
@@ -410,7 +410,7 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
                header.append("")
             else:
                header.append(item.text())
-         with open(filename,'w') as f:
+         with open(filename,'w',encoding='utf8') as f:
             writer = csv.writer(f,lineterminator='\n')
             writer.writerow(header)
             for i in range(self.logTable.rowCount()):
