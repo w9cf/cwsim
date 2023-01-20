@@ -694,7 +694,7 @@
     <message>
         <location filename="../mplwidget.py" line="41"/>
         <source>QS0s/Hour</source>
-        <translation>QSO all&apos;ora</translation>
+        <translation>QSO per ora</translation>
     </message>
 </context>
 <context>
@@ -822,7 +822,7 @@
     <message>
         <location filename="../cwsim.py" line="303"/>
         <source>Lids</source>
-        <translation>Cattivi operatori</translation>
+        <translation>Difficoltà</translation>
     </message>
     <message>
         <location filename="../cwsim.py" line="306"/>
@@ -872,7 +872,7 @@
     <message>
         <location filename="../cwsim.py" line="335"/>
         <source>QSOs/Hour for each 5 minute interval</source>
-        <translation>QSO all&apos;ora, suddiviso in intervalli da 5 minuti</translation>
+        <translation>QSO per ora, suddiviso in intervalli da 5 minuti</translation>
     </message>
     <message>
         <location filename="../cwsim.py" line="359"/>
@@ -887,12 +887,12 @@
     <message>
         <location filename="../cwsim.py" line="377"/>
         <source>copied</source>
-        <translation>copiati</translation>
+        <translation>copiato</translation>
     </message>
     <message>
         <location filename="../cwsim.py" line="377"/>
         <source>should be</source>
-        <translation>doveva essere</translation>
+        <translation>era</translation>
     </message>
     <message>
         <location filename="../cwsim.py" line="382"/>
