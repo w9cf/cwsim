@@ -43,9 +43,10 @@ jobs:
            wine C:/Python38/Scripts/pyuic5.exe -i 3 -o cwsimgui.py cwsimgui.ui
            wine C:/Python38/Scripts/pyinstaller.exe  -w -F --clean \
               --add-data "MASTER.SCP;." --add-data "cwsimgui.ui;." \
+              --add-data "translate/*.qm;translate/" \
               -n cwsim cwsim.py
            cd ..
-           RELEASE="0.01"
+           RELEASE="0.04"
            echo "G_RELEASE=${RELEASE}" >> $GITHUB_ENV
            rm -rf tmp
            mkdir -p tmp
