@@ -1046,6 +1046,10 @@ if __name__ == "__main__":
       tdir = os.path.dirname(sys.executable)
    else:
       tdir = os.path.dirname(__file__)
+   try:
+      tdir = sys._MEIPASS # check for translations in pyinstall temp directory
+   except:
+      pass
    tfile = QtCore.QLocale.system().name() + '.qm'
    tdir = os.path.join(tdir,'translate')
    translator.load(tfile,tdir)
