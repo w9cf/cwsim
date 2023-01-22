@@ -795,132 +795,132 @@
         <translation>Condizioni</translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="293"/>
+        <location filename="../cwsim.py" line="294"/>
         <source>QRN</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="295"/>
+        <location filename="../cwsim.py" line="296"/>
         <source>QRM</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="297"/>
+        <location filename="../cwsim.py" line="298"/>
         <source>QSB</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="299"/>
+        <location filename="../cwsim.py" line="300"/>
         <source>Flutter</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="301"/>
+        <location filename="../cwsim.py" line="302"/>
         <source>QSY</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="303"/>
+        <location filename="../cwsim.py" line="304"/>
         <source>Lids</source>
         <translation>Difficoltà</translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="306"/>
+        <location filename="../cwsim.py" line="309"/>
         <source>Activity</source>
         <translation>Attività</translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="309"/>
+        <location filename="../cwsim.py" line="312"/>
         <source>Duration</source>
         <translation>Durata</translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="312"/>
+        <location filename="../cwsim.py" line="315"/>
         <source>Raw Points</source>
         <translation>Punti totali</translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="315"/>
+        <location filename="../cwsim.py" line="318"/>
         <source>Raw Prefixes</source>
         <translation>Prefissi totali</translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="318"/>
+        <location filename="../cwsim.py" line="321"/>
         <source>Raw Score</source>
         <translation>Punteggio totale</translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="321"/>
+        <location filename="../cwsim.py" line="324"/>
         <source>Verified Points</source>
         <translation>Punti verificati</translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="324"/>
+        <location filename="../cwsim.py" line="327"/>
         <source>Verified Prefixes</source>
         <translation>Prefissi verificati</translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="327"/>
+        <location filename="../cwsim.py" line="330"/>
         <source>Verified Score</source>
         <translation>Punteggio verificato</translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="332"/>
+        <location filename="../cwsim.py" line="335"/>
         <source>Error percentage</source>
         <translation>Percentuale d&apos;errore</translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="335"/>
+        <location filename="../cwsim.py" line="338"/>
         <source>QSOs/Hour for each 5 minute interval</source>
         <translation>QSO per ora, suddiviso in intervalli da 5 minuti</translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="359"/>
+        <location filename="../cwsim.py" line="362"/>
         <source>Calls miscopied</source>
         <translation>Nominativi copiati male</translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="374"/>
+        <location filename="../cwsim.py" line="377"/>
         <source>Exchanges miscopied</source>
         <translation>Progressivi copiati male</translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="377"/>
+        <location filename="../cwsim.py" line="380"/>
         <source>copied</source>
         <translation>copiato</translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="377"/>
+        <location filename="../cwsim.py" line="380"/>
         <source>should be</source>
         <translation>era</translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="382"/>
+        <location filename="../cwsim.py" line="385"/>
         <source>Stations who gave up without a QSO</source>
         <translation>Stazioni che hanno abbandonato senza terminare il QSO</translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="400"/>
+        <location filename="../cwsim.py" line="403"/>
         <source>Save Log File</source>
         <translation>Salva il log</translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="400"/>
+        <location filename="../cwsim.py" line="403"/>
         <source>csv</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="506"/>
+        <location filename="../cwsim.py" line="509"/>
         <source>Start</source>
         <translation>Avvia</translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="527"/>
+        <location filename="../cwsim.py" line="530"/>
         <source>Stop</source>
         <translation>Ferma</translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="545"/>
+        <location filename="../cwsim.py" line="548"/>
         <source>
    Keyboard Shortcuts:
       Alt+X = Start/Stop simulation run
@@ -961,7 +961,7 @@
       </translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="568"/>
+        <location filename="../cwsim.py" line="571"/>
         <source>
    Function Keys:
       F1 = Send CQ
@@ -986,14 +986,19 @@
       </translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="669"/>
+        <location filename="../cwsim.py" line="672"/>
         <source>Rate</source>
         <translation>Valutazione</translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="670"/>
+        <location filename="../cwsim.py" line="673"/>
         <source>QSOs/Hr (5m)</source>
         <translation>QSO per Ora (5m)</translation>
+    </message>
+    <message>
+        <location filename="../cwsim.py" line="306"/>
+        <source>None</source>
+        <translation>Nessuna</translation>
     </message>
 </context>
 </TS>

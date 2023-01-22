@@ -289,6 +289,7 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
                + " " + _translate("RunApp","WPM") + "\n")
             f.write(s)
             s = _translate("RunApp","Conditions") + " "
+            s0 = s
             if self.contest.qrn:
                s += _translate("RunApp","QRN") + " "
             if self.contest.qrm:
@@ -301,6 +302,8 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
                s += _translate("RunApp","QSY") + " "
             if self.contest.lids:
                s += _translate("RunApp","Lids") + " "
+            if s == s0:
+               s += _translate("RunApp","None")
             s += "\n"
             f.write(s)
             s = (_translate("RunApp","Activity") + " "
