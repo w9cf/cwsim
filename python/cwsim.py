@@ -1040,6 +1040,8 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
       
 
 if __name__ == "__main__":
+   import locale
+   locale.setlocale(locale.LC_ALL,"")
    app = QApplication(sys.argv)
    translator = QtCore.QTranslator()
    if getattr(sys,'frozen',False):
