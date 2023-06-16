@@ -163,6 +163,9 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
       self.\
          action_Overwrite_summary_to_cwsim_txt_when_simulation_ends.\
          triggered.connect(self.alwaysSummary)
+      self.\
+         actionAppend_summary_to_cwsim_txt_when_simulation_ends.\
+         triggered.connect(self.alwaysAppendSummary)
       self.tqrmSpinBox.valueChanged.connect(self.tqrm)
       self.lidRstProbSpinBox.valueChanged.connect(self.lidRstProb)
       self.lidNrProbSpinBox.valueChanged.connect(self.lidNrProb)
@@ -221,7 +224,10 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
          self.contest.saveini != 0)
       self.\
          action_Overwrite_summary_to_cwsim_txt_when_simulation_ends.\
-         setChecked(self.contest.savesummary != 0)
+         setChecked(self.contest.savesummary == 1)
+      self.\
+         actionAppend_summary_to_cwsim_txt_when_simulation_ends.\
+         setChecked(self.contest.savesummary == 2)
       self.callLine.setText(self.contest.call)
       self.wpmSpinBox.setValue(self.contest.wpm)
       self.bandwidthSpinBox.setValue(self.contest.bandwidth)
@@ -279,9 +285,14 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
       self.writeSummary(filename)
 
    def writeSummary(self,filename):
+      mode = "w"
+      if self.contest.savesummary == 2:
+         mode = "a"
       if filename != "":
          _translate = QtCore.QCoreApplication.translate
-         with open(filename,'w',encoding='utf8') as f:
+         with open(filename,mode,encoding='utf8') as f:
+            if self.contest.savesummary == 2:
+               f.write("\n")
             s = (self.contest.call + " " + _translate("RunApp","cwsim summary")
                + " " + datetime.datetime.now().strftime("%c") + "\n")
             f.write(s)
@@ -435,6 +446,20 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
    def alwaysSummary(self,s):
       if s:
          self.contest.savesummary = 1
+         if (self.actionAppend_summary_to_cwsim_txt_when_simulation_ends.
+            isChecked()): 
+            self.actionAppend_summary_to_cwsim_txt_when_simulation_ends.\
+               setChecked(False)
+      else:
+         self.contest.savesummary = 0
+
+   def alwaysAppendSummary(self,s):
+      if s:
+         self.contest.savesummary = 2
+         if (self.action_Overwrite_summary_to_cwsim_txt_when_simulation_ends.
+            isChecked()): 
+            self.action_Overwrite_summary_to_cwsim_txt_when_simulation_ends.\
+               setChecked(False) 
       else:
          self.contest.savesummary = 0
 
