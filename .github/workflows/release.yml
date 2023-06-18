@@ -39,6 +39,7 @@ jobs:
               TargetDir="C:Python38" \
               PrependPath=1
            wine C:Python38/python.exe -m pip install --upgrade pip
+           wine C:Python38/python.exe -m pip install contourpy==1.0.1
            wine C:Python38/python.exe -m pip install \
               -r requirements_qt5.txt
            wine C:Python38/python.exe -m pip install pyinstaller
