@@ -23,7 +23,9 @@ jobs:
            export WINEARCH=win32
            sudo dpkg --add-architecture i386
            sudo apt-get update -y
+           sudo apt-get install libatomic1:i386
            sudo apt-get install libgcc-s1:i386
+           sudo apt-get install libstdc++6:i386
            sudo apt-get install wine32 -y
            sudo apt-get install wine -y
            sudo apt-get install winetricks -y
