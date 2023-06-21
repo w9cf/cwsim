@@ -50,7 +50,7 @@ jobs:
               --add-data "translate/*.qm;translate/" \
               -n cwsim cwsim.py
            cd ..
-           RELEASE="0.04"
+           RELEASE="0.06"
            echo "G_RELEASE=${RELEASE}" >> $GITHUB_ENV
            rm -rf tmp
            mkdir -p tmp
