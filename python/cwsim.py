@@ -95,7 +95,7 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
       callval = ToUpperRegularExpressionValidator(
          QtCore.QRegularExpression(r'^[a-zA-Z0-9/?]*$'),self)
       nrval = QtGui.QRegularExpressionValidator(
-         QtCore.QRegularExpression(r'^[0-9]*$'),self)
+         QtCore.QRegularExpression(r'^[0-9]+$'),self)
       trexval = ToUpperRegularExpressionValidator(
          QtCore.QRegularExpression(r'^\ *[0-9]*\ *[0-9]*\ *[a-zA-Z0-9/?]*$'),self)
       self.callLine.setValidator(callval)
@@ -887,6 +887,8 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
       self._callsent = False
       self._rawQsoCount += 1
       h,m,s = self.contest.time()
+      if self._rst == "":
+         self._rst = "599"
       self._lastLog = [self._hiscall, int(self._nr), int(self._rst)]
       time.sleep(0) #yield
       rawPfx = self.prefix.getPrefix(self._hiscall)
