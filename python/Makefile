@@ -10,7 +10,7 @@ pyqt6:
 	pyuic6 -i 3 -o cwsimgui.py cwsimgui.ui
 
 cwsim.exe: pyqt6
-	pyinstaller.exe -w -F --clean --add-data "MASTER.SCP;." --add-data "cwsimgui.ui;." -n cwsim cwsim.py
+	pyinstaller.exe -w -F --clean --add-data "MASTER.SCP;." --add-data "cwsimgui.ui;." --add-data "translate/zh_CN.qm;translate/" -n cwsim cwsim.py
 
 distclean:
 	rm -rf cwsimgui.py
