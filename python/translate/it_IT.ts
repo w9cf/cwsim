@@ -696,7 +696,7 @@
     <message>
         <location filename="../cwsimgui.ui" line="1362"/>
         <source>Duration (QSOs)</source>
-        <translation>Durata (QSOs)</translation>
+        <translation>Durata (QSO)</translation>
     </message>
 </context>
 <context>
