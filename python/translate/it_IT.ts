@@ -494,152 +494,152 @@
         <translation>Chiamata singola</translation>
     </message>
     <message>
-        <location filename="../cwsimgui.ui" line="1344"/>
+        <location filename="../cwsimgui.ui" line="1357"/>
         <source>Duration (Min)</source>
         <translation>Durata (Min)</translation>
     </message>
     <message>
-        <location filename="../cwsimgui.ui" line="1389"/>
+        <location filename="../cwsimgui.ui" line="1430"/>
         <source>Activity</source>
         <translation>Attività</translation>
     </message>
     <message>
-        <location filename="../cwsimgui.ui" line="1367"/>
+        <location filename="../cwsimgui.ui" line="1408"/>
         <source>Contest simulation duration</source>
         <translation>Durata della simulazione Contest</translation>
     </message>
     <message>
-        <location filename="../cwsimgui.ui" line="1364"/>
+        <location filename="../cwsimgui.ui" line="1405"/>
         <source>Duration</source>
         <translation>Durata</translation>
     </message>
     <message>
-        <location filename="../cwsimgui.ui" line="1392"/>
+        <location filename="../cwsimgui.ui" line="1433"/>
         <source>Average number of calling stations</source>
         <translation>Media del numero di chiamate contemporanee</translation>
     </message>
     <message>
-        <location filename="../cwsimgui.ui" line="1411"/>
+        <location filename="../cwsimgui.ui" line="1383"/>
         <source>Start/Stop</source>
         <translation>Avvia/Ferma</translation>
     </message>
     <message>
-        <location filename="../cwsimgui.ui" line="1417"/>
+        <location filename="../cwsimgui.ui" line="1389"/>
         <source>Start</source>
         <translation>Avvia</translation>
     </message>
     <message>
-        <location filename="../cwsimgui.ui" line="1436"/>
+        <location filename="../cwsimgui.ui" line="1455"/>
         <source>Score</source>
         <translation>Punteggio</translation>
     </message>
     <message>
-        <location filename="../cwsimgui.ui" line="1433"/>
+        <location filename="../cwsimgui.ui" line="1452"/>
         <source>Panel with current score</source>
         <translation>Finestra col punteggio corrente</translation>
     </message>
     <message>
-        <location filename="../cwsimgui.ui" line="1454"/>
+        <location filename="../cwsimgui.ui" line="1473"/>
         <source>Score table</source>
         <translation>Tabella dei punteggi</translation>
     </message>
     <message>
-        <location filename="../cwsimgui.ui" line="1457"/>
+        <location filename="../cwsimgui.ui" line="1476"/>
         <source>Score table of raw and correct contacts and multipliers</source>
         <translation>Tabella dei punteggi per i calls trasmessi, quelli corretti e dei moltiplicatori</translation>
     </message>
     <message>
-        <location filename="../cwsimgui.ui" line="1535"/>
+        <location filename="../cwsimgui.ui" line="1554"/>
         <source>Rate</source>
         <translation>Tasso di QSO</translation>
     </message>
     <message>
-        <location filename="../cwsimgui.ui" line="1559"/>
+        <location filename="../cwsimgui.ui" line="1578"/>
         <source>Rate Plot</source>
         <translation>Grafico del tasso di QSO</translation>
     </message>
     <message>
-        <location filename="../cwsimgui.ui" line="1562"/>
+        <location filename="../cwsimgui.ui" line="1581"/>
         <source>Plot of contact rate in 5 minute intervals</source>
         <translation>Valutazione suddivisa per fascie da 5 minuti ciascuna</translation>
     </message>
     <message>
-        <location filename="../cwsimgui.ui" line="1603"/>
+        <location filename="../cwsimgui.ui" line="1622"/>
         <source>&amp;File</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cwsimgui.ui" line="1620"/>
+        <location filename="../cwsimgui.ui" line="1639"/>
         <source>&amp;Help</source>
         <translation>&amp;Aiuto</translation>
     </message>
     <message>
-        <location filename="../cwsimgui.ui" line="1632"/>
+        <location filename="../cwsimgui.ui" line="1651"/>
         <source>toolBar</source>
         <translation>Barra degli strumenti</translation>
     </message>
     <message>
-        <location filename="../cwsimgui.ui" line="1643"/>
+        <location filename="../cwsimgui.ui" line="1662"/>
         <source>&amp;Exit</source>
         <translation>&amp;Esci</translation>
     </message>
     <message>
-        <location filename="../cwsimgui.ui" line="1648"/>
+        <location filename="../cwsimgui.ui" line="1667"/>
         <source>&amp;Pile up</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cwsimgui.ui" line="1653"/>
+        <location filename="../cwsimgui.ui" line="1672"/>
         <source>&amp;Single calls</source>
         <translation>&amp;Singolo QRZ</translation>
     </message>
     <message>
-        <location filename="../cwsimgui.ui" line="1658"/>
+        <location filename="../cwsimgui.ui" line="1677"/>
         <source>&amp;End run</source>
         <translation>&amp;Ferma</translation>
     </message>
     <message>
-        <location filename="../cwsimgui.ui" line="1663"/>
+        <location filename="../cwsimgui.ui" line="1682"/>
         <source>&amp;About</source>
         <translation>&amp;Info su</translation>
     </message>
     <message>
-        <location filename="../cwsimgui.ui" line="1671"/>
+        <location filename="../cwsimgui.ui" line="1690"/>
         <source>&amp;Load Configuration</source>
         <translation>&amp;Carica configurazione</translation>
     </message>
     <message>
-        <location filename="../cwsimgui.ui" line="1676"/>
+        <location filename="../cwsimgui.ui" line="1695"/>
         <source>&amp;Save Configuration</source>
         <translation>&amp;Salva configurazione</translation>
     </message>
     <message>
-        <location filename="../cwsimgui.ui" line="1681"/>
+        <location filename="../cwsimgui.ui" line="1700"/>
         <source>&amp;Keyboard Shortcuts</source>
         <translation>&amp;Abbreviazioni da tastiera</translation>
     </message>
     <message>
-        <location filename="../cwsimgui.ui" line="1686"/>
+        <location filename="../cwsimgui.ui" line="1705"/>
         <source>&amp;Copy Log</source>
         <translation>Copia &amp;Log</translation>
     </message>
     <message>
-        <location filename="../cwsimgui.ui" line="1691"/>
+        <location filename="../cwsimgui.ui" line="1710"/>
         <source>&amp;Function Key CW</source>
         <translation>&amp;Tasti funzione CW</translation>
     </message>
     <message>
-        <location filename="../cwsimgui.ui" line="1702"/>
+        <location filename="../cwsimgui.ui" line="1721"/>
         <source>&amp;Always Update Default Configuration on Exit</source>
         <translation>Aggiorna la configurazione all&apos;&amp;uscita</translation>
     </message>
     <message>
-        <location filename="../cwsimgui.ui" line="1707"/>
+        <location filename="../cwsimgui.ui" line="1726"/>
         <source>&amp;Update Default Configuration</source>
         <translation>&amp;Aggiorna la configurazione di default</translation>
     </message>
     <message>
-        <location filename="../cwsimgui.ui" line="1712"/>
+        <location filename="../cwsimgui.ui" line="1731"/>
         <source>&amp;Write Simulation Summary File</source>
         <translation>Scrivi il &amp;report della simulazione</translation>
     </message>
@@ -669,12 +669,12 @@
         <translation>TR inserito</translation>
     </message>
     <message>
-        <location filename="../cwsimgui.ui" line="1414"/>
+        <location filename="../cwsimgui.ui" line="1386"/>
         <source>Start or stop contest Alt+x</source>
         <translation>Premere alt+x per avviare o fermare</translation>
     </message>
     <message>
-        <location filename="../cwsimgui.ui" line="1723"/>
+        <location filename="../cwsimgui.ui" line="1742"/>
         <source>&amp;Overwrite summary to cwsim.txt when simulation ends</source>
         <translation>Sovrascrivi il report (cwsim.txt), al &amp;termine della simulazione</translation>
     </message>
@@ -684,9 +684,19 @@
         <translation>Probabilità che un cattivo operatore invii un Progressivo sbagliato</translation>
     </message>
     <message>
-        <location filename="../cwsimgui.ui" line="1731"/>
+        <location filename="../cwsimgui.ui" line="1750"/>
         <source>A&amp;ppend summary to cwsim.txt when simulation ends</source>
         <translation>A&amp;ggiungi il report (cwsim.txt), al termine della simulazione</translation>
+    </message>
+    <message>
+        <location filename="../cwsimgui.ui" line="1344"/>
+        <source>Choose duration, total time in minutes, or total QSOs</source>
+        <translation>Durata, tempo totale in minuti, o QSO totale</translation>
+    </message>
+    <message>
+        <location filename="../cwsimgui.ui" line="1362"/>
+        <source>Duration (QSOs)</source>
+        <translation>Durata (QSOs)</translation>
     </message>
 </context>
 <context>
@@ -705,227 +715,227 @@
 <context>
     <name>RunApp</name>
     <message>
-        <location filename="../cwsim.py" line="208"/>
+        <location filename="../cwsim.py" line="213"/>
         <source>UTC</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="208"/>
+        <location filename="../cwsim.py" line="213"/>
         <source>Call</source>
         <translation>Nominativo</translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="208"/>
+        <location filename="../cwsim.py" line="213"/>
         <source>Recv</source>
         <translation>RX</translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="208"/>
+        <location filename="../cwsim.py" line="213"/>
         <source>Sent</source>
         <translation>TX</translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="208"/>
+        <location filename="../cwsim.py" line="213"/>
         <source>Pref</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="208"/>
+        <location filename="../cwsim.py" line="213"/>
         <source>Chk</source>
         <translation>CFM</translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="212"/>
+        <location filename="../cwsim.py" line="217"/>
         <source>Points</source>
         <translation>Punti</translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="212"/>
+        <location filename="../cwsim.py" line="217"/>
         <source>Mults</source>
         <translation>Moltip</translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="212"/>
+        <location filename="../cwsim.py" line="217"/>
         <source>Score</source>
         <translation>Punteggio</translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="215"/>
+        <location filename="../cwsim.py" line="220"/>
         <source>Raw</source>
         <translation>Originale</translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="215"/>
+        <location filename="../cwsim.py" line="220"/>
         <source>Verified</source>
         <translation>Verificato</translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="261"/>
+        <location filename="../cwsim.py" line="279"/>
         <source>Open Configuration</source>
         <translation>Apri cnfigurazione</translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="261"/>
+        <location filename="../cwsim.py" line="279"/>
         <source>Configuration Files</source>
         <translation>File di configurazione</translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="281"/>
+        <location filename="../cwsim.py" line="299"/>
         <source>Save Summary File</source>
         <translation>Salva il report della simulazione</translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="281"/>
+        <location filename="../cwsim.py" line="299"/>
         <source>txt</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="296"/>
+        <location filename="../cwsim.py" line="314"/>
         <source>cwsim summary</source>
         <translation>Report cwsim</translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="299"/>
+        <location filename="../cwsim.py" line="317"/>
         <source>CW Speed</source>
         <translation>Velocità CW</translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="299"/>
+        <location filename="../cwsim.py" line="317"/>
         <source>WPM</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="302"/>
+        <location filename="../cwsim.py" line="320"/>
         <source>Conditions</source>
         <translation>Condizioni</translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="305"/>
+        <location filename="../cwsim.py" line="323"/>
         <source>QRN</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="307"/>
+        <location filename="../cwsim.py" line="325"/>
         <source>QRM</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="309"/>
+        <location filename="../cwsim.py" line="327"/>
         <source>QSB</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="311"/>
+        <location filename="../cwsim.py" line="329"/>
         <source>Flutter</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="313"/>
+        <location filename="../cwsim.py" line="331"/>
         <source>QSY</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="315"/>
+        <location filename="../cwsim.py" line="333"/>
         <source>Lids</source>
         <translation>Difficoltà</translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="320"/>
+        <location filename="../cwsim.py" line="338"/>
         <source>Activity</source>
         <translation>Attività</translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="323"/>
+        <location filename="../cwsim.py" line="341"/>
         <source>Duration</source>
         <translation>Durata</translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="326"/>
+        <location filename="../cwsim.py" line="344"/>
         <source>Raw Points</source>
         <translation>Punti totali</translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="329"/>
+        <location filename="../cwsim.py" line="347"/>
         <source>Raw Prefixes</source>
         <translation>Prefissi totali</translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="332"/>
+        <location filename="../cwsim.py" line="350"/>
         <source>Raw Score</source>
         <translation>Punteggio totale</translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="335"/>
+        <location filename="../cwsim.py" line="353"/>
         <source>Verified Points</source>
         <translation>Punti verificati</translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="338"/>
+        <location filename="../cwsim.py" line="356"/>
         <source>Verified Prefixes</source>
         <translation>Prefissi verificati</translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="341"/>
+        <location filename="../cwsim.py" line="359"/>
         <source>Verified Score</source>
         <translation>Punteggio verificato</translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="346"/>
+        <location filename="../cwsim.py" line="364"/>
         <source>Error percentage</source>
         <translation>Percentuale d&apos;errore</translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="349"/>
+        <location filename="../cwsim.py" line="367"/>
         <source>QSOs/Hour for each 5 minute interval</source>
         <translation>QSO per ora, suddiviso in intervalli da 5 minuti</translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="373"/>
+        <location filename="../cwsim.py" line="391"/>
         <source>Calls miscopied</source>
         <translation>Nominativi copiati male</translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="388"/>
+        <location filename="../cwsim.py" line="406"/>
         <source>Exchanges miscopied</source>
         <translation>Progressivi copiati male</translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="391"/>
+        <location filename="../cwsim.py" line="409"/>
         <source>copied</source>
         <translation>copiato</translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="391"/>
+        <location filename="../cwsim.py" line="409"/>
         <source>should be</source>
         <translation>era</translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="396"/>
+        <location filename="../cwsim.py" line="414"/>
         <source>Stations who gave up without a QSO</source>
         <translation>Stazioni che hanno abbandonato senza terminare il QSO</translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="414"/>
+        <location filename="../cwsim.py" line="432"/>
         <source>Save Log File</source>
         <translation>Salva il log</translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="414"/>
+        <location filename="../cwsim.py" line="432"/>
         <source>csv</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="534"/>
+        <location filename="../cwsim.py" line="553"/>
         <source>Start</source>
         <translation>Avvia</translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="555"/>
+        <location filename="../cwsim.py" line="569"/>
         <source>Stop</source>
         <translation>Ferma</translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="573"/>
+        <location filename="../cwsim.py" line="587"/>
         <source>
    Keyboard Shortcuts:
       Alt+X = Start/Stop simulation run
@@ -966,7 +976,7 @@
       </translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="596"/>
+        <location filename="../cwsim.py" line="610"/>
         <source>
    Function Keys:
       F1 = Send CQ
@@ -991,17 +1001,17 @@
       </translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="697"/>
+        <location filename="../cwsim.py" line="735"/>
         <source>Rate</source>
         <translation>Valutazione</translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="698"/>
+        <location filename="../cwsim.py" line="736"/>
         <source>QSOs/Hr (5m)</source>
         <translation>QSO per Ora (5m)</translation>
     </message>
     <message>
-        <location filename="../cwsim.py" line="317"/>
+        <location filename="../cwsim.py" line="335"/>
         <source>None</source>
         <translation>Nessuna</translation>
     </message>

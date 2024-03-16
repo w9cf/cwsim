@@ -134,6 +134,8 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
       self.startStopButton.clicked.connect(self.startStop)
       self.durationSpinBox.valueChanged.connect(self.duration)
       self.activitySpinBox.valueChanged.connect(self.activity)
+      self.durationComboBox.currentIndexChanged.connect(self.modecombo)
+      self.contestComboBox.currentIndexChanged.connect(self.modecombo)
       self.trF1Button.clicked.connect(self.f1)
       self.trF2Button.clicked.connect(self.f2)
       self.trF3Button.clicked.connect(self.f3)
@@ -203,7 +205,10 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
       self.ratetimer.timeout.connect(self.updateRate)
       nbin = self.contest.duration//5
       if nbin*5 < self.contest.duration: nbin += 1
-      self.ratehist = np.zeros(nbin)
+      if self.contest.mode in [RunMode.pileup_qsonr, RunMode.single_qsonr]:
+         nbin = self.contest.duration//20
+         nbin = np.maximum(nbin,2)
+      self.ratehist = np.zeros(nbin,np.int32)
       self.ratePlot.canvas.setaxes(nbin,5,300)
       self.logTable.setHorizontalHeaderLabels(
          [_translate("RunApp","UTC"),_translate("RunApp","Call")
@@ -218,6 +223,7 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
       self._rawPfxs = set()
       self._goodPfxs = set()
       self.prefix = Prefix()
+      self.nrchecked = 0
 
    def syncGui(self):
       self.action_Update_Default_Configuration_on_Exit.setChecked(
@@ -253,8 +259,20 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
       self.slowSpinBox.setValue(self.contest.slow)
       if self.contest.mode == RunMode.pileup:
          self.contestComboBox.setCurrentIndex(0)
+         self.durationComboBox.setCurrentIndex(0)
+         self.durationSpinBox.setMaximum(120)
       elif self.contest.mode == RunMode.single:
          self.contestComboBox.setCurrentIndex(1)
+         self.durationComboBox.setCurrentIndex(0)
+         self.durationSpinBox.setMaximum(120)
+      elif self.contest.mode == RunMode.pileup_qsonr:
+         self.contestComboBox.setCurrentIndex(0)
+         self.durationComboBox.setCurrentIndex(1)
+         self.durationSpinBox.setMaximum(500)
+      elif self.contest.mode == RunMode.single_qsonr:
+         self.contestComboBox.setCurrentIndex(1)
+         self.durationComboBox.setCurrentIndex(1)
+         self.durationSpinBox.setMaximum(500)
 
    def getFile(self):
       _translate = QtCore.QCoreApplication.translate
@@ -511,6 +529,7 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
 
    def resetCounters(self):
       self.contest.me.nr = 1
+      self.nrchecked = 0
       self._lastQso = [None,None,None]
       self._lastLog = [None,None,None]
       self._rawQsoCount = 0
@@ -541,11 +560,6 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
          self.resetCounters()
          self.clocktimer.start(500)
          self.ratetimer.start(1000)
-         i = self.contestComboBox.currentIndex()
-         if i == 0:
-            self.contest.mode = RunMode.pileup
-         elif i==1:
-            self.contest.mode = RunMode.single
          self.tr = self.entryTabs.currentIndex() == 1
          if self.tr:
             self.trCallEntry.setFocus()
@@ -649,12 +663,36 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
    def lids(self,s):
       self.contest.lids = (s // 2)
 
+   def modecombo(self,s):
+      i = self.contestComboBox.currentIndex()
+      j = self.durationComboBox.currentIndex()
+      if i == 0:
+         if j == 0:
+            self.contest.mode = RunMode.pileup
+            self.durationSpinBox.setMaximum(120)
+         elif j == 1:
+            self.contest.mode = RunMode.pileup_qsonr
+            self.durationSpinBox.setMaximum(500)
+      elif i==1:
+         if j == 0:
+            self.contest.mode = RunMode.single
+            self.durationSpinBox.setMaximum(120)
+         elif j == 1:
+            self.contest.mode = RunMode.single_qsonr
+            self.durationSpinBox.setMaximum(500)
+      self._updateduration(self.contest.duration)
 
    def duration(self,s):
       self.contest.duration = s
+      self._updateduration(s)
+
+   def _updateduration(self,s):
       nbin = s//5
       if nbin*5 < s: nbin += 1
-      h = np.zeros(nbin)
+      if self.contest.mode in [RunMode.pileup_qsonr, RunMode.single_qsonr]:
+         nbin = s//20
+         nbin = np.maximum(nbin,2)
+      h = np.zeros(nbin,dtype=np.int32)
       if nbin > len(self.ratehist):
          h[:len(self.ratehist)] = self.ratehist[:]
       else:
@@ -834,27 +872,26 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
       if chk == "":
          if trueCall in self._goodCalls:
             self.logTable.item(r,5).setText("Dupe")
-            return
          else:
             self._goodCalls.add(trueCall)
-
-         if goodPfx not in self._goodPfxs:
-            self._goodPfxs.add(goodPfx)
-         else:
-            goodPfx = ""
-         self.logTable.item(r,5).setText("")
-         self.logTable.item(r,4).setText(goodPfx)
-         self._goodQsoCount += 1
-         self.scoreTable.setItem(1,0,
-            QTableWidgetItem(str(self._goodQsoCount)))
-         self.scoreTable.setItem(1,1,QTableWidgetItem(
-            str(len(self._goodPfxs))))
-         score = str(self._goodQsoCount*len(self._goodPfxs))
-         self.scoreTable.setItem(1,2,QTableWidgetItem(score))
+            if goodPfx not in self._goodPfxs:
+               self._goodPfxs.add(goodPfx)
+            else:
+               goodPfx = ""
+            self.logTable.item(r,5).setText("")
+            self.logTable.item(r,4).setText(goodPfx)
+            self._goodQsoCount += 1
+            self.scoreTable.setItem(1,0,
+               QTableWidgetItem(str(self._goodQsoCount)))
+            self.scoreTable.setItem(1,1,QTableWidgetItem(
+               str(len(self._goodPfxs))))
+            score = str(self._goodQsoCount*len(self._goodPfxs))
+            self.scoreTable.setItem(1,2,QTableWidgetItem(score))
       elif chk == "NR":
          self.logTable.item(r,5).setText("NR "+str(trueNr))
       elif chk == "RST":
          self.logTable.item(r,5).setText("RST "+str(trueRst))
+      self.nrchecked = self.contest.me.nr-1
 
    def contestEnded(self):
       self.contestendedsig.emit()
@@ -939,7 +976,15 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
       self.contest.me.nr += 1
       s += 60*m+3600*h
       i = int(s/300)
-      if i >= len(self.ratehist): i -= 1
+      if i >= len(self.ratehist):
+         if self.contest.mode in [RunMode.pileup, RunMode.single]:
+            i = len(self.ratehist)-1
+         else:
+            nbin = i+1
+            h = np.zeros(nbin,np.int32)
+            h[:len(self.ratehist)] = self.ratehist
+            self.ratehist = h
+            self.ratePlot.canvas.setaxes(nbin,5,300)
       self.ratehist[i] += 12
       time.sleep(0) #yield
       self.ratePlot.canvas.newData(self.ratehist)

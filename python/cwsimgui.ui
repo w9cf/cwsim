@@ -1339,16 +1339,57 @@
               </widget>
              </item>
              <item row="0" column="1">
-              <widget class="QLabel" name="durationLabel">
-               <property name="text">
+              <widget class="QComboBox" name="durationComboBox">
+               <property name="toolTip">
+                <string>Choose duration, total time in minutes, or total QSOs</string>
+               </property>
+               <property name="editable">
+                <bool>false</bool>
+               </property>
+               <property name="currentText">
                 <string>Duration (Min)</string>
                </property>
+               <property name="currentIndex">
+                <number>0</number>
+               </property>
+               <item>
+                <property name="text">
+                 <string>Duration (Min)</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Duration (QSOs)</string>
+                </property>
+               </item>
               </widget>
              </item>
              <item row="0" column="2">
               <widget class="QLabel" name="activityLabel">
                <property name="text">
                 <string>Activity</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QPushButton" name="startStopButton">
+               <property name="focusPolicy">
+                <enum>Qt::TabFocus</enum>
+               </property>
+               <property name="toolTip">
+                <string>Start or stop contest Alt+x</string>
+               </property>
+               <property name="accessibleName">
+                <string>Start/Stop</string>
+               </property>
+               <property name="accessibleDescription">
+                <string>Start or stop contest Alt+x</string>
+               </property>
+               <property name="text">
+                <string>Start</string>
+               </property>
+               <property name="default">
+                <bool>false</bool>
                </property>
               </widget>
              </item>
@@ -1396,28 +1437,6 @@
                </property>
                <property name="maximum">
                 <number>111</number>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="0">
-              <widget class="QPushButton" name="startStopButton">
-               <property name="focusPolicy">
-                <enum>Qt::TabFocus</enum>
-               </property>
-               <property name="toolTip">
-                <string>Start or stop contest Alt+x</string>
-               </property>
-               <property name="accessibleName">
-                <string>Start/Stop</string>
-               </property>
-               <property name="accessibleDescription">
-                <string>Start or stop contest Alt+x</string>
-               </property>
-               <property name="text">
-                <string>Start</string>
-               </property>
-               <property name="default">
-                <bool>false</bool>
                </property>
               </widget>
              </item>

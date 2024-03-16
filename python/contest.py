@@ -38,6 +38,8 @@ class RunMode(enum.IntEnum):
   stop = 1
   pileup = 2
   single = 3
+  pileup_qsonr = 4
+  single_qsonr = 5
 
 class Contest():
    """
@@ -103,6 +105,7 @@ class Contest():
       self._rfgcal = np.frompyfunc(self.rfgfun,2,1)
       self._ritph = 0.0
       self._bufindex = np.arange(self._bufsize,dtype=np.float64)
+      self._extratime = 0
 #      self.ef = open('temp.out',mode='w')
 #      self.ef.close()
 #      self.ef = open('temp.out',mode='a')
@@ -271,7 +274,7 @@ class Contest():
                   self.me.app.lastQso()
 #               (trueCall, trueRst, trueNr) = s.dataToLastQso()
 #               print("contest Correct Info ",trueCall,trueRst,trueNr)
-      if self.mode == RunMode.single:
+      if self.mode in [RunMode.single, RunMode.single_qsonr]:
          if self.dxCount() == 0:
             s = DxStation(self._rng,self._keyer,self._callList,self.me,
                self._bufsize*self.bufcount/(60.0*self._rate),
@@ -310,7 +313,7 @@ class Contest():
          Inform all stations that we finished sending
          Add new calling station with Poisson probability if not single call
       """
-      if self.mode != RunMode.single:
+      if self.mode not in [RunMode.single, RunMode.single_qsonr]:
          if (StationMessage.CQ in self.me.msgs or
             (# fixme QsoList not none and
              StationMessage.TU in self.me.msgs 
@@ -347,8 +350,18 @@ class Contest():
       return (h,m,s)
 
    def checkDuration(self):
-      if self.duration < self.bufcount*self._bufsize/(self._rate*60):
-         self.me.app.contestEnded()
+      if self.mode in [RunMode.single, RunMode.pileup]:
+         if self.duration < self.bufcount*self._bufsize/(self._rate*60):
+            self.me.app.contestEnded()
+      elif self.mode in [RunMode.single_qsonr, RunMode.pileup_qsonr]:
+         if (self.me.app.nrchecked >= self.duration and
+            self.me.state != StationState.Sending):
+            tsec = self.bufcount*self._bufsize/self._rate
+            if self._extratime == 0:
+               self._extratime = tsec+0.5 #continue for 1/2 second
+            elif tsec > self._extratime:
+               self._extratime = 0
+               self.me.app.contestEnded()
 
    def readConfig(self,filename):
       if os.path.exists(filename):
