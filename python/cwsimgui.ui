@@ -1790,11 +1790,13 @@
   <tabstop>slowSpinBox</tabstop>
   <tabstop>contestComboBox</tabstop>
   <tabstop>startStopButton</tabstop>
+  <tabstop>durationComboBox</tabstop>
   <tabstop>durationSpinBox</tabstop>
   <tabstop>activitySpinBox</tabstop>
   <tabstop>entryTabs</tabstop>
   <tabstop>callEntry</tabstop>
   <tabstop>rstEntry</tabstop>
+  <tabstop>nrEntry</tabstop>
   <tabstop>trCallEntry</tabstop>
   <tabstop>trExchangeEntry</tabstop>
  </tabstops>
