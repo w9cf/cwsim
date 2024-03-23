@@ -314,6 +314,16 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
             s = (self.contest.call + " " + _translate("RunApp","cwsim summary")
                + " " + datetime.datetime.now().strftime("%c") + "\n")
             f.write(s)
+            sec = int(self.contest.seconds)
+            h = sec//3600
+            m = (sec%3600)//60
+            sec = sec%60
+            s = (_translate("RunApp","Duration") + " "
+               + datetime.datetime(1,1,1,h,m,sec).strftime("%T")+ "\n")
+            f.write(s)
+            s = (_translate("CwsimMainWindow","Duration (QSOs)") + " "
+               + str(self.nrchecked) + "\n")
+            f.write(s)
             s = (_translate("RunApp","CW Speed") + " " + str(self.contest.wpm)
                + " " + _translate("RunApp","WPM") + "\n")
             f.write(s)

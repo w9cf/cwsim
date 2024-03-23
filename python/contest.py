@@ -106,6 +106,7 @@ class Contest():
       self._ritph = 0.0
       self._bufindex = np.arange(self._bufsize,dtype=np.float64)
       self._extratime = 0
+      self.seconds = 0
 #      self.ef = open('temp.out',mode='w')
 #      self.ef.close()
 #      self.ef = open('temp.out',mode='a')
@@ -352,6 +353,7 @@ class Contest():
    def checkDuration(self):
       if self.mode in [RunMode.single, RunMode.pileup]:
          if self.duration < self.bufcount*self._bufsize/(self._rate*60):
+            self.seconds = self.bufcount*self._bufsize/self._rate
             self.me.app.contestEnded()
       elif self.mode in [RunMode.single_qsonr, RunMode.pileup_qsonr]:
          if (self.me.app.nrchecked >= self.duration and
@@ -361,6 +363,7 @@ class Contest():
                self._extratime = tsec+0.5 #continue for 1/2 second
             elif tsec > self._extratime:
                self._extratime = 0
+               self.seconds = tsec
                self.me.app.contestEnded()
 
    def readConfig(self,filename):
