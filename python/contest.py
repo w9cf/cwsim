@@ -351,19 +351,17 @@ class Contest():
       return (h,m,s)
 
    def checkDuration(self):
+      self.seconds = self.bufcount*self._bufsize/self._rate
       if self.mode in [RunMode.single, RunMode.pileup]:
-         if self.duration < self.bufcount*self._bufsize/(self._rate*60):
-            self.seconds = self.bufcount*self._bufsize/self._rate
+         if self.duration < self.seconds/60:
             self.me.app.contestEnded()
       elif self.mode in [RunMode.single_qsonr, RunMode.pileup_qsonr]:
          if (self.me.app.nrchecked >= self.duration and
             self.me.state != StationState.Sending):
-            tsec = self.bufcount*self._bufsize/self._rate
             if self._extratime == 0:
-               self._extratime = tsec+0.5 #continue for 1/2 second
-            elif tsec > self._extratime:
+               self._extratime = self.seconds+0.5 #continue for 1/2 second
+            elif self.seconds > self._extratime:
                self._extratime = 0
-               self.seconds = tsec
                self.me.app.contestEnded()
 
    def readConfig(self,filename):
