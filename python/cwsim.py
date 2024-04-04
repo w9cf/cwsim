@@ -950,86 +950,86 @@ class RunApp(QtWidgets.QMainWindow,cwsimgui.Ui_CwsimMainWindow):
 
    def saveQso(self):
       time.sleep(0) #yield
-      try:
-         self._nrsent = False
-         self._callsent = False
-         self._rawQsoCount += 1
-         h,m,s = self.contest.time()
-         if self._rst == "":
-            self._rst = "599"
-         self._lastLog = [self._hiscall, int(self._nr), int(self._rst)]
-         time.sleep(0) #yield
-         rawPfx = self.prefix.getPrefix(self._hiscall)
-         time.sleep(0) #yield
-         goodPfx = rawPfx
-         if rawPfx not in self._rawPfxs:
-            self._rawPfxs.add(rawPfx)
+      #check needed if period or equivalent typed before QSO info set up
+      if not (self._hiscall and self._nr and self._rst):
+         return
+      self._nrsent = False
+      self._callsent = False
+      self._rawQsoCount += 1
+      h,m,s = self.contest.time()
+      if self._rst == "":
+         self._rst = "599"
+      self._lastLog = [self._hiscall, int(self._nr), int(self._rst)]
+      time.sleep(0) #yield
+      rawPfx = self.prefix.getPrefix(self._hiscall)
+      time.sleep(0) #yield
+      goodPfx = rawPfx
+      if rawPfx not in self._rawPfxs:
+         self._rawPfxs.add(rawPfx)
+      else:
+         rawPfx = ""
+      time.sleep(0) #yield
+      chk = self.checkQso()
+      time.sleep(0) #yield
+      if chk == "":
+         self._goodQsoCount += 1
+         if goodPfx not in self._goodPfxs:
+            self._goodPfxs.add(goodPfx)
          else:
-            rawPfx = ""
+            goodPfx = ""
          time.sleep(0) #yield
-         chk = self.checkQso()
-         time.sleep(0) #yield
-         if chk == "":
-            self._goodQsoCount += 1
-            if goodPfx not in self._goodPfxs:
-               self._goodPfxs.add(goodPfx)
-            else:
-               goodPfx = ""
-            time.sleep(0) #yield
-            self.scoreTable.setItem(1,0,QTableWidgetItem(str(self._goodQsoCount)))
-            self.scoreTable.setItem(1,1,QTableWidgetItem(str(len(self._goodPfxs))))
-            score = str(self._goodQsoCount*len(self._goodPfxs))
-            self.scoreTable.setItem(1,2,QTableWidgetItem(score))
-         time.sleep(0) #yield
-         if chk in ["", "NR", "RST"]:
-            self._lastLog = [None,None,None]
-            self._lastQso = [None,None,None]
-         tstr = '{:02d}:{:02d}:{:02d}'.format(h,m,s)
-         rcvd = '{:03d} {:04d}'.format(int(self._rst),int(self._nr))
-         sent = '{:03d} {:04d}'.format(599,self.contest.me.nr)
-         time.sleep(0) #yield
-         r = self.logTable.rowCount()
-         time.sleep(0) #yield
-         self.logTable.insertRow(r)
-         self.logTable.setItem(r,0,QTableWidgetItem(tstr))
-         self.logTable.setItem(r,1,QTableWidgetItem(self._hiscall))
-         self.logTable.setItem(r,2,QTableWidgetItem(rcvd))
-         self.logTable.setItem(r,3,QTableWidgetItem(sent))
-         time.sleep(0) #yield
-         if chk == "":
-            self.logTable.setItem(r,4,QTableWidgetItem(goodPfx))
+         self.scoreTable.setItem(1,0,QTableWidgetItem(str(self._goodQsoCount)))
+         self.scoreTable.setItem(1,1,QTableWidgetItem(str(len(self._goodPfxs))))
+         score = str(self._goodQsoCount*len(self._goodPfxs))
+         self.scoreTable.setItem(1,2,QTableWidgetItem(score))
+      time.sleep(0) #yield
+      if chk in ["", "NR", "RST"]:
+         self._lastLog = [None,None,None]
+         self._lastQso = [None,None,None]
+      tstr = '{:02d}:{:02d}:{:02d}'.format(h,m,s)
+      rcvd = '{:03d} {:04d}'.format(int(self._rst),int(self._nr))
+      sent = '{:03d} {:04d}'.format(599,self.contest.me.nr)
+      time.sleep(0) #yield
+      r = self.logTable.rowCount()
+      time.sleep(0) #yield
+      self.logTable.insertRow(r)
+      self.logTable.setItem(r,0,QTableWidgetItem(tstr))
+      self.logTable.setItem(r,1,QTableWidgetItem(self._hiscall))
+      self.logTable.setItem(r,2,QTableWidgetItem(rcvd))
+      self.logTable.setItem(r,3,QTableWidgetItem(sent))
+      time.sleep(0) #yield
+      if chk == "":
+         self.logTable.setItem(r,4,QTableWidgetItem(goodPfx))
+      else:
+         self.logTable.setItem(r,4,QTableWidgetItem(rawPfx))
+      time.sleep(0) #yield
+      self.logTable.setItem(r,5,QTableWidgetItem(chk))
+      time.sleep(0) #yield
+      self.wipe()
+      self.contest.me.nr += 1
+      s += 60*m+3600*h
+      i = int(s/300)
+      if i >= len(self.ratehist):
+         if self.contest.mode in [RunMode.pileup, RunMode.single]:
+            i = len(self.ratehist)-1
          else:
-            self.logTable.setItem(r,4,QTableWidgetItem(rawPfx))
-         time.sleep(0) #yield
-         self.logTable.setItem(r,5,QTableWidgetItem(chk))
-         time.sleep(0) #yield
-         self.wipe()
-         self.contest.me.nr += 1
-         s += 60*m+3600*h
-         i = int(s/300)
-         if i >= len(self.ratehist):
-            if self.contest.mode in [RunMode.pileup, RunMode.single]:
-               i = len(self.ratehist)-1
-            else:
-               nbin = i+1
-               h = np.zeros(nbin,np.int32)
-               h[:len(self.ratehist)] = self.ratehist
-               self.ratehist = h
-               self.ratePlot.canvas.setaxes(nbin,5,300)
-         self.ratehist[i] += 12
-         time.sleep(0) #yield
-         self.ratePlot.canvas.newData(self.ratehist)
-         self.scoreTable.setItem(0,0,QTableWidgetItem(str(self._rawQsoCount)))
-         self.scoreTable.setItem(0,1,QTableWidgetItem(str(len(self._rawPfxs))))
-         time.sleep(0) #yield
-         score = str(self._rawQsoCount*len(self._rawPfxs))
-         self.scoreTable.setItem(0,2,QTableWidgetItem(score))
-         time.sleep(0) #yield
-         self._qtimes.append(s)
-         time.sleep(0) #yield
-         QtCore.QTimer.singleShot(100,self.logTable.scrollToBottom)
-      except:
-         pass
+            nbin = i+1
+            h = np.zeros(nbin,np.int32)
+            h[:len(self.ratehist)] = self.ratehist
+            self.ratehist = h
+            self.ratePlot.canvas.setaxes(nbin,5,300)
+      self.ratehist[i] += 12
+      time.sleep(0) #yield
+      self.ratePlot.canvas.newData(self.ratehist)
+      self.scoreTable.setItem(0,0,QTableWidgetItem(str(self._rawQsoCount)))
+      self.scoreTable.setItem(0,1,QTableWidgetItem(str(len(self._rawPfxs))))
+      time.sleep(0) #yield
+      score = str(self._rawQsoCount*len(self._rawPfxs))
+      self.scoreTable.setItem(0,2,QTableWidgetItem(score))
+      time.sleep(0) #yield
+      self._qtimes.append(s)
+      time.sleep(0) #yield
+      QtCore.QTimer.singleShot(100,self.logTable.scrollToBottom)
 
    def wipe(self):
       if self.tr:
