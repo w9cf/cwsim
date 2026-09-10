@@ -26,8 +26,6 @@ from dxstation import DxStation
 from mystation import MyStation
 from dxoper import Os
 import queue
-import wave
-import time
 import sys
 import os
 import errno
@@ -86,6 +84,11 @@ class Contest():
          self.savewave = 0
          self.saveini = 1
          self.savesummary = 1
+         self.isDxExpedition = False
+         self.straightKeyProb = 0.25
+         self.myRstSpeedUp = 0.20
+         self.dxRstSpeedUp = 0.15
+         self.dxRstProb = 0.15
          self.fontsize = 12 # not used
          
       self._qskdecayfactor = 1.0/(self._rate*self.qskdecaytime)
@@ -98,7 +101,7 @@ class Contest():
       self._callList = calllist.CallList(rng)
       self.stations = []
       self.me = MyStation(self._rng,self._keyer,self,self.call,self.pitch
-         ,self.wpm,bufsize=self._bufsize,rate=self._rate)
+         ,self.wpm,bufsize=self._bufsize,rate=self._rate,isDxExpedition=self.isDxExpedition)
       self.bufcount = 0
       self._rfg0 = 1.0
       self._rfg = np.zeros(self._bufsize+1,dtype=np.float64)
@@ -137,7 +140,7 @@ class Contest():
    def bandwidth(self,bandwidth):
       self._bandwidth = np.max([np.min([round(bandwidth/50)*50,600]),100])
       navg = int(np.rint(0.7*self._rate/self._bandwidth))
-      self._fgain = np.sqrt(500/self._bandwidth);
+      self._fgain = np.sqrt(500/self._bandwidth)
       self._m1 = movavg(self._bufsize,navg,dtype=np.complex128)
       self._m2 = movavg(self._bufsize,navg,dtype=np.complex128)
       self._m3 = movavg(self._bufsize,navg,dtype=np.complex128)
@@ -231,7 +234,7 @@ class Contest():
             if (self.qsy and isinstance(s,DxStation) and
                s.oper.state != Os.Done and s.called):
                self.q.put(s.myCall)
-               if not (self.me.app is None):
+               if self.me.app is not None:
                   self.me.app.qsy()
             self.stations.remove(s)
          elif s.state == StationState.Sending:
@@ -271,7 +274,7 @@ class Contest():
          if isinstance(s,DxStation):
             if (s.oper.state == Os.Done):
                self.q.put(s.dataToLastQso())
-               if not (self.me.app is None):
+               if self.me.app is not None:
                   self.me.app.lastQso()
 #               (trueCall, trueRst, trueNr) = s.dataToLastQso()
 #               print("contest Correct Info ",trueCall,trueRst,trueNr)
@@ -283,10 +286,13 @@ class Contest():
                lidRstProb=self.lidRstProb,qsb=self.qsb,
                flutterProb=self.flutterProb,
                rptProb=self.rptProb,fast=self.fast,slow=self.slow,
-               isSingle=True,bufsize=self._bufsize,rate=self._rate)
+               straightKeyProb=self.straightKeyProb,
+               isSingle=True,isDxExpedition=self.isDxExpedition,
+               dxRstSpeedUp=self.dxRstSpeedUp, dxRstProb=self.dxRstProb,
+               bufsize=self._bufsize,rate=self._rate)
             self.stations.append(s)
             s.processEvent(StationEvent.MeFinished)
-         
+
 #      np.savetxt(self.ef,audio)
 #      self.wf.writeframesraw((audio*30000).astype(np.int16))
 
@@ -328,7 +334,10 @@ class Contest():
                   lidRstProb=self.lidRstProb,qsb=self.qsb,
                   flutterProb=self.flutterProb,
                   rptProb=self.rptProb,fast=self.fast,slow=self.slow,
-                  isSingle=False,bufsize=self._bufsize,rate=self._rate))
+                  straightKeyProb=self.straightKeyProb,
+                  isSingle=False,isDxExpedition=self.isDxExpedition,
+                  dxRstSpeedUp=self.dxRstSpeedUp, dxRstProb=self.dxRstProb,
+                  bufsize=self._bufsize,rate=self._rate))
       for s in self.stations:
          s.processEvent(StationEvent.MeFinished)
 
@@ -401,16 +410,21 @@ class Contest():
       self.flutter = int(conditionsdict['flutter'])
       self.flutterProb = float(conditionsdict['flutterprob'])
       self.lids = int(conditionsdict['lids'])
+      self.straightKeyProb = float(conditionsdict.get('straightkeyprob', '0.25'))
       self.activity = int(conditionsdict['activity'])
       self.lidRstProb = float(conditionsdict['lidrstprob'])
       self.lidNrProb = float(conditionsdict['lidnrprob'])
       self.rptProb = float(conditionsdict['rptprob'])
+      self.myRstSpeedUp = float(conditionsdict.get('myrstspeedup', '0.20'))
+      self.dxRstSpeedUp = float(conditionsdict.get('dxrstspeedup', '0.15'))
+      self.dxRstProb = float(conditionsdict.get('dxrstprob', '0.15'))
       contestdict = dict(p['Contest'])
       self.duration = int(contestdict['duration'])
       self.mode = eval(contestdict['mode'])
       self.savewave = int(contestdict['savewave'])
       self.saveini = int(contestdict['saveini'])
       self.savesummary = int(contestdict['savesummary'])
+      self.isDxExpedition = contestdict.get('isdxexpedition', 'False') == 'True'
 
    def writeConfig(self,filename):
       with open(filename,'w') as f:
@@ -426,10 +440,10 @@ class Contest():
             ,'qskdecaytime', 'cwreverse', 'rit', 'monitor']:
             p.set('Station',i,str(eval('self.'+i)))
          p.add_section('Conditions')
-         for i in ['qrn','qrm','tqrm','qsb','flutter','qsy','lids','activity'
-            ,'lidRstProb','lidNrProb','rptProb','flutterProb']:
+         for i in ['qrn','qrm','tqrm','qsb','flutter','qsy','lids','straightKeyProb','activity'
+            ,'lidRstProb','lidNrProb','rptProb','flutterProb','myRstSpeedUp','dxRstSpeedUp','dxRstProb']:
             p.set('Conditions',i,str(eval('self.'+i)))
          p.add_section('Contest')
-         for i in ['duration','mode','savewave','saveini','savesummary']:
+         for i in ['duration','mode','savewave','saveini','savesummary','isDxExpedition']:
             p.set('Contest',i,str(eval('self.'+i)))
          p.write(f)

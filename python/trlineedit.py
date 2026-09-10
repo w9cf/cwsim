@@ -14,10 +14,7 @@
 #
 # See https://www.gnu.org/licenses/ for GPL licensing information.
 #
-try:
-   from PyQt6 import QtWidgets, QtCore
-except ImportError:
-   from PyQt5 import QtWidgets, QtCore
+from PyQt6 import QtWidgets, QtCore
 
 class TrLineEdit(QtWidgets.QLineEdit):
 

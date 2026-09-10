@@ -16,8 +16,6 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import numpy as np
 import math
-import configparser
-import os
 
 class Keyer():
    """
@@ -34,7 +32,7 @@ class Keyer():
        "?":"..--..", "/":"-..-.", ";":"-.-.-.", "(":"-.--.", "[":"-.--.",
        ")":"-.--.-", "]":"-.--.-", "@":".--.-.", "*":"...-.-", "+":".-.-.",
        "%":".-...", ":":"---...", "=":"-...-", '"':".-..-.", "'":".----.",
-       "!":"---.", "$":"...-..-"," ":"", "_":""
+       "!":"---.", "$":"...-..-"," ":"", "_":"", ">":"", "<":""
    })
 
    def __init__(self,rate=11025,bufsize=512,risetime=0.005):
@@ -72,42 +70,95 @@ class Keyer():
             string encoding for morse dits and dahs
       """
       s = ""
-      for i in range(len(txt)-1):
-         s += Keyer._morse[txt[i]] + " "
-      s += Keyer._morse[txt[len(txt)-1]]
+      for i in range(len(txt)):
+         char = txt[i]
+         if char in [">", "<"]:
+            s += char
+         elif char in Keyer._morse:
+            s += Keyer._morse[char]
+            # Add space only if not the last char and next is not a speed marker
+            if i < len(txt) - 1 and txt[i+1] not in [">", "<"]:
+               s += " "
       if s != "":
          s += "~"
       return s
 
-   def getenvelop(self,msg,wpm):
+   def getenvelop(self,msg,wpm,l=30,s=50,p=50,speed_up_factor=0.20):
       """
          Arguments
             msg: morse encoding of dits and dahs
             wpm: speed in words per minute (PARIS)
+            l: dash weight (default 30)
+            s: space weight (default 50)
+            p: dot weight (default 50)
+            speed_up_factor: how much to increase speed (0 to 1)
          Returns
             keying envelop for audio samples
       """
       nr = len(self.rise)
-      count = 2*(msg.count('.')+msg.count(' ')+2*msg.count('-'))+msg.count('~')
-      samples = int(np.rint(1.2*self.rate/wpm))
-      n = int(self._bufsize*np.ceil((count*samples+nr)/self._bufsize))
+      
+      def get_params(current_wpm):
+         T = 1.2 * self.rate / current_wpm
+         d_on = int(np.rint(T * (p / 50.0)))
+         da_on = int(np.rint(3.0 * T * (l / 30.0)))
+         i_off = int(np.rint(T * (s / 50.0)))
+         l_gap = int(np.rint(3.0 * T * (s / 50.0))) - i_off
+         pad = int(np.rint(T))
+         return d_on, da_on, i_off, l_gap, pad
+
+      # First pass: Calculate total length
+      total_samples = 0
+      cur_wpm = wpm
+      for char in msg:
+         if char == '>':
+            cur_wpm = wpm * (1.0 + speed_up_factor)
+            continue
+         elif char == '<':
+            cur_wpm = wpm
+            continue
+         
+         d_on, da_on, i_off, l_gap, pad = get_params(cur_wpm)
+         if char == '.':
+            total_samples += d_on + i_off
+         elif char == '-':
+            total_samples += da_on + i_off
+         elif char == ' ':
+            total_samples += l_gap
+         elif char == '~':
+            total_samples += pad
+            
+      n = int(self._bufsize*np.ceil((total_samples + nr + 100)/self._bufsize))
       env = np.zeros(n,dtype=np.float32)
-      dit = np.ones(nr+samples,dtype=np.float32)
-      dit[:nr] = self.rise
-      dit[samples:] = self.fall
-      dah = np.ones(nr+3*samples,dtype=np.float32)
-      dah[:nr] = self.rise
-      dah[3*samples:] = self.fall
+      
       k = 0
-      for i in range(len(msg)):
-         if msg[i] == '.':
-            env[k:k+len(dit)] = dit
-            k += 2*samples
-         elif msg[i] == '-':
-            env[k:k+len(dah)] = dah
-            k += 4*samples
-         elif msg[i] == ' ':
-            k += 2*samples-nr
-         elif msg[i] == '~':
-            k += samples-nr
+      cur_wpm = wpm
+      for char in msg:
+         if char == '>':
+            cur_wpm = wpm * (1.0 + speed_up_factor)
+            continue
+         elif char == '<':
+            cur_wpm = wpm
+            continue
+            
+         d_on, da_on, i_off, l_gap, pad = get_params(cur_wpm)
+         
+         if char == '.':
+            pulse = np.ones(nr+d_on,dtype=np.float32)
+            pulse[:nr] = self.rise
+            pulse[d_on:] = self.fall
+            if k+len(pulse) <= n:
+               env[k:k+len(pulse)] = pulse
+            k += d_on + i_off
+         elif char == '-':
+            pulse = np.ones(nr+da_on,dtype=np.float32)
+            pulse[:nr] = self.rise
+            pulse[da_on:] = self.fall
+            if k+len(pulse) <= n:
+               env[k:k+len(pulse)] = pulse
+            k += da_on + i_off
+         elif char == ' ':
+            k += l_gap
+         elif char == '~':
+            k += pad
+            
       return env

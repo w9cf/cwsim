@@ -47,7 +47,7 @@ class DxOperator():
    FULL_PATIENCE = 5
    def __init__(self,rng,minutes=0,cqstn=None,call=None,skills=2,
       s2bfac=11025/512,lids=True,rptProb=0.1,wpm=40,fast=1.1,slow=0.9,
-      isSingle=False,state=Os.NeedPrevEnd):
+      isSingle=False,isDxExpedition=False,state=Os.NeedPrevEnd):
       """
          Arguments
             rng: numpy random number generator
@@ -57,6 +57,7 @@ class DxOperator():
             call: My station's call
             skills: My skills
             isSingle: True if RunMode is single calls
+            isDxExpedition: True if in DX Expedition mode
             state: Initial operator state
       """
       self._rng = rng
@@ -69,12 +70,14 @@ class DxOperator():
       self.repeatCnt= None
       self._minutes = minutes
       self._isSingle = isSingle
+      self.isDxExpedition = isDxExpedition
       self._lids = lids
       self._wpm = wpm
       self._slow = slow
       self._fast = fast
       self._rptProb = rptProb
       self._s2bfac = s2bfac
+      self.rstSent = False
 
    def getSendDelay(self):
       """
@@ -152,7 +155,7 @@ class DxOperator():
          for y in range(1,len(c0)+1):
             d = m[x-1,y-1]
             if c[x-1] != c0[y-1]: d += 1
-            m[x,y] = np.min([m[x,y-1],m[x-1,y]+1,d])
+            m[x,y] = np.min([m[x,y-1],m[x-1,y],d])
       else:
          for y in range(1,len(c0)+1):
             m[x,y] = np.min([m[x,y-1],m[x-1,y],m[x-1,y-1]])
@@ -208,12 +211,18 @@ class DxOperator():
          isme = self.ismycall()
          if isme == Mc.Yes:
             if self.state in [Os.NeedPrevEnd, Os.NeedQso, Os.NeedCallNr]:
-               self.setState(Os.NeedNr)
+               if self.isDxExpedition:
+                  self.setState(Os.NeedEnd)
+               else:
+                  self.setState(Os.NeedNr)
             elif self.state == Os.NeedCall:
                self.setState(Os.NeedEnd)
          elif isme == Mc.Almost:
             if self.state in [Os.NeedPrevEnd, Os.NeedQso, Os.NeedNr]:
-               self.setState(Os.NeedCallNr)
+               if self.isDxExpedition:
+                  self.setState(Os.NeedCall)
+               else:
+                  self.setState(Os.NeedCallNr)
             elif self.state == Os.NeedEnd:
                self.setState(Os.NeedCall)
          elif isme == Mc.No:
@@ -258,7 +267,7 @@ class DxOperator():
          return reply message.
       """
       if self.state in [Os.NeedPrevEnd, Os.Done, Os.Failed]:
-         res = StationMessage.noMsg
+         res = StationMessage.NoMsg
       elif self.state == Os.NeedQso:
          res = StationMessage.MyCall
       elif self.state == Os.NeedNr:
@@ -281,11 +290,31 @@ class DxOperator():
          else:
             res = StationMessage.DeMyCall2
       else: #NeedEnd
-         if (self.patience == (DxOperator.FULL_PATIENCE-1)
-            or self._rng.random() < 0.9):
-            res = StationMessage.R_NR
+         if self.isDxExpedition:
+            if not self.rstSent:
+               res = StationMessage.R_NR # Send RST if not sent yet
+            else:
+               # RST already sent, send final greetings
+               r = self._rng.random()
+               if r < 0.4:
+                  res = StationMessage.TU
+               elif r < 0.6:
+                  res = StationMessage.NoMsg
+               elif r < 0.8:
+                  res = StationMessage.NoMsg # Silence is common
+               else:
+                  res = StationMessage.TU
          else:
-            res = StationMessage.R_NR2
+            if (self.patience == (DxOperator.FULL_PATIENCE-1)
+               or self._rng.random() < 0.9):
+               res = StationMessage.R_NR
+            else:
+               res = StationMessage.R_NR2
+      
+      # Track if RST was sent in this reply
+      if res in [StationMessage.R_NR, StationMessage.R_NR2, 
+                 StationMessage.DeMyCallNr1, StationMessage.DeMyCallNr2,
+                 StationMessage.MyCallNr2, StationMessage.NR]:
+         self.rstSent = True
  
       return res
-

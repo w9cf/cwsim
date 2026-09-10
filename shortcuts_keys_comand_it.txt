@@ -1,0 +1,25 @@
+Riepilogo dei Tasti Rapidi e Comandi per cwsim:
+
+**Tasti Funzione (Invio messaggi CW):**
+* F1 = Invia CQ
+* F2 = Invia Exchange (Rapporto e Progressivo)
+* F3 = Invia TU (Ringraziamento per confermare il QSO)
+* F4 = Invia il tuo nominativo
+* F5 = Invia il nominativo del corrispondente (quello inserito nel campo Call)
+* F6 = Invia QSO B4 (QSO già a log)
+* F7 = Invia il punto interrogativo (?)
+* F8 = Invia NIL (Not in log)
+
+**Azioni del Log e Controllo Simulatore:**
+* Invio (Return) = Passa al campo successivo o registra il QSO a log
+* Esc (Escape) = Ferma la trasmissione CW corrente
+* Alt+W = Pulisce (Wipe) i campi della riga corrente
+* Alt+X = Avvia o Ferma il contest (Start/Stop)
+* Freccia Su / Freccia Giù = Naviga tra i campi / righe del log
+
+**Controlli Audio e Radio:**
+* PgSu / PgGiù (PgUp/PgDown) = Aumenta / Diminuisce la velocità del CW (WPM)
+* Shift+Freccia Su / Shift+Freccia Giù = Regola il RIT (sposta la frequenza di ricezione su/giù)
+* Alt+C = Azzera il RIT (lo riporta al centro)
+* Ctrl+Freccia Su / Ctrl+Freccia Giù = Allarga o restringe la larghezza di banda del filtro audio (Bandwidth)
+* Alt+Freccia Su / Alt+Freccia Giù = Alza o abbassa il Pitch (la tonalità del CW)

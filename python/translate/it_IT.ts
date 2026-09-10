@@ -698,6 +698,42 @@
         <source>Duration (QSOs)</source>
         <translation>Durata (QSO)</translation>
     </message>
+    <message>
+        <source>Straight Key %</source>
+        <translation>Tasto verticale %</translation>
+    </message>
+    <message>
+        <source>My RST Speed Up %</source>
+        <translation>Aumento velocità mio RST %</translation>
+    </message>
+    <message>
+        <source>Bot RST Speed Up %</source>
+        <translation>Aumento velocità RST Bot %</translation>
+    </message>
+    <message>
+        <source>Bot Speed Up Prob %</source>
+        <translation>Prob. aumento velocità Bot %</translation>
+    </message>
+    <message>
+        <source>Straight Key probability</source>
+        <translation>Probabilità tasto verticale</translation>
+    </message>
+    <message>
+        <source>Probability of stations using a straight key (0 to 1)</source>
+        <translation>Probabilità che le stazioni usino un tasto verticale (da 0 a 1)</translation>
+    </message>
+    <message>
+        <source>My RST speed increase (0 to 1)</source>
+        <translation>Incremento velocità del mio RST (da 0 a 1)</translation>
+    </message>
+    <message>
+        <source>Bot RST speed increase (0 to 1)</source>
+        <translation>Incremento velocità dell&apos;RST dei Bot (da 0 a 1)</translation>
+    </message>
+    <message>
+        <source>Probability of bots using speed up (0 to 1)</source>
+        <translation>Probabilità che i bot usino la velocità aumentata (da 0 a 1)</translation>
+    </message>
 </context>
 <context>
     <name>MplCanvas</name>
@@ -888,6 +924,26 @@
         <location filename="../cwsim.py" line="367"/>
         <source>QSOs/Hour for each 5 minute interval</source>
         <translation>QSO per ora, suddiviso in intervalli da 5 minuti</translation>
+    </message>
+    <message>
+        <source>Welcome to Cwsim {version} ({date}) by Kevin Schmidt (W9CF) and Gabriele Battaglia (IZ4APU)</source>
+        <translation>Benvenuti in Cwsim {version} ({date}) di Kevin Schmidt (W9CF) e Gabriele Battaglia (IZ4APU)</translation>
+    </message>
+    <message>
+        <source>Welcome to Cwsim - Python CW Simulator</source>
+        <translation>Benvenuti in Cwsim - Simulatore CW in Python</translation>
+    </message>
+    <message>
+        <source>Authors: Kevin Schmidt (W9CF) and Gabriele Battaglia (IZ4APU)</source>
+        <translation>Autori: Kevin Schmidt (W9CF) e Gabriele Battaglia (IZ4APU)</translation>
+    </message>
+    <message>
+        <source>Version: {version}</source>
+        <translation>Versione: {version}</translation>
+    </message>
+    <message>
+        <source>Date: {date}</source>
+        <translation>Data: {date}</translation>
     </message>
     <message>
         <location filename="../cwsim.py" line="391"/>

@@ -19,14 +19,15 @@ import station
 from station import StationMessage
 
 class MyStation(station.Station):
-   def __init__(self,rng,keyer,contest,myCall,pitch,wpm,bufsize=512,rate=11025):
-      super().__init__(rng,keyer,bufsize=bufsize,rate=rate)
+   def __init__(self,rng,keyer,contest,myCall,pitch,wpm,bufsize=512,rate=11025,isDxExpedition=False):
+      super().__init__(rng,keyer,bufsize=bufsize,rate=rate,isDxExpedition=isDxExpedition)
       self._contest = contest
       self.myCall = myCall
       self.nr = 1
       self._rst = 599
       self.pitch = pitch
       self.wpm = wpm
+      self.speedUpRst = isDxExpedition
       self._amplitude = 1.0
       self._pieces = []
       self.app = None
@@ -71,7 +72,7 @@ class MyStation(station.Station):
          self._pieces.pop(0)
          if len(self._pieces) > 0:
             self.sendNextPiece()
-            if not (self.app is None):
+            if self.app is not None:
                self.app.advance()
       return buf
 
@@ -84,7 +85,7 @@ class MyStation(station.Station):
          res = False
       if res:
          s = self._keyer.encode(call.lower())
-         ne  = self._keyer.getenvelop(s,self.wpm)*self._amplitude
+         ne  = self._keyer.getenvelop(s,self.wpm,self.l,self.s,self.p)*self._amplitude
          res = len(ne) >= self._sendpos
          if res:
             res = np.array_equiv(self._envelop[0:self._sendpos]

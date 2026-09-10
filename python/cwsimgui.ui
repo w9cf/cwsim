@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <ui version="4.0">
  <class>CwsimMainWindow</class>
  <widget class="QMainWindow" name="CwsimMainWindow">
@@ -30,7 +30,7 @@
        <enum>Qt::TabFocus</enum>
       </property>
       <property name="toolTip">
-       <string/>
+       <string />
       </property>
       <property name="accessibleName">
        <string>Log</string>
@@ -101,15 +101,15 @@
          <attribute name="verticalHeaderVisible">
           <bool>false</bool>
          </attribute>
-         <row/>
-         <row/>
-         <row/>
-         <column/>
-         <column/>
-         <column/>
-         <column/>
-         <column/>
-         <column/>
+         <row />
+         <row />
+         <row />
+         <column />
+         <column />
+         <column />
+         <column />
+         <column />
+         <column />
         </widget>
        </item>
       </layout>
@@ -133,7 +133,7 @@
           <enum>Qt::NoFocus</enum>
          </property>
          <property name="title">
-          <string/>
+          <string />
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_8">
           <item>
@@ -810,6 +810,92 @@
                    </property>
                   </widget>
                  </item>
+                <item row="4" column="1">
+                 <widget class="QLabel" name="straightKeyLabel">
+                  <property name="text">
+                   <string>Straight Key %</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="4" column="2">
+                 <widget class="QLabel" name="myRstSpeedUpLabel">
+                  <property name="text">
+                   <string>My RST Speed Up %</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="4" column="3">
+                 <widget class="QLabel" name="dxRstSpeedUpLabel">
+                  <property name="text">
+                   <string>Bot RST Speed Up %</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="4" column="4">
+                 <widget class="QLabel" name="dxRstProbLabel">
+                  <property name="text">
+                   <string>Bot Speed Up Prob %</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="5" column="1">
+                 <widget class="QDoubleSpinBox" name="straightKeyProbSpinBox">
+                  <property name="focusPolicy">
+                   <enum>Qt::StrongFocus</enum>
+                  </property>
+                  <property name="toolTip">
+                   <string>Probability of stations using a straight key (0 to 1)</string>
+                  </property>
+                  <property name="accessibleName">
+                   <string>Straight Key probability</string>
+                  </property>
+                  <property name="maximum">
+                   <double>1.000000000000000</double>
+                  </property>
+                  <property name="singleStep">
+                   <double>0.010000000000000</double>
+                  </property>
+                 </widget>
+                </item>
+                <item row="5" column="2">
+                 <widget class="QDoubleSpinBox" name="myRstSpeedUpSpinBox">
+                  <property name="toolTip">
+                   <string>My RST speed increase (0 to 1)</string>
+                  </property>
+                  <property name="maximum">
+                   <double>1.000000000000000</double>
+                  </property>
+                  <property name="singleStep">
+                   <double>0.010000000000000</double>
+                  </property>
+                 </widget>
+                </item>
+                <item row="5" column="3">
+                 <widget class="QDoubleSpinBox" name="dxRstSpeedUpSpinBox">
+                  <property name="toolTip">
+                   <string>Bot RST speed increase (0 to 1)</string>
+                  </property>
+                  <property name="maximum">
+                   <double>1.000000000000000</double>
+                  </property>
+                  <property name="singleStep">
+                   <double>0.010000000000000</double>
+                  </property>
+                 </widget>
+                </item>
+                <item row="5" column="4">
+                 <widget class="QDoubleSpinBox" name="dxRstProbSpinBox">
+                  <property name="toolTip">
+                   <string>Probability of bots using speed up (0 to 1)</string>
+                  </property>
+                  <property name="maximum">
+                   <double>1.000000000000000</double>
+                  </property>
+                  <property name="singleStep">
+                   <double>0.010000000000000</double>
+                  </property>
+                 </widget>
+                </item>
                 </layout>
                </widget>
               </item>
@@ -1303,7 +1389,7 @@
           <enum>Qt::NoFocus</enum>
          </property>
          <property name="title">
-          <string/>
+          <string />
          </property>
          <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,1">
           <item>
@@ -1440,7 +1526,7 @@
                </property>
               </widget>
              </item>
-            </layout>
+            <item row="1" column="0" colspan="2"><widget class="QComboBox" name="typeComboBox"><property name="focusPolicy"><enum>Qt::TabFocus</enum></property><property name="toolTip"><string>Choose operating mode</string></property><property name="accessibleName"><string>Operating Mode</string></property><item><property name="text"><string>Contest</string></property></item><item><property name="text"><string>DX Expedition</string></property></item></widget></item></layout>
            </widget>
           </item>
           <item>
@@ -1538,11 +1624,11 @@
                <attribute name="verticalHeaderStretchLastSection">
                 <bool>false</bool>
                </attribute>
-               <row/>
-               <row/>
-               <column/>
-               <column/>
-               <column/>
+               <row />
+               <row />
+               <column />
+               <column />
+               <column />
               </widget>
              </item>
             </layout>
@@ -1621,15 +1707,15 @@
     <property name="title">
      <string>&amp;File</string>
     </property>
-    <addaction name="action_Update_Default_Configuration"/>
-    <addaction name="action_Load_Configuration"/>
-    <addaction name="action_Save_Configuration"/>
-    <addaction name="action_Update_Default_Configuration_on_Exit"/>
-    <addaction name="action_Write_Simulation_Summary_File"/>
-    <addaction name="action_Overwrite_summary_to_cwsim_txt_when_simulation_ends"/>
-    <addaction name="actionAppend_summary_to_cwsim_txt_when_simulation_ends"/>
-    <addaction name="action_Copy_Log"/>
-    <addaction name="action_Exit"/>
+    <addaction name="action_Update_Default_Configuration" />
+    <addaction name="action_Load_Configuration" />
+    <addaction name="action_Save_Configuration" />
+    <addaction name="action_Update_Default_Configuration_on_Exit" />
+    <addaction name="action_Write_Simulation_Summary_File" />
+    <addaction name="action_Overwrite_summary_to_cwsim_txt_when_simulation_ends" />
+    <addaction name="actionAppend_summary_to_cwsim_txt_when_simulation_ends" />
+    <addaction name="action_Copy_Log" />
+    <addaction name="action_Exit" />
    </widget>
    <widget class="QMenu" name="menu_Help">
     <property name="focusPolicy">
@@ -1638,14 +1724,14 @@
     <property name="title">
      <string>&amp;Help</string>
     </property>
-    <addaction name="actionKeyboard_Shortcuts"/>
-    <addaction name="action_Function_Key_CW"/>
-    <addaction name="action_About"/>
+    <addaction name="actionKeyboard_Shortcuts" />
+    <addaction name="action_Function_Key_CW" />
+    <addaction name="action_About" />
    </widget>
-   <addaction name="menu_File"/>
-   <addaction name="menu_Help"/>
+   <addaction name="menu_File" />
+   <addaction name="menu_Help" />
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QStatusBar" name="statusbar" />
   <widget class="QToolBar" name="toolBar">
    <property name="windowTitle">
     <string>toolBar</string>
@@ -1779,7 +1865,7 @@
   <tabstop>qsyCheck</tabstop>
   <tabstop>qrmCheck</tabstop>
   <tabstop>lidsCheck</tabstop>
-  <tabstop>lidRstProbSpinBox</tabstop>
+  <tabstop>straightKeyProbSpinBox</tabstop><tabstop>lidRstProbSpinBox</tabstop>
   <tabstop>rptProbSpinBox</tabstop>
   <tabstop>fastSpinBox</tabstop>
   <tabstop>qsbCheck</tabstop>
@@ -1789,7 +1875,7 @@
   <tabstop>flutterProbSpinBox</tabstop>
   <tabstop>slowSpinBox</tabstop>
   <tabstop>contestComboBox</tabstop>
-  <tabstop>startStopButton</tabstop>
+  <tabstop>typeComboBox</tabstop><tabstop>startStopButton</tabstop>
   <tabstop>durationComboBox</tabstop>
   <tabstop>durationSpinBox</tabstop>
   <tabstop>activitySpinBox</tabstop>
@@ -1800,7 +1886,7 @@
   <tabstop>trCallEntry</tabstop>
   <tabstop>trExchangeEntry</tabstop>
  </tabstops>
- <resources/>
+ <resources />
  <connections>
   <connection>
    <sender>action_Exit</sender>

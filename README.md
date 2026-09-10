@@ -73,7 +73,7 @@ the commands I used to install the needed packages:
 ```
 git clone https://github.com/w9cf/cwsim.git
 sudo apt-get install python3-matplotlib
-sudo apt-get install python3-pyqt5
+sudo apt-get install python3-pyqt6
 sudo apt-get install libportaudio2
 pip install pip --upgrade --user
 python3 -m pip install numpy==1.23 --user

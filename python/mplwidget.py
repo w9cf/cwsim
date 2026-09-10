@@ -14,15 +14,10 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
-try:
-   from PyQt6 import QtWidgets
-   from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg as Canvas
-except ImportError:
-   from PyQt5 import QtWidgets
-   from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as Canvas
+from PyQt6 import QtWidgets
+from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg as Canvas
 
 from matplotlib.figure import Figure
-import matplotlib
 import numpy as np
 
 class MplCanvas(Canvas):

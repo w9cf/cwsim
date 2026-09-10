@@ -1,0 +1,171 @@
+Analisi del codice, revisione 1
+Progetto: cwsim, simulatore di contest CW
+Versione analizzata: 0.9.0 Beta del 4 maggio 2026, ramo CWSIM+DX+StraightKey
+Revisione: 1
+Data: 2026-09-07
+Analisi eseguita da: ClaudIA, Claude Opus 5 in modalita' auto
+Autori del progetto: Kevin Schmidt (W9CF) e Gabriele Battaglia (IZ4APU), su algoritmi di Morse Runner di Alex Shovkoplyas (VE3NEA)
+Avvertenza preliminare, da leggere prima dei rilievi
+cwsim non e' un progetto di Gabriele nel senso in cui lo sono gli altri della tabella. E' un fork di w9cf/cwsim, che a sua volta e' una riscrittura in Python di Morse Runner, ed e' distribuito sotto GNU GPL versione 3. Il repository ha tre remoti configurati, origin, upstream e z_drive, e il lavoro sta sul ramo CWSIM+DX+StraightKey, non su main. Il contributo di Gabriele, misurato con git diff fra upstream/main e HEAD, e' di 609 righe aggiunte e 205 tolte su un totale di 4157 righe di Python, concentrate in cwsim.py, cwsimgui.ui, keyer.py, dxoper.py, dxstation.py, station.py e contest.py.
+Da questo discendono tre conseguenze che vanno decise con Gabriele prima di toccare qualunque cosa.
+La prima e' che le regole del punto 3.4 del documento di refactoring non si applicano qui come altrove. L'intestazione con gli autori nel formato del parco software, la numerazione x.y.z, l'importazione delle utilita' di GBUtils al posto del codice locale: applicarle a cwsim significherebbe riscrivere codice di Kevin nello stile di Gabriele, rendere impossibile ogni fusione futura con l'upstream e togliere al progetto la possibilita' di restituire a monte cio' che qui viene migliorato. Il codice usa anche un'indentazione a tre spazi, diversa da tutto il resto del parco software: va rispettata, non uniformata.
+La seconda e' che i rilievi vanno distinti fra quelli che stanno nel codice aggiunto da Gabriele, dove puo' intervenire da solo, e quelli che stanno nel codice condiviso, dove la correzione giusta e' una segnalazione a Kevin o una richiesta di fusione a monte. Questo rapporto li tiene separati.
+La terza e' che il repository ha le issue disattivate su GitHub, quindi la via maestra del punto 2.7 qui non e' percorribile: le segnalazioni che riguardano il codice condiviso vanno mandate a Kevin per un'altra strada, o va riattivata la sezione issue.
+1. File esaminati
+python/cwsim.py, 1266 righe, l'applicazione e l'interfaccia PyQt6.
+python/cwsimgui.py, 923 righe, generato da cwsimgui.ui, non versionato.
+python/contest.py, 449 righe, il motore del contest e la configurazione.
+python/dxoper.py, 320 righe, la macchina a stati dell'operatore avversario.
+python/station.py, 222 righe, la stazione generica.
+python/audioprocess.py, 175 righe; python/keyer.py, 164 righe; python/dxstation.py, 140 righe; python/mystation.py, 103 righe; python/qsb.py, 91 righe; python/prefix.py e python/mplwidget.py, 62 righe; python/qrmstation.py e python/calllist.py, 52 righe; python/trlineedit.py, 45 righe; python/qrnstation.py, 31 righe.
+python/cwsimgui.ui, la definizione dell'interfaccia; python/MASTER.SCP, l'elenco dei nominativi; python/Makefile.
+python/translate, le traduzioni italiana e cinese, sorgenti .ts e compilate .qm.
+cwsim.txt, il report prodotto dal programma, versionato.
+plan.md, sei voci di lavoro aperte; shortcuts_keys_comand_it.txt; README.md; requirements.txt; .github/workflows, due flussi di lavoro per la compilazione automatica.
+2. Issue aperte trovate su GitHub
+Nessuna, e non per caso: il repository GabrieleBattaglia/cwsim ha le issue disattivate, come risponde gh issue list. Le segnalazioni vive del progetto stanno quindi in plan.md, che ne contiene sei, tutte non spuntate. L'analisi le ha verificate una per una e il risultato e' nel rilievo 12.
+3. Rilievi in ordine di gravita' decrescente
+3.1 Rilievi critici
+Nessuno. cwsim non tiene archivi che possa distruggere: il file di configurazione si rigenera e il report si riscrive a ogni sessione.
+3.2 Rilievi alti
+Rilievo 1
+Gravita': alto
+Categoria: logica
+File e riga: python/cwsim.py:190, 198, 201, e i metodi tab e backtab
+Problema: fra le scorciatoie da tastiera registrate ci sono Tab e Maiusc piu' Tab, e ogni scorciatoia viene creata come QShortcut legata alla finestra, cioe' con il contesto predefinito WindowShortcut. Da quel momento il tasto Tab non arriva piu' a Qt e la navigazione fra i comandi non e' piu' quella del sistema ma quella scritta nei metodi tab e backtab. Quei due metodi conoscono cinque soli campi, cioe' quello del nominativo, quello dell'RST, quello del progressivo e i due della scheda a nastro: da qualunque altro punto della finestra il Tab viene intercettato e non fa niente.
+Impatto per l'utente: dai comandi dei parametri, cioe' le caselle numeriche della velocita', dell'attivita', della probabilita' di tasto verticale e delle nuove voci DX, il tasto Tab non porta da nessuna parte. Chi naviga con lo screen reader resta bloccato dove si trova e deve usare altri modi per muoversi. E' quasi certamente la causa della prima voce di plan.md, quella che dice che NVDA riporta i nuovi parametri in fondo alla lista e che il tab order va ottimizzato: il tab order non e' disordinato, e' proprio assente fuori dai cinque campi previsti.
+Correzione proposta: dare alle due scorciatoie il contesto ristretto, cioe' legarle ai soli campi di inserimento invece che alla finestra, oppure lasciar proseguire l'evento quando il comando che ha il fuoco non e' fra quelli previsti. E' una correzione nel codice aggiunto da Gabriele, quindi si puo' fare qui.
+Rilievo 2
+Gravita': alto
+Categoria: logica
+File e riga: python/keyer.py:70, 73, 74, 75, 76, 77, 78 e 79, con python/station.py:195 e 196
+Problema: la codifica morse aggiunge lo spazio fra un carattere e il successivo soltanto se il carattere che segue non e' un marcatore di velocita'. Ma i marcatori, maggiore e minore, sono proprio cio' che nrAsText mette prima e dopo il rapporto quando la stazione accelera: il marcatore mangia quindi l'intervallo che lo precede.
+Verifica: misurato. La stringa tu 599 produce una codifica con cinque spazi, la stringa tu >599< ne produce quattro. L'intervallo fra la parola e il numero passa da cinque a tre unita' di punto, cioe' da intervallo di parola a intervallo di carattere, proprio nel momento in cui la trasmissione accelera. Nel caso peggiore, se un marcatore capitasse fra due lettere invece che dopo uno spazio, le due lettere si fondono in una sola: provato con ab>cd, che produce punto trattino, spazio, trattino punto punto punto, maggiore, trattino punto trattino punto, cioe' la B e la C attaccate senza nessun intervallo.
+Impatto per l'utente: chi si allena a copiare a ventidue parole al minuto e oltre sente il rapporto arrivare troppo attaccato a cio' che lo precede, e non e' un difetto della propria copia ma del generatore. Su un simulatore che serve proprio a misurare la propria capacita' di copia, un errore di temporizzazione sistematico e' peggio di un errore casuale, perche' non si riconosce come tale.
+Correzione proposta: contare l'intervallo prima del marcatore come se il marcatore non ci fosse, cioe' guardare il primo carattere non marcatore che segue. E' codice aggiunto da Gabriele, quindi si corregge qui.
+Rilievo 3
+Gravita': alto
+Categoria: logica
+File e riga: python/keyer.py:59, 60, 121, 122, 145, 146 e 147
+Problema: la rampa di salita e di discesa del keyer e' lunga 149 campioni, cioe' 13,5 millisecondi a 11025 campioni al secondo, ed e' costruita con una funzione errore, che e' la forma giusta per un CW pulito. La durata del punto, pero', dipende dalla velocita' e dal peso p, e quando scende sotto i 149 campioni il punto non fa in tempo a raggiungere l'ampiezza piena, perche' la discesa comincia prima che la salita sia finita.
+Verifica: misurato. A 40 parole al minuto con p uguale a 18, che e' il minimo che il tasto verticale simulato puo' estrarre, il punto dura 119 campioni contro 149 di rampa. A 60 parole al minuto con p uguale a 18 ne dura 79. A 90 parole al minuto anche il punto normale, con p uguale a 50, ne dura 147, cioe' resta sotto la rampa.
+Impatto per l'utente: i punti si sentono piu' deboli dei trattini, e tanto piu' quanto piu' si va veloci o quanto piu' l'operatore simulato ha il tasto pesante. In un simulatore di gara e' un difetto che si scambia per una condizione di propagazione.
+Nota sull'origine: il difetto e' in parte ereditato dall'upstream, perche' anche il codice originale costruiva il punto come rampa piu' durata, e a 90 parole al minuto lo aveva gia'. Il parametro p introdotto da Gabriele lo rende pero' raggiungibile molto prima, gia' a 40 parole al minuto, e su un simulatore che simula apposta i tasti verticali questo cambia le cose. La correzione va discussa con Kevin, perche' tocca il codice condiviso.
+Correzione proposta: legare la durata della rampa alla durata del punto quando questa e' piccola, per esempio limitando la rampa a una frazione fissa del punto, come fa CWzator con i suoi modi di dissolvenza. In alternativa, impedire ai valori di p e di velocita' di produrre punti piu' corti della rampa, dicendolo.
+Rilievo 4
+Gravita': alto
+Categoria: fragilita'
+File e riga: python/keyer.py:73, 74, 75 e 76
+Problema: nella codifica morse, un carattere che non compare nella tabella e non e' un marcatore viene ora saltato in silenzio. Il codice originale scriveva Keyer._morse[txt[i]] e quindi sollevava KeyError, che almeno diceva quale carattere mancava.
+Impatto per l'utente: un carattere non previsto in un nominativo o in un messaggio non produce nessun suono e nessun avviso: chi ascolta sente un nominativo piu' corto di quello vero e lo copia sbagliato, senza che niente segnali il problema. Il rischio e' concreto perche' MASTER.SCP contiene nominativi di tutto il mondo.
+Correzione proposta: contare i caratteri saltati e riferirli, almeno su standard error, invece di ignorarli. E' codice aggiunto da Gabriele, quindi si corregge qui.
+3.3 Rilievi medi
+Rilievo 5
+Gravita': medio
+Categoria: DRY
+File e riga: python/cwsim.py, tredici occorrenze di getattr con isDxExpedition, fra cui le righe 249, 251, 320, 410, 411 e i metodi space, tab e backtab
+Problema: la modalita' DX Expedition si legge tredici volte con getattr e un valore di ripiego falso, come se l'attributo potesse non esserci. Ma contest.py lo imposta sempre: alla riga 87 quando si parte dai valori predefiniti, e in readConfig con un get che ha gia' il suo ripiego. Il valore predefinito del getattr non serve quindi mai.
+Impatto per l'utente: nessuno diretto. Il guaio e' che se un giorno il nome dell'attributo cambiasse, o venisse scritto male in un solo punto, tutti e tredici i getattr risponderebbero tranquillamente falso e il programma si comporterebbe come se la modalita' DX non fosse attiva, senza nessun errore. E' un guasto silenzioso costruito apposta.
+Correzione proposta: leggere l'attributo direttamente, oppure tenerlo in una sola proprieta' della finestra aggiornata quando cambia, e usarla nei tredici punti.
+Rilievo 6
+Gravita': medio
+Categoria: logica
+File e riga: python/cwsim.py, il ramo dx_exp della funzione che invia i messaggi, e python/station.py:190, 191, 192, 193 e 194
+Problema: in modalita' DX Expedition il messaggio StationMessage.NR viene usato per mandare l'RST, e il commento nel codice lo dichiara apertamente, sends RST in DX mode. Il nome del messaggio quindi mente, e nrAsText restituisce due cose diverse a seconda della modalita'.
+Impatto per l'utente: nessuno diretto, ma e' la causa del rilievo 11, cioe' del fatto che il report scriva Progressivi copiati male sopra un elenco di rapporti sbagliati.
+Correzione proposta: introdurre un messaggio con il proprio nome, per esempio Rst, e lasciare NR al progressivo. E' un cambiamento nel codice condiviso e va concordato con Kevin.
+Rilievo 7
+Gravita': medio
+Categoria: logica
+File e riga: python/mystation.py:88, confrontata con python/station.py:163
+Problema: le due chiamate a getenvelop non passano gli stessi argomenti. Quella di station.py passa speed_up_factor uguale a self.myRstSpeedUp, cioe' il valore che l'utente regola nella finestra; quella di mystation.py lo omette, quindi vale il predefinito 0,20 scritto nella firma della funzione.
+Impatto per l'utente: il cursore My RST Speed-up della finestra non ha effetto su quella chiamata. Chi lo regola sente cambiare una parte della trasmissione e non l'altra, e non ha modo di capire perche'.
+Correzione proposta: passare self.myRstSpeedUp anche li'. E' codice aggiunto da Gabriele, quindi si corregge qui.
+Rilievo 8
+Gravita': medio
+Categoria: logica
+File e riga: python/dxoper.py:158, confrontata con la riga 149
+Problema: nella matrice che misura la distanza fra il nominativo trasmesso e quello della stazione, l'ultima riga e' stata modificata togliendo il piu' uno sulla cancellazione: era np.min di m[x,y-1], m[x-1,y]+1, d ed e' diventata np.min di m[x,y-1], m[x-1,y], d. Le righe precedenti, alla riga 149, hanno ancora entrambi i piu' uno. La distanza calcolata non e' quindi piu' una distanza di edit e diventa piu' indulgente sulla coda del nominativo.
+Impatto per l'utente: la stazione avversaria riconosce come proprio, o come quasi proprio, un nominativo che prima avrebbe rifiutato. E' un cambiamento del realismo del simulatore, non un difetto in se': puo' essere stato fatto apposta, per esempio per compensare un comportamento troppo severo in modalita' DX.
+Correzione proposta: da chiarire con Gabriele. Se il cambiamento e' voluto va scritto in un commento accanto, dicendo perche', perche' senza spiegazione sembra un piu' uno dimenticato; e va comunicato a Kevin, perche' tocca il cuore della simulazione. Se non e' voluto va rimesso.
+Rilievo 9
+Gravita': medio
+Categoria: fragilita'
+File e riga: python/cwsim.py:315 e 460
+Problema: le due finestre di salvataggio propongono come cartella iniziale il contenuto della variabile d'ambiente HOME. Su Windows quella variabile di solito non esiste: la variabile equivalente si chiama USERPROFILE. getenv restituisce quindi None e la finestra si apre dove capita.
+Impatto per l'utente: salvando il log o il file audio, la finestra non parte dalla cartella personale ma dall'ultima usata dal sistema, che puo' essere qualunque. E' il tipo di dettaglio che si nota solo su Windows, e l'upstream e' scritto su Linux.
+Correzione proposta: usare os.path.expanduser con la tilde, che funziona su tutti e tre i sistemi. E' codice condiviso, quindi e' un buon candidato per una richiesta di fusione a monte: e' piccola, e' innocua per Linux e migliora Windows.
+Rilievo 10
+Gravita': medio
+Categoria: regole generali
+File e riga: python/translate/it_IT.qm e python/translate/it_IT.ts
+Problema: il file sorgente della traduzione italiana e' del 2 aprile, il file compilato che il programma legge davvero e' del 25 marzo. Le cinquantasei righe di traduzione aggiunte da Gabriele nel .ts non sono quindi mai arrivate nel .qm.
+Verifica: confrontate le date dei due file. Il .ts e' piu' recente del .qm di otto giorni, e il diff con l'upstream mostra 56 righe aggiunte al solo .ts.
+Impatto per l'utente: tutte le voci nuove dell'interfaccia, comprese quelle della modalita' DX Expedition, compaiono in inglese anche con l'italiano selezionato.
+Correzione proposta: e' la terza voce di plan.md e resta valida. Serve lrelease, che fa parte degli strumenti di Qt; in mancanza, il .qm si puo' produrre con pyside6-lrelease oppure con lo script Makefile gia' presente nella cartella python.
+Rilievo 11
+Gravita': medio
+Categoria: logica
+File e riga: python/cwsim.py:411 e 432, python/translate/it_IT.ts:955 e 956
+Problema: la seconda voce di plan.md chiede di togliere dal report i riferimenti ai progressivi in modalita' DX Expedition. Meta' del lavoro e' fatto: la riga 411 gia' esclude gli errori sul progressivo quando la modalita' e' DX. Resta pero' il titolo della sezione, che nel sorgente e' Exchanges miscopied, cioe' scambi copiati male, e che la traduzione italiana rende con Progressivi copiati male.
+Verifica: nel report cwsim.txt del 17 luglio, prodotto in modalita' DX Expedition, sotto il titolo Progressivi copiati male compare la riga KO4CTP copiato 599 era RST 589, che e' un errore di rapporto e non di progressivo.
+Impatto per l'utente: il report dice il falso sul proprio contenuto, e lo dice solo in italiano, perche' l'originale inglese e' corretto.
+Correzione proposta: correggere la traduzione italiana in Scambi copiati male, o in Rapporti copiati male, che va bene in entrambe le modalita'. E' una modifica al solo file di traduzione italiano, quindi non tocca il codice condiviso.
+Rilievo 12
+Gravita': medio
+Categoria: regole generali
+File e riga: plan.md, cwsim.txt, ramo CWSIM+DX+StraightKey
+Problema: tre questioni di gestione del progetto. La prima: plan.md contiene sei voci, tutte non spuntate, di cui questa analisi conferma la prima come rilievo 1, la seconda come rilievo 11, la terza come rilievo 10, e lascia aperte la quarta, cioe' la validazione dell'RST in modalita' DX, la quinta, cioe' la verifica visiva del layout, che nessuno qui puo' fare, e la sesta, il coordinamento con Kevin sulla numerazione. Sono lavori maturi, cioe' issue secondo il punto 2.7.1, ma le issue sul repository sono disattivate. La seconda: cwsim.txt e' il report che il programma scrive a ogni sessione, ed e' versionato; gli ultimi nove commit del ramo hanno tutti come unico contenuto modified cwsim.txt. La terza: il lavoro sta su un ramo di funzionalita' e non e' ne' su main ne' proposto a monte, mentre la versione nel codice dice 0.9.0 Beta e plan.md parla di numerazione ufficiale post 1.0.2: sono due numerazioni diverse in circolazione.
+Impatto per l'utente: le migliorie di Gabriele, che sono sostanziose e riguardano proprio l'accessibilita', restano su un ramo che nessun altro usa.
+Correzione proposta: riattivare le issue su GitHub e travasarci plan.md; togliere cwsim.txt dal versionamento aggiungendolo al .gitignore; decidere con Gabriele e con Kevin che cosa proporre a monte e con quale numero di versione.
+Rilievo 13
+Gravita': medio
+Categoria: regole generali
+File e riga: sessantanove rilievi ruff sull'intero progetto
+Problema: ruff riporta sessantanove rilievi, di cui quarantacinque correggibili da solo. Riguardano quasi tutti il codice condiviso: import non ordinati, super con argomenti, rami di if combinabili, punti e virgola di troppo.
+Impatto per l'utente: nessuno.
+Correzione proposta: non applicare ruff a tutto il progetto. Una riformattazione di massa del codice di Kevin renderebbe illeggibile ogni diff futuro e impossibile ogni fusione, e sarebbe anche scortese. Conviene limitarsi ai file che Gabriele ha gia' toccato, e anche li' solo alle correzioni che non spostano righe. Questa e' una scelta da confermare con Gabriele: e' l'unico punto in cui questo rapporto propone di non applicare il punto 3.4.
+3.4 Rilievi bassi
+Rilievo 14
+Gravita': basso
+Categoria: regole generali
+File e riga: python/cwsim.py:397
+Problema: nel report, la tabella dei QSO per intervallo di cinque minuti e' scritta incolonnando i numeri con tre spazi fissi. Il punto 3.4 chiede che le tabelle siano rese in forma discorsiva o con separatori leggibili.
+Impatto per l'utente: NVDA legge righe come zero trattino quattro, spazio spazio spazio, centoventi. E' l'unica parte del report che non si legge bene: tutto il resto e' gia' in forma di frase.
+Correzione proposta: scrivere per esempio dal minuto zero al quattro, centoventi QSO all'ora. E' testo prodotto dal codice condiviso, quindi la modifica va concordata, ma passa quasi tutta dal file di traduzione.
+Rilievo 15
+Gravita': basso
+Categoria: regole generali
+File e riga: README.md
+Problema: il README descrive l'installazione alternativa con requirements_qt5.txt, ma quel file e' stato tolto dal ramo, come mostra il diff con l'upstream, insieme al supporto per PyQt5.
+Impatto per l'utente: chi segue le istruzioni per la variante Qt5 non trova il file.
+Correzione proposta: togliere dal README il riferimento, oppure ripristinare il file. Da decidere con Gabriele, perche' la pulizia di Qt5 e' stata voluta.
+Rilievo 16
+Gravita': basso
+Categoria: fragilita'
+File e riga: python/cwsim.py:41 e 79
+Problema: la cartella di configurazione si ricava con xdg.BaseDirectory.save_config_path, che segue la convenzione dei sistemi Linux. Su Windows la libreria pyxdg ripiega su una cartella punto config dentro la cartella personale, che funziona ma non e' il posto in cui un programma Windows mette le proprie impostazioni.
+Impatto per l'utente: nessun malfunzionamento; il file di configurazione finisce in un posto insolito per Windows e chi lo cerca a mano fatica a trovarlo.
+Correzione proposta: nessuna azione consigliata. E' una scelta del progetto originale, coerente con il fatto che gira su Linux, Mac e Windows, e cambiarla sul solo ramo di Gabriele creerebbe una divergenza inutile. Segnalato per completezza.
+Rilievo 17
+Gravita': basso
+Categoria: logica
+File e riga: python/dxstation.py:36, 37, 38, 39, 40, 41, 42, 43, 44 e 45
+Problema: la simulazione del tasto verticale estrae a sorte i tre pesi l, p ed s dentro un ciclo che scarta le due combinazioni troppo regolari, cioe' quella tutta bassa e quella tutta alta. Il ciclo non ha un numero massimo di tentativi.
+Impatto per l'utente: nessuno in pratica, perche' le due condizioni di scarto coprono una frazione piccola dello spazio dei valori e il ciclo termina quasi sempre al primo giro. Il difetto e' strutturale, non pratico, e va tenuto d'occhio solo se un giorno gli intervalli si stringessero.
+Correzione proposta: nessuna azione consigliata oggi.
+4. Riepilogo
+Rilievi totali: 17. Critici 0, alti 4, medi 9, bassi 4.
+Cio' che e' solido: il contributo di Gabriele e' un lavoro di sostanza e non di contorno. La modalita' DX Expedition e' implementata coerentemente attraverso sette file, con lo scambio ridotto al solo rapporto, la macchina a stati dell'operatore adattata di conseguenza e la validazione del report che gia' esclude i progressivi. La simulazione del tasto verticale, con i tre pesi estratti a sorte per ogni stazione e le due combinazioni troppo regolari scartate, e' l'idea giusta per rendere credibile un pile-up: e' proprio l'irregolarita' del manipolatore a mano che rende difficile la copia, e nessun simulatore che conosca la riproduce. L'accelerazione del rapporto, cioe' il fatto che gli operatori veri sparino il 599 piu' veloce del resto, e' un'osservazione fine di chi ha davvero ascoltato una spedizione. La riscrittura di getenvelop per accogliere i pesi e' fatta con la struttura giusta, cioe' due passaggi, prima il calcolo della lunghezza e poi il riempimento, con la protezione sui limiti del vettore. E infine, alla riga 267 di dxoper.py, Gabriele ha corretto un vero difetto dell'upstream, StationMessage.noMsg scritto con la n minuscola, che avrebbe sollevato AttributeError: quella correzione merita di tornare a monte, e da sola giustificherebbe una richiesta di fusione.
+Quadro d'insieme: cwsim e' il progetto piu' particolare della tabella, perche' non e' di Gabriele e perche' la sua revisione, presa alla lettera, chiederebbe di fare cose che al progetto farebbero male. I quattro rilievi alti sono tutti nel raggio d'azione di Gabriele: due stanno nel codice che ha scritto lui, uno riguarda la temporizzazione ed e' in parte ereditato, e il primo, quello del Tab, spiega una voce di plan.md che era rimasta senza causa. Il resto e' gestione: un ramo che non torna a monte, una traduzione compilata vecchia di otto giorni rispetto alla sua sorgente, e le issue disattivate proprio dove servirebbero.
+5. Ordine di lavorazione proposto
+Primo blocco, l'accessibilita': rilievo 1, cioe' il Tab che non naviga, che e' il piu' facile da correggere e il piu' utile da subito.
+Secondo blocco, la temporizzazione: rilievi 2 e 4, entrambi in keyer.py e nel codice di Gabriele; il rilievo 3 va invece discusso con Kevin prima di essere toccato.
+Terzo blocco, le incoerenze del lavoro nuovo: rilievi 5, 7 e 11.
+Quarto blocco, la gestione del progetto: rilievo 12, cioe' riattivare le issue, travasare plan.md, togliere cwsim.txt dal versionamento e decidere che cosa proporre a monte.
+Quinto blocco, la traduzione: rilievo 10.
+Da decidere con Gabriele prima di toccarli: rilievo 3, la rampa contro il punto, rilievo 6, il nome del messaggio, rilievo 8, il piu' uno tolto dalla distanza fra nominativi, rilievo 13, quanto ruff applicare, e rilievo 15, la sorte della variante Qt5.
+Da mandare a Kevin, non da correggere qui: la correzione gia' fatta di noMsg, il rilievo 9 sulla variabile HOME e, come domanda prima che come proposta, i rilievi 3, 6 e 8.
+6. Prove che richiedono Gabriele
+Nessuna prova interattiva e' stata messa in collaudo.txt in questa fase, perche' il programma non e' stato modificato e i rilievi 2 e 3 sono stati verificati misurando la codifica e le durate in laboratorio, senza bisogno di orecchie.
+Quando le correzioni saranno applicate serviranno pero' tre prove che solo Gabriele puo' fare, e sono tutte di ascolto. La prima: verificare che l'intervallo prima del rapporto accelerato suoni giusto, cioe' come un intervallo di parola e non di carattere. La seconda: ascoltare una stazione con tasto verticale simulato a quaranta parole al minuto e dire se i punti si sentono piu' deboli dei trattini, che e' il rilievo 3. La terza: navigare la finestra con NVDA e il tasto Tab dopo la correzione del rilievo 1, e dire se i comandi dei parametri sono raggiungibili e in che ordine.
